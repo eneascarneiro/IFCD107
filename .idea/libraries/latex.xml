@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="latex">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/latex/Guia_Laboratorio_Jupyter_Machine_Learning_LaTeX.zip!/" />
+      <root url="jar://$PROJECT_DIR$/latex/IFCD107____Especialista_en_Inteligencia_Artificial__2_.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

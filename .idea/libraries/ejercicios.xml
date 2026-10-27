@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="ejercicios">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/ejercicios/proyecto_regresion_polinomica.zip!/" />
+      <root url="jar://$PROJECT_DIR$/ejercicios/Python_Estadistica-main.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

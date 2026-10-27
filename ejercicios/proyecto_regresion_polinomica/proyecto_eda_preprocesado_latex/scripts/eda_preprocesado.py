@@ -8,6 +8,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
+from matplotlib.backends.backend_pdf import PdfPages
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.model_selection import train_test_split
@@ -20,6 +21,150 @@ OUT = ROOT / "resultados"
 TARGET = "y"
 ID = "expediente_id"
 SEED = 42
+
+CASE_NOTES = {
+    "datos_ejemplo_complejo": "CSV sintético original de referencia",
+    "01_referencia_limpia": "Referencia limpia: distribuciones y relaciones base",
+    "02_valores_ausentes": "Nulos en columnas numéricas, categóricas y objetivo",
+    "03_valores_atipicos": "Valores extremos intencionados para investigar",
+    "04_categorias_raras": "Categorías poco frecuentes, espacios y mayúsculas",
+    "05_duplicados": "Duplicados exactos y claves repetidas con conflicto",
+    "06_sesgo_y_heterocedasticidad": "Sesgo del predictor y varianza creciente en y",
+}
+
+
+def generate_check_pdf():
+    """Crea un informe PDF multipágina con comprobaciones de cada CSV."""
+    csv_files = sorted(DATA.parent.glob("*.csv"))
+    if not csv_files:
+        raise FileNotFoundError(f"No se encontraron CSV en {DATA.parent}")
+    output_pdf = OUT / "informe_comprobacion_datos.pdf"
+    sns.set_theme(style="whitegrid")
+    overview = []
+    datasets = []
+    for path in csv_files:
+        frame = pd.read_csv(path)
+        frame.columns = frame.columns.str.strip()
+        duplicate_rows = int(frame.duplicated().sum())
+        duplicate_ids = (int(frame[ID].duplicated().sum()) if ID in frame else 0)
+        missing_cells = int(frame.isna().sum().sum())
+        numeric_cols = frame.select_dtypes(include="number").columns.tolist()
+        outliers = {}
+        for col in numeric_cols:
+            values = frame[col].dropna()
+            if len(values):
+                q1, q3 = values.quantile([.25, .75])
+                iqr = q3 - q1
+                outliers[col] = int(((values < q1 - 1.5 * iqr) | (values > q3 + 1.5 * iqr)).sum())
+        info = {
+            "path": path, "frame": frame, "duplicate_rows": duplicate_rows,
+            "duplicate_ids": duplicate_ids, "missing_cells": missing_cells,
+            "outliers": outliers,
+        }
+        datasets.append(info)
+        overview.append([
+            path.name, len(frame), len(frame.columns), missing_cells,
+            duplicate_rows, duplicate_ids, sum(outliers.values()),
+        ])
+
+    with PdfPages(output_pdf) as pdf:
+        # Página de síntesis para comparar de un vistazo las casuísticas.
+        fig, ax = plt.subplots(figsize=(11.7, 8.3))
+        ax.axis("off")
+        ax.text(0, 1.02, "Informe de comprobación de los CSV", fontsize=20,
+                fontweight="bold", transform=ax.transAxes, va="bottom")
+        ax.text(0, .97,
+                "Datos sintéticos para prácticas de EDA. Los candidatos IQR requieren revisión contextual.",
+                fontsize=10, transform=ax.transAxes, va="top")
+        table = ax.table(cellText=overview,
+                         colLabels=["Archivo", "Filas", "Cols.", "Nulos", "Duplic.", "ID repet.", "Atípicos IQR"],
+                         cellLoc="center", colLoc="center", loc="upper center",
+                         bbox=[0, .44, 1, .46],
+                         colWidths=[.40, .08, .08, .09, .09, .10, .16])
+        table.auto_set_font_size(False)
+        table.set_fontsize(8)
+        for (row, _), cell in table.get_celld().items():
+            if row == 0:
+                cell.set_facecolor("#24476b")
+                cell.get_text().set_color("white")
+                cell.get_text().set_weight("bold")
+        notes = [
+            "Lectura de comprobaciones:",
+            "• Nulos: total de celdas vacías del archivo.",
+            "• Duplic.: filas completamente repetidas; ID repet.: identificadores repetidos, aunque el resto cambie.",
+            "• Atípicos IQR: conteo acumulado entre las columnas numéricas según 1,5 × IQR; no significa error automáticamente.",
+            "• La hoja siguiente de cada CSV muestra faltantes por variable, distribución de y y relación x-y cuando están disponibles.",
+            "• No extraer conclusiones sobre casos reales: todas las filas de práctica son inventadas.",
+        ]
+        ax.text(0, .36, "\n".join(notes), fontsize=10, linespacing=1.7,
+                transform=ax.transAxes, va="top")
+        pdf.savefig(fig, bbox_inches="tight")
+        plt.close(fig)
+
+        # Una página de diagnóstico por archivo, con tabla y gráficos.
+        for item in datasets:
+            frame = item["frame"]
+            fig = plt.figure(figsize=(11.7, 8.3))
+            fig.suptitle(item["path"].name, fontsize=16, fontweight="bold", y=.98)
+            note = CASE_NOTES.get(item["path"].stem, "Conjunto incluido en la carpeta datos")
+            fig.text(.08, .93, note, fontsize=10)
+            fig.text(.08, .89,
+                     f"Filas: {len(frame)} | columnas: {len(frame.columns)} | celdas ausentes: {item['missing_cells']} | "
+                     f"duplicados exactos: {item['duplicate_rows']} | IDs repetidos: {item['duplicate_ids']}",
+                     fontsize=9)
+
+            profile_rows = []
+            for col in frame.columns:
+                series = frame[col]
+                missing_pct = 100 * series.isna().mean()
+                profile_rows.append([col, str(series.dtype), int(series.isna().sum()),
+                                     f"{missing_pct:.1f}%", int(series.nunique(dropna=True)),
+                                     item["outliers"].get(col, "—")])
+            ax_table = fig.add_axes([.07, .51, .86, .31])
+            ax_table.axis("off")
+            profile_table = ax_table.table(
+                cellText=profile_rows,
+                colLabels=["Variable", "Tipo", "Nulos", "% nulos", "Únicos", "Atípicos IQR"],
+                loc="center", cellLoc="center", colLoc="center",
+            )
+            profile_table.auto_set_font_size(False)
+            profile_table.set_fontsize(8)
+            profile_table.scale(1, 1.25)
+            for (row, _), cell in profile_table.get_celld().items():
+                if row == 0:
+                    cell.set_facecolor("#24476b")
+                    cell.get_text().set_color("white")
+                    cell.get_text().set_weight("bold")
+
+            ax_y = fig.add_axes([.09, .09, .36, .33])
+            if TARGET in frame:
+                target = pd.to_numeric(frame[TARGET], errors="coerce").dropna()
+                if len(target):
+                    sns.histplot(target, kde=len(target) > 2, ax=ax_y, color="#2878B5")
+                    ax_y.set_title("Distribución del objetivo y")
+                else:
+                    ax_y.text(.5, .5, "y no contiene valores numéricos", ha="center", va="center")
+                    ax_y.set_axis_off()
+            else:
+                ax_y.text(.5, .5, "No existe columna objetivo y", ha="center", va="center")
+                ax_y.set_axis_off()
+
+            ax_xy = fig.add_axes([.56, .09, .36, .33])
+            if "x" in frame and TARGET in frame:
+                plot_data = frame[["x", TARGET]].apply(pd.to_numeric, errors="coerce").dropna()
+                if len(plot_data):
+                    sns.scatterplot(data=plot_data, x="x", y=TARGET, ax=ax_xy,
+                                    alpha=.65, s=22, color="#e07a35")
+                    ax_xy.set_title("Relación entre x e y")
+                else:
+                    ax_xy.text(.5, .5, "No hay pares x-y completos", ha="center", va="center")
+                    ax_xy.set_axis_off()
+            else:
+                ax_xy.text(.5, .5, "No están disponibles x e y", ha="center", va="center")
+                ax_xy.set_axis_off()
+            pdf.savefig(fig, bbox_inches="tight")
+            plt.close(fig)
+    return output_pdf
 
 
 def main():
@@ -102,14 +247,16 @@ def main():
     test_matrix = preprocessor.transform(X_test)
     names = preprocessor.get_feature_names_out()
     for filename, matrix, targets in (
-        ("train_preprocesado.csv", train_matrix, y_train),
-        ("test_preprocesado.csv", test_matrix, y_test),
+            ("train_preprocesado.csv", train_matrix, y_train),
+            ("test_preprocesado.csv", test_matrix, y_test),
     ):
         result = pd.DataFrame(matrix, columns=names)
         result[TARGET] = targets.to_numpy()
         result.to_csv(OUT / filename, index=False, encoding="utf-8-sig")
     joblib.dump({"preprocessor": preprocessor, "feature_columns": feature_columns,
                  "target": TARGET, "id_column": ID}, OUT / "preprocesador.joblib")
+
+    check_pdf = generate_check_pdf()
 
     summary = {
         "filas_entrada": int(len(raw)), "filas_salida": int(len(df)),
@@ -123,6 +270,7 @@ def main():
     }
     (OUT / "resumen.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"Análisis terminado. Salidas: {OUT}")
+    print(f"Informe PDF con datos a comprobar: {check_pdf}")
 
 
 if __name__ == "__main__":
