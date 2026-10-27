@@ -1,0 +1,1001 @@
+expediente_id,distrito,tipo_tramite,superficie_solicitada_m2,requerimientos_documentacion,mes_presentacion,x,y
+DEMO-TERR-2026-0001,Puente de Vallecas,alta,72.1,0,2,58.36,65
+DEMO-TERR-2026-0002,Chamberí,alta,54.6,0,1,48.19,56
+DEMO-TERR-2026-0003,Carabanchel,alta,24.7,2,8,58.64,76
+DEMO-TERR-2026-0004,Salamanca,renovación,104.0,2,4,84.52,114
+DEMO-TERR-2026-0005,Carabanchel,renovación,37.0,0,3,44.28,58
+DEMO-TERR-2026-0006,Arganzuela,renovación,74.3,0,5,39.37,54
+DEMO-TERR-2026-0007,Carabanchel,alta,43.6,1,2,54.61,64
+DEMO-TERR-2026-0008,Moncloa-Aravaca,renovación,74.2,0,3,50.38,56
+DEMO-TERR-2026-0009,Chamartín,renovación,97.2,2,7,82.62,125
+DEMO-TERR-2026-0010,Hortaleza,renovación,101.0,2,12,83.87,109
+DEMO-TERR-2026-0011,Moncloa-Aravaca,modificación,104.1,2,9,87.36,108
+DEMO-TERR-2026-0012,Vicálvaro,modificación,25.5,0,6,38.26,31
+DEMO-TERR-2026-0013,Villa de Vallecas,modificación,64.2,1,2,50.84,52
+DEMO-TERR-2026-0014,Villaverde,renovación,40.0,0,7,41.93,54
+DEMO-TERR-2026-0015,Hortaleza,alta,19.0,1,10,42.56,41
+DEMO-TERR-2026-0016,Tetuán,renovación,40.6,2,6,65.17,88
+DEMO-TERR-2026-0017,Vicálvaro,alta,87.4,1,5,76.40,90
+DEMO-TERR-2026-0018,Moratalaz,alta,11.6,1,7,45.58,47
+DEMO-TERR-2026-0019,Centro,alta,82.7,1,3,84.80,123
+DEMO-TERR-2026-0020,Moncloa-Aravaca,modificación,53.5,2,12,64.59,75
+DEMO-TERR-2026-0021,Hortaleza,renovación,17.9,0,10,32.10,42
+DEMO-TERR-2026-0022,Salamanca,renovación,8.5,0,1,14.51,16
+DEMO-TERR-2026-0023,Ciudad Lineal,alta,113.8,0,7,65.74,72
+DEMO-TERR-2026-0024,Chamartín,modificación,103.3,1,9,71.14,88
+DEMO-TERR-2026-0025,Carabanchel,modificación,75.2,0,10,52.72,68
+DEMO-TERR-2026-0026,Moratalaz,modificación,115.7,2,1,73.61,94
+DEMO-TERR-2026-0027,Chamberí,alta,61.6,1,2,74.26,87
+DEMO-TERR-2026-0028,Retiro,alta,112.6,1,4,68.74,84
+DEMO-TERR-2026-0029,Arganzuela,alta,76.3,0,6,59.12,62
+DEMO-TERR-2026-0030,Latina,renovación,73.2,1,12,60.40,67
+DEMO-TERR-2026-0031,Chamberí,modificación,31.6,0,12,34.63,33
+DEMO-TERR-2026-0032,Barajas,modificación,67.9,1,1,63.86,91
+DEMO-TERR-2026-0033,Ciudad Lineal,renovación,119.9,2,11,77.71,103
+DEMO-TERR-2026-0034,Fuencarral-El Pardo,alta,68.7,0,8,57.60,65
+DEMO-TERR-2026-0035,Villaverde,renovación,52.5,3,11,76.87,100
+DEMO-TERR-2026-0036,Moratalaz,renovación,73.6,3,5,67.50,80
+DEMO-TERR-2026-0037,Tetuán,modificación,71.9,1,6,64.55,69
+DEMO-TERR-2026-0038,Villa de Vallecas,alta,76.4,0,10,61.62,77
+DEMO-TERR-2026-0039,Barajas,modificación,28.9,1,8,37.15,33
+DEMO-TERR-2026-0040,Villaverde,alta,33.0,2,11,62.62,71
+DEMO-TERR-2026-0041,Tetuán,modificación,56.6,0,11,38.71,40
+DEMO-TERR-2026-0042,Retiro,renovación,73.7,0,3,47.72,74
+DEMO-TERR-2026-0043,Retiro,modificación,29.1,3,10,64.71,76
+DEMO-TERR-2026-0044,Moncloa-Aravaca,alta,27.9,1,10,49.20,41
+DEMO-TERR-2026-0045,San Blas-Canillejas,modificación,65.8,1,7,61.28,80
+DEMO-TERR-2026-0046,Moratalaz,renovación,23.7,0,2,33.81,36
+DEMO-TERR-2026-0047,Puente de Vallecas,alta,113.4,0,3,66.17,78
+DEMO-TERR-2026-0048,Carabanchel,renovación,46.4,1,11,46.34,41
+DEMO-TERR-2026-0049,Chamartín,renovación,72.5,0,1,53.34,73
+DEMO-TERR-2026-0050,Retiro,alta,106.6,1,8,73.94,102
+DEMO-TERR-2026-0051,Chamartín,alta,98.7,0,1,61.63,66
+DEMO-TERR-2026-0052,Moncloa-Aravaca,renovación,45.3,3,5,60.80,65
+DEMO-TERR-2026-0053,Latina,alta,28.6,0,2,50.19,43
+DEMO-TERR-2026-0054,Arganzuela,renovación,26.1,1,11,49.28,64
+DEMO-TERR-2026-0055,Tetuán,renovación,107.4,0,5,54.49,51
+DEMO-TERR-2026-0056,Vicálvaro,alta,102.2,0,2,70.25,88
+DEMO-TERR-2026-0057,San Blas-Canillejas,modificación,90.4,0,10,60.91,71
+DEMO-TERR-2026-0058,Villa de Vallecas,alta,89.8,0,5,67.63,78
+DEMO-TERR-2026-0059,Latina,modificación,101.4,1,12,70.24,104
+DEMO-TERR-2026-0060,Carabanchel,alta,70.3,2,4,78.86,100
+DEMO-TERR-2026-0061,Retiro,renovación,51.4,3,1,74.42,92
+DEMO-TERR-2026-0062,Centro,renovación,100.5,1,12,71.19,81
+DEMO-TERR-2026-0063,Salamanca,renovación,53.2,0,10,37.17,53
+DEMO-TERR-2026-0064,Barajas,renovación,43.6,2,3,53.89,73
+DEMO-TERR-2026-0065,Carabanchel,modificación,79.4,0,10,35.89,44
+DEMO-TERR-2026-0066,Barajas,renovación,73.2,1,12,46.72,62
+DEMO-TERR-2026-0067,Hortaleza,renovación,26.8,0,3,32.48,42
+DEMO-TERR-2026-0068,Retiro,alta,12.6,0,7,42.77,46
+DEMO-TERR-2026-0069,San Blas-Canillejas,renovación,100.0,0,4,44.45,48
+DEMO-TERR-2026-0070,Villa de Vallecas,renovación,80.8,2,4,81.29,112
+DEMO-TERR-2026-0071,Arganzuela,renovación,82.5,1,10,56.02,67
+DEMO-TERR-2026-0072,Arganzuela,renovación,112.6,1,6,66.70,82
+DEMO-TERR-2026-0073,Retiro,modificación,98.2,3,5,85.53,120
+DEMO-TERR-2026-0074,Carabanchel,renovación,21.5,0,11,31.40,33
+DEMO-TERR-2026-0075,Hortaleza,modificación,95.9,1,9,64.18,71
+DEMO-TERR-2026-0076,Moratalaz,alta,79.9,2,9,79.64,97
+DEMO-TERR-2026-0077,San Blas-Canillejas,renovación,60.1,1,6,45.58,57
+DEMO-TERR-2026-0078,Chamberí,renovación,114.9,0,2,63.39,80
+DEMO-TERR-2026-0079,Carabanchel,alta,98.5,0,12,63.65,76
+DEMO-TERR-2026-0080,Ciudad Lineal,modificación,96.5,0,11,57.65,58
+DEMO-TERR-2026-0081,San Blas-Canillejas,alta,104.2,1,1,73.80,95
+DEMO-TERR-2026-0082,Villa de Vallecas,renovación,34.3,1,1,43.83,60
+DEMO-TERR-2026-0083,Centro,renovación,9.4,1,8,38.50,35
+DEMO-TERR-2026-0084,San Blas-Canillejas,alta,94.2,1,12,79.90,105
+DEMO-TERR-2026-0085,Puente de Vallecas,alta,45.6,1,4,56.95,61
+DEMO-TERR-2026-0086,Hortaleza,renovación,64.8,0,12,45.84,53
+DEMO-TERR-2026-0087,Usera,alta,68.3,0,5,52.05,69
+DEMO-TERR-2026-0088,Chamartín,modificación,19.9,2,9,49.92,56
+DEMO-TERR-2026-0089,Centro,modificación,34.9,1,9,54.66,61
+DEMO-TERR-2026-0090,Chamberí,renovación,64.5,1,1,55.65,56
+DEMO-TERR-2026-0091,Puente de Vallecas,modificación,58.8,1,1,47.46,44
+DEMO-TERR-2026-0092,Chamartín,modificación,48.3,0,7,37.80,45
+DEMO-TERR-2026-0093,Chamberí,modificación,74.6,0,1,38.95,49
+DEMO-TERR-2026-0094,Chamartín,modificación,118.3,0,2,81.09,93
+DEMO-TERR-2026-0095,Fuencarral-El Pardo,alta,77.7,0,5,56.40,69
+DEMO-TERR-2026-0096,Puente de Vallecas,alta,111.1,0,7,56.96,65
+DEMO-TERR-2026-0097,Puente de Vallecas,alta,76.9,0,9,61.97,65
+DEMO-TERR-2026-0098,Latina,alta,91.3,0,12,64.11,60
+DEMO-TERR-2026-0099,Moratalaz,modificación,57.7,0,1,49.55,65
+DEMO-TERR-2026-0100,Salamanca,modificación,64.3,1,12,60.44,64
+DEMO-TERR-2026-0101,Fuencarral-El Pardo,alta,14.5,0,1,48.68,55
+DEMO-TERR-2026-0102,Hortaleza,alta,112.9,0,10,72.79,76
+DEMO-TERR-2026-0103,Moratalaz,alta,29.6,0,9,47.39,48
+DEMO-TERR-2026-0104,Villa de Vallecas,modificación,74.4,1,9,58.86,69
+DEMO-TERR-2026-0105,Carabanchel,alta,106.3,0,11,64.02,69
+DEMO-TERR-2026-0106,Salamanca,modificación,19.2,0,5,22.28,36
+DEMO-TERR-2026-0107,Latina,alta,20.4,0,10,42.87,37
+DEMO-TERR-2026-0108,Chamberí,alta,51.9,1,6,59.19,74
+DEMO-TERR-2026-0109,Chamberí,alta,42.8,2,3,60.07,64
+DEMO-TERR-2026-0110,Puente de Vallecas,alta,92.2,0,3,63.28,89
+DEMO-TERR-2026-0111,Fuencarral-El Pardo,alta,18.9,0,8,26.70,27
+DEMO-TERR-2026-0112,Tetuán,alta,66.8,0,10,53.78,47
+DEMO-TERR-2026-0113,Villaverde,renovación,53.4,0,8,29.32,29
+DEMO-TERR-2026-0114,Puente de Vallecas,modificación,49.4,1,7,45.26,53
+DEMO-TERR-2026-0115,Puente de Vallecas,renovación,117.7,0,10,62.75,82
+DEMO-TERR-2026-0116,Usera,renovación,44.8,1,7,39.33,46
+DEMO-TERR-2026-0117,Tetuán,modificación,119.8,0,10,74.62,97
+DEMO-TERR-2026-0118,Chamberí,alta,39.7,1,9,50.66,54
+DEMO-TERR-2026-0119,Chamberí,renovación,27.2,0,8,24.76,31
+DEMO-TERR-2026-0120,Chamberí,alta,52.5,0,12,60.77,65
+DEMO-TERR-2026-0121,Tetuán,modificación,113.3,1,12,73.42,96
+DEMO-TERR-2026-0122,Latina,modificación,100.2,0,2,56.52,75
+DEMO-TERR-2026-0123,Hortaleza,modificación,96.0,0,3,54.79,60
+DEMO-TERR-2026-0124,Latina,renovación,28.0,0,2,28.76,24
+DEMO-TERR-2026-0125,Barajas,alta,113.9,1,2,80.32,102
+DEMO-TERR-2026-0126,Villa de Vallecas,modificación,68.0,0,5,49.42,58
+DEMO-TERR-2026-0127,Salamanca,alta,55.6,1,10,72.16,85
+DEMO-TERR-2026-0128,Moncloa-Aravaca,alta,89.0,0,8,65.23,77
+DEMO-TERR-2026-0129,Chamberí,modificación,17.4,0,11,21.21,24
+DEMO-TERR-2026-0130,Usera,alta,36.5,2,9,69.21,80
+DEMO-TERR-2026-0131,Hortaleza,alta,32.9,2,12,63.96,84
+DEMO-TERR-2026-0132,Carabanchel,alta,9.8,1,8,55.42,64
+DEMO-TERR-2026-0133,Carabanchel,alta,71.5,1,2,68.64,75
+DEMO-TERR-2026-0134,Retiro,alta,55.1,1,3,70.32,82
+DEMO-TERR-2026-0135,San Blas-Canillejas,alta,10.4,0,9,43.62,50
+DEMO-TERR-2026-0136,Hortaleza,alta,11.8,3,12,55.39,66
+DEMO-TERR-2026-0137,San Blas-Canillejas,alta,49.0,0,2,53.63,49
+DEMO-TERR-2026-0138,Chamartín,modificación,111.3,0,4,71.67,82
+DEMO-TERR-2026-0139,Moncloa-Aravaca,modificación,95.2,0,8,56.19,64
+DEMO-TERR-2026-0140,Moncloa-Aravaca,modificación,57.3,0,1,45.78,67
+DEMO-TERR-2026-0141,Tetuán,alta,39.4,0,1,51.98,58
+DEMO-TERR-2026-0142,Villa de Vallecas,renovación,68.4,1,3,49.74,56
+DEMO-TERR-2026-0143,Retiro,alta,72.2,0,10,47.53,52
+DEMO-TERR-2026-0144,Villaverde,alta,58.2,3,11,72.44,75
+DEMO-TERR-2026-0145,Villa de Vallecas,renovación,68.2,0,4,57.75,70
+DEMO-TERR-2026-0146,Retiro,renovación,68.4,0,9,38.56,43
+DEMO-TERR-2026-0147,San Blas-Canillejas,renovación,109.1,0,12,56.74,74
+DEMO-TERR-2026-0148,Tetuán,alta,88.1,0,11,67.27,73
+DEMO-TERR-2026-0149,Tetuán,renovación,77.0,0,2,47.03,51
+DEMO-TERR-2026-0150,Usera,renovación,95.7,0,8,54.07,47
+DEMO-TERR-2026-0151,Usera,modificación,17.2,0,6,21.19,21
+DEMO-TERR-2026-0152,Ciudad Lineal,renovación,46.1,0,5,30.70,46
+DEMO-TERR-2026-0153,San Blas-Canillejas,renovación,95.3,0,11,48.62,64
+DEMO-TERR-2026-0154,Fuencarral-El Pardo,modificación,103.4,1,2,71.48,94
+DEMO-TERR-2026-0155,Villaverde,alta,55.9,0,5,53.58,57
+DEMO-TERR-2026-0156,Chamartín,alta,19.3,0,5,42.65,50
+DEMO-TERR-2026-0157,Hortaleza,alta,37.1,0,8,42.12,58
+DEMO-TERR-2026-0158,Barajas,alta,8.2,0,12,26.98,28
+DEMO-TERR-2026-0159,Arganzuela,modificación,69.2,3,10,91.24,122
+DEMO-TERR-2026-0160,Moratalaz,modificación,21.2,0,8,18.82,12
+DEMO-TERR-2026-0161,Carabanchel,modificación,69.5,1,7,62.85,60
+DEMO-TERR-2026-0162,Puente de Vallecas,alta,22.9,2,7,52.55,55
+DEMO-TERR-2026-0163,Puente de Vallecas,alta,8.6,0,3,27.12,43
+DEMO-TERR-2026-0164,Tetuán,modificación,62.1,0,7,23.38,38
+DEMO-TERR-2026-0165,Usera,alta,73.1,0,2,56.52,66
+DEMO-TERR-2026-0166,Puente de Vallecas,modificación,90.3,0,1,50.79,62
+DEMO-TERR-2026-0167,Latina,renovación,43.0,0,10,42.51,52
+DEMO-TERR-2026-0168,Salamanca,alta,47.2,1,7,58.30,83
+DEMO-TERR-2026-0169,Villa de Vallecas,modificación,20.1,1,4,36.49,41
+DEMO-TERR-2026-0170,Villa de Vallecas,alta,115.9,0,10,62.60,82
+DEMO-TERR-2026-0171,Chamberí,renovación,91.2,1,3,57.44,79
+DEMO-TERR-2026-0172,Ciudad Lineal,renovación,40.6,0,9,30.34,37
+DEMO-TERR-2026-0173,Centro,alta,48.1,0,4,44.45,50
+DEMO-TERR-2026-0174,Centro,modificación,90.0,2,7,67.31,76
+DEMO-TERR-2026-0175,Usera,modificación,13.5,2,4,52.63,65
+DEMO-TERR-2026-0176,Barajas,alta,62.5,2,6,75.26,104
+DEMO-TERR-2026-0177,Ciudad Lineal,alta,88.0,0,7,67.29,81
+DEMO-TERR-2026-0178,Chamartín,renovación,89.3,1,3,60.03,71
+DEMO-TERR-2026-0179,Hortaleza,alta,47.2,1,6,58.90,73
+DEMO-TERR-2026-0180,Tetuán,modificación,96.4,0,1,53.14,53
+DEMO-TERR-2026-0181,Chamartín,alta,115.0,0,12,66.13,86
+DEMO-TERR-2026-0182,Villa de Vallecas,renovación,98.1,2,4,68.37,87
+DEMO-TERR-2026-0183,Arganzuela,renovación,67.3,0,3,47.70,63
+DEMO-TERR-2026-0184,Tetuán,alta,103.4,0,12,65.36,80
+DEMO-TERR-2026-0185,Barajas,renovación,102.1,0,1,52.86,62
+DEMO-TERR-2026-0186,Chamberí,renovación,72.3,0,2,63.88,78
+DEMO-TERR-2026-0187,Chamberí,alta,19.9,0,9,30.92,30
+DEMO-TERR-2026-0188,Salamanca,modificación,11.2,0,8,41.87,48
+DEMO-TERR-2026-0189,Centro,renovación,63.0,1,10,57.64,71
+DEMO-TERR-2026-0190,Fuencarral-El Pardo,alta,72.7,0,7,56.52,56
+DEMO-TERR-2026-0191,Retiro,renovación,26.6,0,3,29.99,44
+DEMO-TERR-2026-0192,Arganzuela,renovación,95.5,3,2,75.34,81
+DEMO-TERR-2026-0193,Carabanchel,renovación,30.5,0,4,29.79,36
+DEMO-TERR-2026-0194,Villa de Vallecas,alta,95.3,1,11,71.67,94
+DEMO-TERR-2026-0195,Moratalaz,renovación,16.8,1,11,43.92,70
+DEMO-TERR-2026-0196,Chamberí,renovación,69.4,0,11,49.85,65
+DEMO-TERR-2026-0197,Usera,renovación,104.9,2,10,58.72,75
+DEMO-TERR-2026-0198,Puente de Vallecas,alta,9.1,0,2,29.36,30
+DEMO-TERR-2026-0199,San Blas-Canillejas,alta,33.3,0,3,38.79,36
+DEMO-TERR-2026-0200,Puente de Vallecas,renovación,42.2,0,5,32.05,38
+DEMO-TERR-2026-0201,Vicálvaro,alta,105.8,1,11,75.96,85
+DEMO-TERR-2026-0202,Centro,renovación,38.7,0,5,30.48,24
+DEMO-TERR-2026-0203,Latina,alta,44.2,0,11,59.67,55
+DEMO-TERR-2026-0204,Arganzuela,alta,66.3,2,10,72.58,72
+DEMO-TERR-2026-0205,Moncloa-Aravaca,renovación,65.5,0,5,23.38,37
+DEMO-TERR-2026-0206,Fuencarral-El Pardo,modificación,69.2,1,4,69.54,86
+DEMO-TERR-2026-0207,Moratalaz,renovación,63.5,1,5,54.78,57
+DEMO-TERR-2026-0208,Salamanca,renovación,63.4,2,3,55.42,71
+DEMO-TERR-2026-0209,Retiro,modificación,112.9,0,5,58.74,46
+DEMO-TERR-2026-0210,Hortaleza,renovación,85.5,0,8,45.86,42
+DEMO-TERR-2026-0211,Latina,renovación,98.7,0,4,46.50,54
+DEMO-TERR-2026-0212,San Blas-Canillejas,alta,19.6,2,6,57.22,69
+DEMO-TERR-2026-0213,San Blas-Canillejas,alta,113.7,0,2,69.21,91
+DEMO-TERR-2026-0214,Arganzuela,alta,80.1,2,8,98.62,133
+DEMO-TERR-2026-0215,Chamberí,alta,70.1,1,2,61.95,72
+DEMO-TERR-2026-0216,Moratalaz,alta,15.5,0,9,41.99,50
+DEMO-TERR-2026-0217,Centro,renovación,111.1,1,1,73.24,83
+DEMO-TERR-2026-0218,Fuencarral-El Pardo,alta,76.9,0,5,39.26,42
+DEMO-TERR-2026-0219,San Blas-Canillejas,alta,41.1,2,4,72.87,100
+DEMO-TERR-2026-0220,Ciudad Lineal,alta,111.2,1,4,74.53,100
+DEMO-TERR-2026-0221,Retiro,renovación,88.0,0,5,42.72,47
+DEMO-TERR-2026-0222,Retiro,alta,47.1,0,6,51.82,60
+DEMO-TERR-2026-0223,Fuencarral-El Pardo,alta,66.2,0,12,52.65,58
+DEMO-TERR-2026-0224,Chamartín,alta,74.3,0,1,47.12,56
+DEMO-TERR-2026-0225,Chamartín,renovación,14.5,1,1,26.10,36
+DEMO-TERR-2026-0226,Villa de Vallecas,renovación,44.6,1,8,40.62,44
+DEMO-TERR-2026-0227,Barajas,alta,27.0,1,10,51.96,63
+DEMO-TERR-2026-0228,Chamartín,renovación,11.4,0,12,22.08,12
+DEMO-TERR-2026-0229,Hortaleza,modificación,31.8,2,8,55.46,77
+DEMO-TERR-2026-0230,Moncloa-Aravaca,alta,54.6,2,5,73.13,100
+DEMO-TERR-2026-0231,Chamartín,alta,33.1,1,5,57.48,63
+DEMO-TERR-2026-0232,Arganzuela,renovación,93.0,0,8,76.08,85
+DEMO-TERR-2026-0233,Barajas,renovación,42.3,0,8,31.22,36
+DEMO-TERR-2026-0234,Hortaleza,alta,16.0,0,4,39.02,45
+DEMO-TERR-2026-0235,Chamberí,alta,58.3,0,11,53.10,55
+DEMO-TERR-2026-0236,Puente de Vallecas,modificación,119.1,1,11,78.36,103
+DEMO-TERR-2026-0237,Retiro,renovación,45.1,1,5,40.15,34
+DEMO-TERR-2026-0238,Villa de Vallecas,renovación,15.3,0,4,38.47,45
+DEMO-TERR-2026-0239,Barajas,modificación,102.9,0,1,48.31,61
+DEMO-TERR-2026-0240,Villaverde,modificación,103.9,2,12,88.40,127
+DEMO-TERR-2026-0241,Carabanchel,modificación,78.0,0,8,48.73,62
+DEMO-TERR-2026-0242,Puente de Vallecas,renovación,96.5,2,1,76.40,100
+DEMO-TERR-2026-0243,Villaverde,modificación,64.9,0,10,44.99,45
+DEMO-TERR-2026-0244,Chamberí,renovación,117.0,0,7,55.25,74
+DEMO-TERR-2026-0245,Moratalaz,alta,64.2,2,9,80.00,100
+DEMO-TERR-2026-0246,Carabanchel,alta,67.6,1,8,61.40,71
+DEMO-TERR-2026-0247,Arganzuela,renovación,89.8,0,6,50.65,64
+DEMO-TERR-2026-0248,Fuencarral-El Pardo,renovación,53.0,1,7,52.20,60
+DEMO-TERR-2026-0249,Villa de Vallecas,renovación,36.2,2,10,55.72,65
+DEMO-TERR-2026-0250,Puente de Vallecas,renovación,38.9,1,6,55.70,71
+DEMO-TERR-2026-0251,Tetuán,renovación,89.3,1,2,59.17,65
+DEMO-TERR-2026-0252,Villa de Vallecas,renovación,23.0,0,12,44.52,55
+DEMO-TERR-2026-0253,Ciudad Lineal,alta,87.6,0,9,63.28,74
+DEMO-TERR-2026-0254,Moratalaz,alta,31.8,1,5,56.97,74
+DEMO-TERR-2026-0255,Ciudad Lineal,renovación,80.2,1,10,60.78,80
+DEMO-TERR-2026-0256,Moncloa-Aravaca,renovación,55.3,1,6,40.42,41
+DEMO-TERR-2026-0257,Fuencarral-El Pardo,alta,86.3,3,8,90.54,129
+DEMO-TERR-2026-0258,Centro,alta,50.7,0,11,52.15,55
+DEMO-TERR-2026-0259,Vicálvaro,alta,101.9,1,10,69.19,89
+DEMO-TERR-2026-0260,Fuencarral-El Pardo,alta,106.1,1,1,86.56,117
+DEMO-TERR-2026-0261,Fuencarral-El Pardo,alta,11.9,1,5,44.29,40
+DEMO-TERR-2026-0262,Centro,alta,99.0,1,5,68.20,76
+DEMO-TERR-2026-0263,Hortaleza,alta,37.3,1,6,59.26,70
+DEMO-TERR-2026-0264,Carabanchel,alta,117.8,0,6,60.68,75
+DEMO-TERR-2026-0265,Latina,modificación,25.0,0,3,24.81,29
+DEMO-TERR-2026-0266,Latina,alta,105.0,1,11,85.40,119
+DEMO-TERR-2026-0267,Barajas,modificación,45.5,0,3,47.26,50
+DEMO-TERR-2026-0268,Hortaleza,modificación,85.6,1,12,65.95,81
+DEMO-TERR-2026-0269,Barajas,alta,45.7,1,6,51.58,62
+DEMO-TERR-2026-0270,Puente de Vallecas,alta,20.8,1,10,50.06,60
+DEMO-TERR-2026-0271,Chamartín,alta,105.4,1,3,86.97,109
+DEMO-TERR-2026-0272,Latina,modificación,8.7,0,11,37.66,44
+DEMO-TERR-2026-0273,Villaverde,alta,98.0,0,9,65.69,79
+DEMO-TERR-2026-0274,Puente de Vallecas,alta,105.8,0,9,69.28,81
+DEMO-TERR-2026-0275,Usera,alta,51.8,2,9,56.50,62
+DEMO-TERR-2026-0276,Fuencarral-El Pardo,renovación,73.4,0,9,47.51,61
+DEMO-TERR-2026-0277,Hortaleza,modificación,9.9,0,11,23.60,31
+DEMO-TERR-2026-0278,Retiro,renovación,61.5,0,1,46.93,43
+DEMO-TERR-2026-0279,Chamartín,alta,100.9,0,5,64.31,81
+DEMO-TERR-2026-0280,Retiro,modificación,28.4,0,10,41.26,53
+DEMO-TERR-2026-0281,Usera,renovación,96.4,0,9,46.56,59
+DEMO-TERR-2026-0282,Fuencarral-El Pardo,alta,22.4,1,10,44.92,56
+DEMO-TERR-2026-0283,Arganzuela,renovación,78.8,0,6,44.56,53
+DEMO-TERR-2026-0284,Latina,renovación,10.9,0,1,15.22,31
+DEMO-TERR-2026-0285,Hortaleza,alta,10.2,1,1,43.99,39
+DEMO-TERR-2026-0286,Chamartín,renovación,66.3,0,1,49.74,42
+DEMO-TERR-2026-0287,Arganzuela,alta,113.3,2,11,84.15,112
+DEMO-TERR-2026-0288,Salamanca,renovación,95.5,0,3,45.65,62
+DEMO-TERR-2026-0289,Barajas,alta,24.9,2,4,55.41,73
+DEMO-TERR-2026-0290,Fuencarral-El Pardo,alta,39.0,1,6,48.53,65
+DEMO-TERR-2026-0291,Ciudad Lineal,alta,90.6,0,4,59.31,79
+DEMO-TERR-2026-0292,Vicálvaro,modificación,10.8,1,6,39.67,53
+DEMO-TERR-2026-0293,Retiro,renovación,70.8,0,1,32.97,37
+DEMO-TERR-2026-0294,Usera,renovación,53.0,1,10,44.10,35
+DEMO-TERR-2026-0295,Chamartín,alta,27.9,1,6,66.36,81
+DEMO-TERR-2026-0296,Usera,modificación,9.7,1,6,36.50,45
+DEMO-TERR-2026-0297,Ciudad Lineal,alta,25.0,0,9,41.21,50
+DEMO-TERR-2026-0298,Chamberí,renovación,30.0,1,5,36.49,52
+DEMO-TERR-2026-0299,Moratalaz,alta,79.9,1,7,65.84,80
+DEMO-TERR-2026-0300,Vicálvaro,modificación,119.4,3,8,100.00,150
+DEMO-TERR-2026-0301,Fuencarral-El Pardo,renovación,112.4,2,4,64.67,73
+DEMO-TERR-2026-0302,Puente de Vallecas,alta,32.9,0,10,44.86,48
+DEMO-TERR-2026-0303,Fuencarral-El Pardo,alta,48.9,0,6,57.89,61
+DEMO-TERR-2026-0304,Barajas,renovación,77.9,2,11,61.67,76
+DEMO-TERR-2026-0305,Moncloa-Aravaca,modificación,112.6,0,12,73.93,92
+DEMO-TERR-2026-0306,Barajas,renovación,71.7,0,9,38.94,39
+DEMO-TERR-2026-0307,Retiro,renovación,78.7,0,10,58.17,61
+DEMO-TERR-2026-0308,Moratalaz,renovación,71.8,0,11,37.07,49
+DEMO-TERR-2026-0309,Salamanca,alta,26.3,0,12,43.39,41
+DEMO-TERR-2026-0310,Usera,renovación,95.4,0,3,47.19,44
+DEMO-TERR-2026-0311,Hortaleza,alta,56.0,2,4,71.76,96
+DEMO-TERR-2026-0312,Chamartín,alta,53.5,0,9,43.42,43
+DEMO-TERR-2026-0313,Moratalaz,renovación,16.6,0,2,15.13,24
+DEMO-TERR-2026-0314,Salamanca,renovación,68.9,0,6,46.51,46
+DEMO-TERR-2026-0315,Hortaleza,alta,99.0,1,6,63.72,82
+DEMO-TERR-2026-0316,Ciudad Lineal,alta,21.8,1,12,49.50,58
+DEMO-TERR-2026-0317,Chamartín,alta,44.7,0,9,48.77,53
+DEMO-TERR-2026-0318,Hortaleza,modificación,16.2,0,5,32.49,29
+DEMO-TERR-2026-0319,Latina,alta,37.6,0,1,43.42,59
+DEMO-TERR-2026-0320,Fuencarral-El Pardo,alta,75.8,1,6,75.40,86
+DEMO-TERR-2026-0321,Puente de Vallecas,renovación,41.4,0,4,27.03,44
+DEMO-TERR-2026-0322,Barajas,alta,114.8,0,10,66.93,74
+DEMO-TERR-2026-0323,Villa de Vallecas,alta,118.0,0,4,66.30,76
+DEMO-TERR-2026-0324,Villa de Vallecas,modificación,17.2,1,10,42.18,55
+DEMO-TERR-2026-0325,Hortaleza,renovación,19.3,0,8,17.85,19
+DEMO-TERR-2026-0326,Chamartín,alta,40.4,0,7,39.14,48
+DEMO-TERR-2026-0327,San Blas-Canillejas,renovación,109.8,3,9,86.83,119
+DEMO-TERR-2026-0328,Puente de Vallecas,renovación,89.1,0,8,49.23,58
+DEMO-TERR-2026-0329,Centro,alta,53.0,2,6,66.72,85
+DEMO-TERR-2026-0330,Vicálvaro,renovación,8.1,2,11,36.35,44
+DEMO-TERR-2026-0331,Villa de Vallecas,alta,90.5,0,3,67.80,97
+DEMO-TERR-2026-0332,Tetuán,alta,63.8,1,2,64.95,78
+DEMO-TERR-2026-0333,Fuencarral-El Pardo,alta,115.5,1,5,77.29,100
+DEMO-TERR-2026-0334,Latina,alta,112.7,0,9,59.98,64
+DEMO-TERR-2026-0335,Chamberí,alta,52.4,0,12,35.11,45
+DEMO-TERR-2026-0336,Villaverde,alta,51.6,0,6,49.45,73
+DEMO-TERR-2026-0337,Villa de Vallecas,modificación,69.8,1,7,54.16,63
+DEMO-TERR-2026-0338,Chamartín,alta,76.3,0,12,54.16,59
+DEMO-TERR-2026-0339,Villaverde,alta,11.3,3,3,54.30,74
+DEMO-TERR-2026-0340,Usera,alta,31.9,0,5,51.53,61
+DEMO-TERR-2026-0341,Retiro,renovación,39.6,0,6,28.64,30
+DEMO-TERR-2026-0342,Fuencarral-El Pardo,renovación,67.5,1,7,45.71,47
+DEMO-TERR-2026-0343,Hortaleza,renovación,73.3,0,7,51.35,60
+DEMO-TERR-2026-0344,Carabanchel,alta,113.9,1,3,81.91,99
+DEMO-TERR-2026-0345,Latina,modificación,78.6,0,10,57.45,69
+DEMO-TERR-2026-0346,Villaverde,alta,109.3,0,5,66.52,86
+DEMO-TERR-2026-0347,Arganzuela,modificación,50.9,0,6,49.10,52
+DEMO-TERR-2026-0348,Chamartín,renovación,41.5,0,9,37.97,45
+DEMO-TERR-2026-0349,Villa de Vallecas,alta,70.7,0,5,57.92,71
+DEMO-TERR-2026-0350,Ciudad Lineal,alta,105.5,2,12,90.26,131
+DEMO-TERR-2026-0351,Chamartín,renovación,38.9,1,12,57.41,71
+DEMO-TERR-2026-0352,Chamberí,modificación,22.9,1,5,56.02,69
+DEMO-TERR-2026-0353,Moratalaz,renovación,50.1,0,1,33.89,47
+DEMO-TERR-2026-0354,Tetuán,renovación,46.6,0,8,33.58,40
+DEMO-TERR-2026-0355,Hortaleza,alta,51.1,0,8,39.96,47
+DEMO-TERR-2026-0356,San Blas-Canillejas,modificación,100.9,0,6,61.73,77
+DEMO-TERR-2026-0357,Carabanchel,alta,80.6,0,11,56.72,66
+DEMO-TERR-2026-0358,Villa de Vallecas,alta,85.7,0,1,48.46,48
+DEMO-TERR-2026-0359,Arganzuela,renovación,64.6,0,1,36.81,54
+DEMO-TERR-2026-0360,Arganzuela,renovación,49.6,0,12,22.92,34
+DEMO-TERR-2026-0361,Villa de Vallecas,modificación,47.8,1,9,44.85,48
+DEMO-TERR-2026-0362,Carabanchel,alta,111.1,1,8,73.21,100
+DEMO-TERR-2026-0363,Carabanchel,renovación,91.9,0,2,39.33,41
+DEMO-TERR-2026-0364,Tetuán,renovación,70.8,0,2,50.30,59
+DEMO-TERR-2026-0365,Carabanchel,alta,23.7,1,12,44.00,45
+DEMO-TERR-2026-0366,Centro,alta,52.8,1,7,61.66,54
+DEMO-TERR-2026-0367,Latina,alta,25.3,0,3,41.06,43
+DEMO-TERR-2026-0368,Villa de Vallecas,alta,26.2,0,8,38.32,52
+DEMO-TERR-2026-0369,Barajas,alta,76.8,0,7,62.49,76
+DEMO-TERR-2026-0370,Fuencarral-El Pardo,alta,33.3,1,7,52.38,69
+DEMO-TERR-2026-0371,Villaverde,renovación,24.0,1,8,34.84,44
+DEMO-TERR-2026-0372,Centro,alta,22.8,0,9,52.03,70
+DEMO-TERR-2026-0373,Villaverde,renovación,51.3,0,5,57.65,62
+DEMO-TERR-2026-0374,Ciudad Lineal,renovación,36.3,1,6,46.32,38
+DEMO-TERR-2026-0375,Latina,modificación,43.8,0,7,50.96,54
+DEMO-TERR-2026-0376,Fuencarral-El Pardo,renovación,81.5,3,2,75.67,93
+DEMO-TERR-2026-0377,Barajas,renovación,19.2,3,4,56.87,66
+DEMO-TERR-2026-0378,Moncloa-Aravaca,alta,21.3,0,10,31.49,38
+DEMO-TERR-2026-0379,Salamanca,renovación,20.8,2,6,47.87,61
+DEMO-TERR-2026-0380,Chamartín,renovación,82.9,0,1,39.10,48
+DEMO-TERR-2026-0381,Carabanchel,alta,50.0,1,6,58.08,67
+DEMO-TERR-2026-0382,Tetuán,renovación,34.8,2,3,40.18,50
+DEMO-TERR-2026-0383,Tetuán,alta,115.6,1,5,85.78,116
+DEMO-TERR-2026-0384,Villaverde,renovación,21.8,0,5,24.60,33
+DEMO-TERR-2026-0385,Chamberí,alta,21.6,0,4,52.24,54
+DEMO-TERR-2026-0386,Retiro,alta,11.8,1,11,45.46,59
+DEMO-TERR-2026-0387,Vicálvaro,renovación,61.2,3,4,76.44,82
+DEMO-TERR-2026-0388,Ciudad Lineal,alta,79.5,3,11,85.73,109
+DEMO-TERR-2026-0389,Fuencarral-El Pardo,renovación,29.0,1,1,27.87,41
+DEMO-TERR-2026-0390,Fuencarral-El Pardo,renovación,118.0,0,7,46.62,55
+DEMO-TERR-2026-0391,Centro,alta,59.4,1,7,52.19,51
+DEMO-TERR-2026-0392,Villa de Vallecas,modificación,85.2,0,1,53.22,57
+DEMO-TERR-2026-0393,Fuencarral-El Pardo,alta,70.0,0,12,57.06,72
+DEMO-TERR-2026-0394,Fuencarral-El Pardo,renovación,79.9,0,8,50.35,56
+DEMO-TERR-2026-0395,Villa de Vallecas,alta,17.6,2,4,57.73,59
+DEMO-TERR-2026-0396,Vicálvaro,alta,58.2,0,5,43.59,44
+DEMO-TERR-2026-0397,Villa de Vallecas,modificación,104.4,2,2,80.33,100
+DEMO-TERR-2026-0398,Moncloa-Aravaca,renovación,39.7,3,1,71.10,98
+DEMO-TERR-2026-0399,Arganzuela,renovación,54.1,2,5,52.32,67
+DEMO-TERR-2026-0400,Carabanchel,modificación,91.5,2,8,69.34,85
+DEMO-TERR-2026-0401,Hortaleza,renovación,34.0,0,5,23.53,25
+DEMO-TERR-2026-0402,Arganzuela,modificación,57.1,1,11,55.08,55
+DEMO-TERR-2026-0403,Carabanchel,renovación,88.8,0,10,56.08,66
+DEMO-TERR-2026-0404,Fuencarral-El Pardo,alta,18.9,0,6,31.56,32
+DEMO-TERR-2026-0405,Carabanchel,renovación,73.4,1,7,60.59,78
+DEMO-TERR-2026-0406,Chamberí,renovación,27.8,0,11,37.13,49
+DEMO-TERR-2026-0407,Villa de Vallecas,alta,90.5,2,2,78.67,92
+DEMO-TERR-2026-0408,Carabanchel,alta,73.1,0,12,48.60,52
+DEMO-TERR-2026-0409,Carabanchel,modificación,8.5,2,12,43.62,50
+DEMO-TERR-2026-0410,Chamberí,renovación,44.6,0,5,33.24,35
+DEMO-TERR-2026-0411,Chamartín,alta,60.2,1,11,60.20,83
+DEMO-TERR-2026-0412,Hortaleza,alta,13.1,2,7,61.29,73
+DEMO-TERR-2026-0413,Puente de Vallecas,alta,114.2,0,8,66.76,76
+DEMO-TERR-2026-0414,Latina,alta,70.4,0,3,64.10,80
+DEMO-TERR-2026-0415,San Blas-Canillejas,renovación,51.4,0,10,43.69,50
+DEMO-TERR-2026-0416,Fuencarral-El Pardo,modificación,120.0,0,8,57.54,57
+DEMO-TERR-2026-0417,Villa de Vallecas,alta,77.7,1,5,76.85,88
+DEMO-TERR-2026-0418,Retiro,alta,48.7,1,4,53.03,59
+DEMO-TERR-2026-0419,Chamartín,alta,92.6,0,1,55.81,55
+DEMO-TERR-2026-0420,Fuencarral-El Pardo,modificación,38.2,1,1,41.97,49
+DEMO-TERR-2026-0421,Retiro,alta,39.4,0,3,52.86,75
+DEMO-TERR-2026-0422,Usera,modificación,35.6,3,4,66.51,89
+DEMO-TERR-2026-0423,Puente de Vallecas,renovación,19.3,1,1,40.12,49
+DEMO-TERR-2026-0424,Retiro,modificación,62.1,0,12,51.45,49
+DEMO-TERR-2026-0425,Puente de Vallecas,modificación,31.8,0,2,29.31,31
+DEMO-TERR-2026-0426,Centro,alta,111.1,0,2,59.90,73
+DEMO-TERR-2026-0427,Usera,renovación,19.3,0,7,33.56,37
+DEMO-TERR-2026-0428,Barajas,renovación,22.5,0,3,30.82,36
+DEMO-TERR-2026-0429,Arganzuela,alta,18.3,3,9,78.32,98
+DEMO-TERR-2026-0430,Arganzuela,modificación,83.5,0,8,49.30,51
+DEMO-TERR-2026-0431,Barajas,alta,34.6,0,9,59.17,76
+DEMO-TERR-2026-0432,Retiro,alta,97.6,1,2,79.30,109
+DEMO-TERR-2026-0433,Ciudad Lineal,modificación,113.3,1,6,73.96,100
+DEMO-TERR-2026-0434,Moncloa-Aravaca,modificación,29.8,1,9,42.21,49
+DEMO-TERR-2026-0435,Vicálvaro,alta,49.5,1,7,54.11,47
+DEMO-TERR-2026-0436,Villa de Vallecas,renovación,107.2,1,4,69.25,83
+DEMO-TERR-2026-0437,Tetuán,renovación,87.1,1,11,48.85,62
+DEMO-TERR-2026-0438,Vicálvaro,renovación,62.9,0,10,41.88,46
+DEMO-TERR-2026-0439,Ciudad Lineal,alta,78.9,3,8,79.78,96
+DEMO-TERR-2026-0440,Carabanchel,alta,104.7,0,1,68.15,86
+DEMO-TERR-2026-0441,Retiro,alta,70.4,1,9,75.15,92
+DEMO-TERR-2026-0442,Villaverde,renovación,104.9,0,5,51.85,59
+DEMO-TERR-2026-0443,Arganzuela,renovación,9.6,0,2,25.99,42
+DEMO-TERR-2026-0444,Puente de Vallecas,renovación,39.8,2,2,52.83,57
+DEMO-TERR-2026-0445,Hortaleza,alta,85.2,1,2,62.79,57
+DEMO-TERR-2026-0446,Carabanchel,renovación,103.7,0,7,47.42,62
+DEMO-TERR-2026-0447,Villa de Vallecas,renovación,31.5,0,4,38.05,54
+DEMO-TERR-2026-0448,Tetuán,modificación,42.8,0,6,42.51,44
+DEMO-TERR-2026-0449,Fuencarral-El Pardo,alta,24.9,0,4,41.75,43
+DEMO-TERR-2026-0450,Chamberí,modificación,58.1,3,2,61.87,76
+DEMO-TERR-2026-0451,Moncloa-Aravaca,renovación,9.0,0,1,21.11,33
+DEMO-TERR-2026-0452,Centro,alta,114.3,2,4,96.04,124
+DEMO-TERR-2026-0453,Arganzuela,renovación,44.9,0,10,38.42,36
+DEMO-TERR-2026-0454,Usera,modificación,95.5,1,1,67.27,85
+DEMO-TERR-2026-0455,Moncloa-Aravaca,renovación,23.3,0,2,32.33,41
+DEMO-TERR-2026-0456,Fuencarral-El Pardo,alta,17.7,1,11,37.25,35
+DEMO-TERR-2026-0457,Chamberí,alta,104.6,1,5,76.31,103
+DEMO-TERR-2026-0458,Moratalaz,alta,100.8,1,10,83.67,117
+DEMO-TERR-2026-0459,Arganzuela,alta,70.1,0,8,60.25,72
+DEMO-TERR-2026-0460,Hortaleza,alta,72.4,1,6,69.20,84
+DEMO-TERR-2026-0461,Moncloa-Aravaca,modificación,39.1,2,2,55.75,57
+DEMO-TERR-2026-0462,Villa de Vallecas,renovación,42.0,0,7,44.16,43
+DEMO-TERR-2026-0463,Tetuán,renovación,57.2,3,2,81.51,108
+DEMO-TERR-2026-0464,Latina,renovación,19.4,1,1,45.51,73
+DEMO-TERR-2026-0465,Fuencarral-El Pardo,renovación,93.1,0,7,48.46,55
+DEMO-TERR-2026-0466,Hortaleza,modificación,65.2,1,8,74.02,94
+DEMO-TERR-2026-0467,Moratalaz,alta,98.5,1,10,60.24,63
+DEMO-TERR-2026-0468,Chamberí,renovación,59.6,0,8,45.94,60
+DEMO-TERR-2026-0469,Moratalaz,alta,30.1,1,1,54.02,56
+DEMO-TERR-2026-0470,Villaverde,alta,33.6,0,1,61.48,70
+DEMO-TERR-2026-0471,Chamartín,renovación,71.9,0,11,43.65,42
+DEMO-TERR-2026-0472,Centro,alta,57.1,3,4,78.06,91
+DEMO-TERR-2026-0473,Villaverde,renovación,51.5,1,1,46.93,58
+DEMO-TERR-2026-0474,Barajas,alta,31.9,0,6,63.04,71
+DEMO-TERR-2026-0475,Usera,modificación,32.8,0,2,44.29,53
+DEMO-TERR-2026-0476,Villa de Vallecas,renovación,21.7,0,11,33.78,38
+DEMO-TERR-2026-0477,Villaverde,renovación,92.7,2,4,81.89,108
+DEMO-TERR-2026-0478,Arganzuela,alta,30.4,1,3,56.37,66
+DEMO-TERR-2026-0479,Tetuán,renovación,41.4,1,10,47.13,51
+DEMO-TERR-2026-0480,Ciudad Lineal,alta,33.7,0,8,50.96,59
+DEMO-TERR-2026-0481,Puente de Vallecas,modificación,82.4,2,4,83.97,112
+DEMO-TERR-2026-0482,Vicálvaro,alta,91.9,1,8,63.00,82
+DEMO-TERR-2026-0483,Centro,alta,77.0,2,3,89.17,132
+DEMO-TERR-2026-0484,Chamartín,renovación,100.7,1,6,67.02,81
+DEMO-TERR-2026-0485,Arganzuela,renovación,95.3,0,3,40.67,48
+DEMO-TERR-2026-0486,Latina,alta,82.3,0,4,58.16,47
+DEMO-TERR-2026-0487,Carabanchel,alta,16.3,0,11,40.06,41
+DEMO-TERR-2026-0488,Vicálvaro,alta,90.1,0,12,58.05,75
+DEMO-TERR-2026-0489,Chamartín,alta,18.9,2,6,70.27,69
+DEMO-TERR-2026-0490,Barajas,renovación,10.9,1,3,32.65,32
+DEMO-TERR-2026-0491,Latina,modificación,31.8,0,5,48.26,45
+DEMO-TERR-2026-0492,Moratalaz,alta,40.4,1,6,54.43,69
+DEMO-TERR-2026-0493,Villaverde,renovación,67.4,0,9,44.55,46
+DEMO-TERR-2026-0494,Villaverde,alta,89.8,1,5,71.51,96
+DEMO-TERR-2026-0495,Ciudad Lineal,alta,76.6,1,5,80.20,102
+DEMO-TERR-2026-0496,Puente de Vallecas,alta,33.4,3,8,73.60,98
+DEMO-TERR-2026-0497,Moncloa-Aravaca,alta,67.3,0,11,50.04,59
+DEMO-TERR-2026-0498,Carabanchel,modificación,40.5,1,7,48.19,62
+DEMO-TERR-2026-0499,Chamberí,renovación,103.7,0,8,55.40,55
+DEMO-TERR-2026-0500,Moncloa-Aravaca,alta,118.1,2,3,95.27,122
+DEMO-TERR-2026-0501,Latina,alta,61.6,0,4,48.95,53
+DEMO-TERR-2026-0502,Barajas,modificación,105.6,0,10,63.61,86
+DEMO-TERR-2026-0503,Moratalaz,renovación,31.9,0,2,16.94,19
+DEMO-TERR-2026-0504,Latina,renovación,26.1,0,7,34.18,49
+DEMO-TERR-2026-0505,Fuencarral-El Pardo,modificación,23.7,0,5,33.17,52
+DEMO-TERR-2026-0506,San Blas-Canillejas,renovación,91.5,0,8,48.80,60
+DEMO-TERR-2026-0507,Tetuán,renovación,89.3,0,1,48.68,50
+DEMO-TERR-2026-0508,Moratalaz,alta,54.5,0,4,44.71,42
+DEMO-TERR-2026-0509,Puente de Vallecas,alta,46.1,1,2,64.81,67
+DEMO-TERR-2026-0510,Moratalaz,modificación,103.1,0,1,57.40,67
+DEMO-TERR-2026-0511,Villaverde,renovación,30.3,1,6,48.69,55
+DEMO-TERR-2026-0512,Chamberí,alta,22.8,1,3,39.30,41
+DEMO-TERR-2026-0513,Villaverde,renovación,35.9,0,8,36.11,38
+DEMO-TERR-2026-0514,San Blas-Canillejas,renovación,119.6,1,9,65.57,82
+DEMO-TERR-2026-0515,Villaverde,alta,112.8,1,8,79.48,100
+DEMO-TERR-2026-0516,Centro,alta,8.5,1,4,27.09,51
+DEMO-TERR-2026-0517,Arganzuela,renovación,30.2,0,9,29.30,43
+DEMO-TERR-2026-0518,Barajas,renovación,58.9,2,5,64.30,74
+DEMO-TERR-2026-0519,Hortaleza,renovación,63.3,1,10,49.95,52
+DEMO-TERR-2026-0520,Salamanca,alta,110.2,0,6,51.26,64
+DEMO-TERR-2026-0521,San Blas-Canillejas,modificación,108.9,1,6,57.46,69
+DEMO-TERR-2026-0522,Centro,renovación,8.3,0,1,16.72,33
+DEMO-TERR-2026-0523,Carabanchel,modificación,99.1,1,7,69.43,85
+DEMO-TERR-2026-0524,Ciudad Lineal,renovación,118.5,2,3,88.44,120
+DEMO-TERR-2026-0525,Puente de Vallecas,alta,26.7,2,7,55.24,63
+DEMO-TERR-2026-0526,Hortaleza,alta,16.6,1,4,49.33,63
+DEMO-TERR-2026-0527,Chamberí,renovación,61.3,3,5,63.93,78
+DEMO-TERR-2026-0528,Moncloa-Aravaca,alta,78.9,1,9,64.24,79
+DEMO-TERR-2026-0529,Hortaleza,modificación,50.9,0,2,38.55,47
+DEMO-TERR-2026-0530,Usera,renovación,96.7,1,2,55.41,67
+DEMO-TERR-2026-0531,Barajas,renovación,56.0,2,3,60.11,60
+DEMO-TERR-2026-0532,Chamberí,modificación,96.0,0,10,53.32,54
+DEMO-TERR-2026-0533,Fuencarral-El Pardo,renovación,100.5,2,2,75.95,99
+DEMO-TERR-2026-0534,Barajas,alta,66.0,1,8,61.94,68
+DEMO-TERR-2026-0535,Salamanca,renovación,40.0,0,6,37.96,45
+DEMO-TERR-2026-0536,Salamanca,modificación,77.8,0,12,57.35,56
+DEMO-TERR-2026-0537,San Blas-Canillejas,renovación,106.8,1,10,68.16,78
+DEMO-TERR-2026-0538,Usera,renovación,58.8,0,6,63.36,76
+DEMO-TERR-2026-0539,Villa de Vallecas,alta,59.5,0,10,60.88,67
+DEMO-TERR-2026-0540,Carabanchel,alta,48.4,1,8,54.51,71
+DEMO-TERR-2026-0541,Chamberí,alta,67.0,0,5,44.12,53
+DEMO-TERR-2026-0542,Usera,alta,16.3,1,11,49.26,60
+DEMO-TERR-2026-0543,Salamanca,renovación,8.3,2,10,59.26,66
+DEMO-TERR-2026-0544,Moncloa-Aravaca,renovación,45.8,1,2,43.61,46
+DEMO-TERR-2026-0545,Puente de Vallecas,alta,76.4,2,1,69.15,85
+DEMO-TERR-2026-0546,Salamanca,renovación,45.6,1,11,36.51,46
+DEMO-TERR-2026-0547,Chamberí,renovación,21.0,0,5,38.63,43
+DEMO-TERR-2026-0548,San Blas-Canillejas,alta,84.0,0,10,53.75,72
+DEMO-TERR-2026-0549,Ciudad Lineal,alta,94.4,2,1,81.80,96
+DEMO-TERR-2026-0550,Retiro,alta,117.0,0,3,81.04,110
+DEMO-TERR-2026-0551,Retiro,alta,100.1,0,9,73.40,90
+DEMO-TERR-2026-0552,Hortaleza,renovación,49.8,0,11,45.49,55
+DEMO-TERR-2026-0553,Carabanchel,alta,116.6,1,11,87.25,114
+DEMO-TERR-2026-0554,Carabanchel,alta,23.1,1,4,66.14,85
+DEMO-TERR-2026-0555,Chamberí,alta,9.2,2,12,56.28,59
+DEMO-TERR-2026-0556,Fuencarral-El Pardo,alta,24.6,1,8,59.91,74
+DEMO-TERR-2026-0557,Latina,renovación,95.2,1,12,65.12,79
+DEMO-TERR-2026-0558,Vicálvaro,renovación,91.9,1,10,57.06,63
+DEMO-TERR-2026-0559,Usera,modificación,72.3,0,6,45.74,50
+DEMO-TERR-2026-0560,San Blas-Canillejas,modificación,95.5,1,12,57.77,58
+DEMO-TERR-2026-0561,Villa de Vallecas,modificación,71.1,0,4,42.45,37
+DEMO-TERR-2026-0562,Ciudad Lineal,modificación,116.1,1,8,71.85,92
+DEMO-TERR-2026-0563,Salamanca,alta,105.6,0,7,78.62,100
+DEMO-TERR-2026-0564,Ciudad Lineal,alta,78.3,1,8,63.41,72
+DEMO-TERR-2026-0565,Moratalaz,alta,62.7,1,11,58.24,64
+DEMO-TERR-2026-0566,Chamberí,modificación,86.5,0,7,60.75,81
+DEMO-TERR-2026-0567,Usera,modificación,111.3,1,12,87.99,125
+DEMO-TERR-2026-0568,Chamberí,alta,53.1,0,1,43.56,55
+DEMO-TERR-2026-0569,Arganzuela,renovación,77.2,1,11,51.93,48
+DEMO-TERR-2026-0570,Carabanchel,renovación,41.8,0,4,31.69,32
+DEMO-TERR-2026-0571,Villaverde,alta,8.9,2,7,55.27,52
+DEMO-TERR-2026-0572,Tetuán,renovación,88.6,1,7,52.80,60
+DEMO-TERR-2026-0573,San Blas-Canillejas,renovación,103.0,1,9,51.05,58
+DEMO-TERR-2026-0574,Vicálvaro,alta,107.1,3,9,98.37,136
+DEMO-TERR-2026-0575,Vicálvaro,alta,59.5,3,4,84.82,110
+DEMO-TERR-2026-0576,Moncloa-Aravaca,renovación,119.2,0,2,72.00,82
+DEMO-TERR-2026-0577,Arganzuela,renovación,90.2,0,7,44.18,44
+DEMO-TERR-2026-0578,Villaverde,renovación,18.9,1,7,42.99,54
+DEMO-TERR-2026-0579,Salamanca,renovación,50.0,1,4,49.23,55
+DEMO-TERR-2026-0580,Moratalaz,renovación,40.6,3,7,60.80,70
+DEMO-TERR-2026-0581,Moratalaz,modificación,100.4,1,2,75.48,87
+DEMO-TERR-2026-0582,Retiro,alta,98.1,1,4,71.19,93
+DEMO-TERR-2026-0583,Arganzuela,alta,113.8,1,8,80.52,105
+DEMO-TERR-2026-0584,Latina,alta,78.1,0,10,49.09,48
+DEMO-TERR-2026-0585,Villa de Vallecas,renovación,15.3,0,11,17.88,24
+DEMO-TERR-2026-0586,Fuencarral-El Pardo,alta,93.8,2,10,83.05,108
+DEMO-TERR-2026-0587,Barajas,renovación,41.7,0,7,31.80,36
+DEMO-TERR-2026-0588,Moratalaz,renovación,106.9,0,10,48.96,54
+DEMO-TERR-2026-0589,Salamanca,modificación,43.5,2,9,49.97,59
+DEMO-TERR-2026-0590,Usera,alta,34.0,1,3,43.97,51
+DEMO-TERR-2026-0591,Usera,alta,24.9,0,8,33.26,34
+DEMO-TERR-2026-0592,Moratalaz,renovación,63.0,0,5,40.37,52
+DEMO-TERR-2026-0593,Ciudad Lineal,alta,51.6,1,3,58.16,72
+DEMO-TERR-2026-0594,Hortaleza,renovación,29.9,1,10,41.35,41
+DEMO-TERR-2026-0595,Villa de Vallecas,alta,17.5,0,3,39.43,50
+DEMO-TERR-2026-0596,Barajas,modificación,105.4,0,9,53.75,48
+DEMO-TERR-2026-0597,Centro,alta,115.2,0,12,76.29,103
+DEMO-TERR-2026-0598,Latina,renovación,67.6,0,12,51.52,56
+DEMO-TERR-2026-0599,Latina,renovación,90.6,0,8,43.45,37
+DEMO-TERR-2026-0600,Vicálvaro,modificación,62.3,0,3,51.90,64
+DEMO-TERR-2026-0601,Fuencarral-El Pardo,renovación,102.4,0,2,62.10,72
+DEMO-TERR-2026-0602,Moratalaz,alta,29.4,0,12,39.75,47
+DEMO-TERR-2026-0603,Hortaleza,alta,27.4,0,5,36.22,46
+DEMO-TERR-2026-0604,Chamberí,renovación,81.4,0,10,55.58,57
+DEMO-TERR-2026-0605,Carabanchel,modificación,91.8,0,9,58.74,64
+DEMO-TERR-2026-0606,Villaverde,renovación,83.0,0,8,38.66,46
+DEMO-TERR-2026-0607,Chamartín,renovación,40.1,0,1,29.31,41
+DEMO-TERR-2026-0608,Chamartín,renovación,117.9,0,5,70.77,91
+DEMO-TERR-2026-0609,Latina,modificación,15.9,0,6,31.17,47
+DEMO-TERR-2026-0610,Fuencarral-El Pardo,alta,27.9,0,4,41.02,37
+DEMO-TERR-2026-0611,Latina,renovación,55.6,0,3,33.69,34
+DEMO-TERR-2026-0612,Barajas,renovación,112.6,1,2,57.73,61
+DEMO-TERR-2026-0613,Carabanchel,modificación,33.7,0,1,25.70,40
+DEMO-TERR-2026-0614,Villaverde,modificación,62.2,0,12,49.39,43
+DEMO-TERR-2026-0615,Villaverde,renovación,51.0,1,11,46.24,52
+DEMO-TERR-2026-0616,Carabanchel,alta,70.2,1,6,64.07,69
+DEMO-TERR-2026-0617,Villa de Vallecas,alta,109.6,0,10,75.79,110
+DEMO-TERR-2026-0618,Fuencarral-El Pardo,modificación,62.3,1,10,56.29,59
+DEMO-TERR-2026-0619,Vicálvaro,alta,49.6,3,10,92.91,140
+DEMO-TERR-2026-0620,Fuencarral-El Pardo,renovación,38.7,1,2,40.68,40
+DEMO-TERR-2026-0621,Carabanchel,modificación,110.7,1,3,70.32,84
+DEMO-TERR-2026-0622,Salamanca,alta,106.2,2,4,82.32,111
+DEMO-TERR-2026-0623,Fuencarral-El Pardo,modificación,87.9,0,8,60.20,53
+DEMO-TERR-2026-0624,Salamanca,renovación,20.9,2,4,57.15,70
+DEMO-TERR-2026-0625,Retiro,renovación,23.7,0,12,25.57,22
+DEMO-TERR-2026-0626,Arganzuela,alta,40.5,2,8,55.87,56
+DEMO-TERR-2026-0627,San Blas-Canillejas,renovación,71.2,1,3,45.49,46
+DEMO-TERR-2026-0628,Salamanca,renovación,58.0,1,2,37.55,33
+DEMO-TERR-2026-0629,Tetuán,alta,31.4,0,9,48.44,55
+DEMO-TERR-2026-0630,Moratalaz,alta,98.4,2,10,74.77,95
+DEMO-TERR-2026-0631,Vicálvaro,renovación,81.1,0,6,54.94,65
+DEMO-TERR-2026-0632,Carabanchel,alta,19.1,0,12,37.71,33
+DEMO-TERR-2026-0633,Vicálvaro,modificación,9.1,2,6,61.55,69
+DEMO-TERR-2026-0634,Fuencarral-El Pardo,modificación,42.2,0,10,30.58,36
+DEMO-TERR-2026-0635,Centro,alta,68.9,2,4,71.57,85
+DEMO-TERR-2026-0636,Vicálvaro,alta,68.4,0,4,46.37,55
+DEMO-TERR-2026-0637,Retiro,modificación,20.0,1,11,38.51,47
+DEMO-TERR-2026-0638,Arganzuela,modificación,70.6,0,11,44.72,57
+DEMO-TERR-2026-0639,Barajas,alta,117.0,0,11,70.50,92
+DEMO-TERR-2026-0640,Villa de Vallecas,alta,84.7,0,9,44.16,47
+DEMO-TERR-2026-0641,Usera,alta,48.3,0,5,43.05,51
+DEMO-TERR-2026-0642,Hortaleza,renovación,48.5,2,8,48.45,60
+DEMO-TERR-2026-0643,Ciudad Lineal,renovación,34.7,1,4,47.65,56
+DEMO-TERR-2026-0644,Villa de Vallecas,renovación,71.1,0,12,42.98,48
+DEMO-TERR-2026-0645,Chamberí,modificación,102.0,0,9,62.77,75
+DEMO-TERR-2026-0646,Usera,renovación,68.0,0,3,47.79,46
+DEMO-TERR-2026-0647,Puente de Vallecas,alta,79.6,2,4,70.44,86
+DEMO-TERR-2026-0648,Centro,renovación,102.5,0,7,49.86,58
+DEMO-TERR-2026-0649,Centro,alta,37.0,0,7,43.27,48
+DEMO-TERR-2026-0650,Centro,alta,83.9,0,8,59.39,60
+DEMO-TERR-2026-0651,Latina,alta,86.1,2,4,88.52,124
+DEMO-TERR-2026-0652,Moncloa-Aravaca,renovación,97.3,1,1,65.94,73
+DEMO-TERR-2026-0653,Puente de Vallecas,modificación,96.2,2,7,78.98,103
+DEMO-TERR-2026-0654,Moratalaz,modificación,12.8,1,5,42.38,53
+DEMO-TERR-2026-0655,Moncloa-Aravaca,modificación,97.2,1,4,60.08,71
+DEMO-TERR-2026-0656,Puente de Vallecas,modificación,79.5,1,10,63.27,77
+DEMO-TERR-2026-0657,Latina,modificación,100.9,0,12,62.90,65
+DEMO-TERR-2026-0658,Carabanchel,renovación,49.5,1,1,36.50,37
+DEMO-TERR-2026-0659,Moratalaz,alta,100.8,0,11,70.54,76
+DEMO-TERR-2026-0660,Villaverde,renovación,12.1,0,4,35.98,29
+DEMO-TERR-2026-0661,Centro,renovación,32.5,1,6,43.59,51
+DEMO-TERR-2026-0662,Chamartín,modificación,69.1,1,1,54.91,58
+DEMO-TERR-2026-0663,Tetuán,modificación,69.5,1,3,45.08,49
+DEMO-TERR-2026-0664,Villaverde,modificación,33.5,0,5,48.67,60
+DEMO-TERR-2026-0665,Latina,renovación,56.6,3,7,57.27,64
+DEMO-TERR-2026-0666,Villaverde,renovación,42.2,0,11,35.12,56
+DEMO-TERR-2026-0667,Tetuán,alta,47.8,0,4,59.35,64
+DEMO-TERR-2026-0668,Vicálvaro,renovación,21.3,0,3,23.25,32
+DEMO-TERR-2026-0669,Retiro,renovación,88.8,0,5,44.06,56
+DEMO-TERR-2026-0670,Chamartín,alta,94.0,1,10,71.77,84
+DEMO-TERR-2026-0671,Ciudad Lineal,modificación,90.9,1,12,74.17,99
+DEMO-TERR-2026-0672,Chamberí,alta,76.0,0,7,62.03,73
+DEMO-TERR-2026-0673,Hortaleza,alta,30.5,0,2,39.07,51
+DEMO-TERR-2026-0674,Usera,renovación,98.0,1,12,59.99,68
+DEMO-TERR-2026-0675,Moncloa-Aravaca,renovación,72.8,0,12,42.16,50
+DEMO-TERR-2026-0676,Fuencarral-El Pardo,alta,56.3,0,1,47.50,61
+DEMO-TERR-2026-0677,Latina,renovación,85.5,0,7,38.48,45
+DEMO-TERR-2026-0678,Usera,alta,55.9,1,1,66.97,83
+DEMO-TERR-2026-0679,Retiro,renovación,8.1,0,11,31.49,35
+DEMO-TERR-2026-0680,Carabanchel,alta,73.5,0,8,59.05,64
+DEMO-TERR-2026-0681,Centro,renovación,100.3,0,10,60.19,83
+DEMO-TERR-2026-0682,Latina,renovación,85.2,2,8,66.72,69
+DEMO-TERR-2026-0683,Usera,alta,32.6,1,12,61.94,78
+DEMO-TERR-2026-0684,Barajas,alta,74.9,1,2,61.91,74
+DEMO-TERR-2026-0685,Latina,alta,37.7,1,12,62.32,68
+DEMO-TERR-2026-0686,Villa de Vallecas,alta,103.3,3,2,89.19,113
+DEMO-TERR-2026-0687,Chamberí,alta,90.3,0,5,59.86,72
+DEMO-TERR-2026-0688,San Blas-Canillejas,renovación,85.1,0,8,48.38,59
+DEMO-TERR-2026-0689,Usera,alta,100.8,0,8,72.47,86
+DEMO-TERR-2026-0690,Puente de Vallecas,modificación,10.8,0,3,20.04,36
+DEMO-TERR-2026-0691,Fuencarral-El Pardo,renovación,93.8,0,4,42.16,42
+DEMO-TERR-2026-0692,Barajas,renovación,32.4,2,12,44.15,50
+DEMO-TERR-2026-0693,Moncloa-Aravaca,alta,102.2,0,4,64.32,80
+DEMO-TERR-2026-0694,Moncloa-Aravaca,alta,55.5,1,6,60.04,65
+DEMO-TERR-2026-0695,Fuencarral-El Pardo,modificación,119.9,1,8,71.90,86
+DEMO-TERR-2026-0696,Usera,alta,32.2,0,9,47.09,58
+DEMO-TERR-2026-0697,Puente de Vallecas,alta,27.9,2,8,56.28,66
+DEMO-TERR-2026-0698,Carabanchel,alta,51.6,0,5,58.21,75
+DEMO-TERR-2026-0699,Chamberí,renovación,42.8,1,11,55.75,70
+DEMO-TERR-2026-0700,Puente de Vallecas,renovación,106.5,0,8,45.03,60
+DEMO-TERR-2026-0701,Barajas,renovación,8.9,0,2,18.63,33
+DEMO-TERR-2026-0702,Chamberí,alta,81.1,1,7,57.91,63
+DEMO-TERR-2026-0703,Latina,renovación,67.7,0,12,33.63,35
+DEMO-TERR-2026-0704,Usera,renovación,61.4,1,12,44.33,54
+DEMO-TERR-2026-0705,Ciudad Lineal,renovación,33.8,0,11,32.75,25
+DEMO-TERR-2026-0706,Retiro,renovación,71.3,0,4,39.56,40
+DEMO-TERR-2026-0707,Salamanca,alta,10.8,0,2,37.18,37
+DEMO-TERR-2026-0708,Hortaleza,renovación,34.5,1,1,51.82,66
+DEMO-TERR-2026-0709,Villaverde,modificación,112.9,2,2,78.90,97
+DEMO-TERR-2026-0710,Chamartín,renovación,33.9,0,6,22.68,30
+DEMO-TERR-2026-0711,Latina,alta,68.2,0,7,46.27,61
+DEMO-TERR-2026-0712,Carabanchel,renovación,48.4,1,8,42.07,41
+DEMO-TERR-2026-0713,Salamanca,modificación,44.0,0,5,43.81,60
+DEMO-TERR-2026-0714,Centro,alta,35.6,0,6,37.67,49
+DEMO-TERR-2026-0715,Latina,renovación,77.8,1,2,55.64,67
+DEMO-TERR-2026-0716,Fuencarral-El Pardo,alta,29.0,2,11,72.72,77
+DEMO-TERR-2026-0717,Tetuán,modificación,21.2,0,10,42.43,44
+DEMO-TERR-2026-0718,San Blas-Canillejas,alta,89.6,0,3,57.49,70
+DEMO-TERR-2026-0719,Barajas,alta,117.5,0,10,72.68,99
+DEMO-TERR-2026-0720,San Blas-Canillejas,alta,36.2,3,11,74.00,99
+DEMO-TERR-2026-0721,Arganzuela,renovación,41.8,0,11,25.40,29
+DEMO-TERR-2026-0722,Villaverde,alta,116.0,0,5,77.78,108
+DEMO-TERR-2026-0723,Chamartín,renovación,81.7,0,11,38.78,43
+DEMO-TERR-2026-0724,Chamartín,alta,80.0,0,10,63.66,69
+DEMO-TERR-2026-0725,Salamanca,alta,99.5,0,12,57.72,75
+DEMO-TERR-2026-0726,Villa de Vallecas,renovación,79.8,0,11,45.55,49
+DEMO-TERR-2026-0727,Vicálvaro,modificación,119.7,0,10,79.59,100
+DEMO-TERR-2026-0728,Villaverde,modificación,97.0,1,2,81.67,113
+DEMO-TERR-2026-0729,Villaverde,modificación,43.8,1,10,50.86,53
+DEMO-TERR-2026-0730,Usera,renovación,46.6,0,4,36.32,36
+DEMO-TERR-2026-0731,Arganzuela,renovación,54.2,1,9,48.85,56
+DEMO-TERR-2026-0732,Usera,renovación,112.5,0,10,51.37,52
+DEMO-TERR-2026-0733,Latina,renovación,105.7,0,11,46.84,54
+DEMO-TERR-2026-0734,Usera,modificación,32.8,0,10,38.14,42
+DEMO-TERR-2026-0735,Vicálvaro,alta,107.1,0,3,77.83,104
+DEMO-TERR-2026-0736,Puente de Vallecas,renovación,47.6,1,12,53.76,71
+DEMO-TERR-2026-0737,Barajas,alta,82.4,1,2,76.05,106
+DEMO-TERR-2026-0738,Moncloa-Aravaca,alta,18.9,0,6,48.77,45
+DEMO-TERR-2026-0739,Retiro,alta,96.7,2,8,73.97,82
+DEMO-TERR-2026-0740,Villa de Vallecas,alta,24.1,0,9,40.79,39
+DEMO-TERR-2026-0741,Chamartín,alta,112.8,2,3,77.98,93
+DEMO-TERR-2026-0742,Chamberí,renovación,103.9,0,8,48.30,44
+DEMO-TERR-2026-0743,Vicálvaro,renovación,24.4,2,1,31.72,44
+DEMO-TERR-2026-0744,San Blas-Canillejas,alta,106.4,2,7,80.42,92
+DEMO-TERR-2026-0745,Barajas,modificación,119.7,0,12,57.83,61
+DEMO-TERR-2026-0746,Salamanca,alta,67.6,0,11,48.91,50
+DEMO-TERR-2026-0747,San Blas-Canillejas,modificación,80.2,1,4,61.71,89
+DEMO-TERR-2026-0748,Latina,alta,41.6,0,11,45.59,43
+DEMO-TERR-2026-0749,Salamanca,modificación,19.1,1,11,29.68,37
+DEMO-TERR-2026-0750,Villaverde,alta,99.1,1,12,69.42,82
+DEMO-TERR-2026-0751,San Blas-Canillejas,renovación,18.2,1,4,23.55,40
+DEMO-TERR-2026-0752,Latina,alta,9.3,1,4,40.60,48
+DEMO-TERR-2026-0753,Chamartín,alta,33.9,0,7,49.63,58
+DEMO-TERR-2026-0754,Moratalaz,renovación,21.6,0,10,22.75,23
+DEMO-TERR-2026-0755,Carabanchel,alta,33.7,0,2,30.89,20
+DEMO-TERR-2026-0756,Retiro,renovación,62.4,1,9,56.71,61
+DEMO-TERR-2026-0757,Fuencarral-El Pardo,alta,20.4,0,4,46.35,66
+DEMO-TERR-2026-0758,Barajas,alta,109.8,0,9,70.61,94
+DEMO-TERR-2026-0759,Tetuán,renovación,119.1,1,2,72.46,97
+DEMO-TERR-2026-0760,Arganzuela,alta,74.8,0,11,65.53,74
+DEMO-TERR-2026-0761,Centro,renovación,117.3,2,5,72.05,79
+DEMO-TERR-2026-0762,Chamberí,alta,114.4,0,5,78.44,89
+DEMO-TERR-2026-0763,San Blas-Canillejas,alta,47.3,1,10,74.80,84
+DEMO-TERR-2026-0764,Carabanchel,modificación,9.5,1,2,47.58,53
+DEMO-TERR-2026-0765,Retiro,alta,79.1,0,11,55.15,50
+DEMO-TERR-2026-0766,Carabanchel,renovación,8.0,0,4,21.43,35
+DEMO-TERR-2026-0767,Usera,renovación,37.5,0,4,21.97,25
+DEMO-TERR-2026-0768,Chamartín,renovación,40.4,1,11,40.35,46
+DEMO-TERR-2026-0769,Hortaleza,renovación,84.2,2,4,72.56,94
+DEMO-TERR-2026-0770,San Blas-Canillejas,renovación,108.9,2,7,80.19,114
+DEMO-TERR-2026-0771,Centro,alta,57.3,1,9,50.53,45
+DEMO-TERR-2026-0772,Moncloa-Aravaca,alta,67.1,0,2,53.31,55
+DEMO-TERR-2026-0773,Chamartín,alta,96.4,0,7,56.49,59
+DEMO-TERR-2026-0774,Centro,alta,89.8,0,12,58.22,77
+DEMO-TERR-2026-0775,Arganzuela,alta,88.1,0,2,64.51,91
+DEMO-TERR-2026-0776,Usera,alta,66.7,2,3,76.40,99
+DEMO-TERR-2026-0777,Chamartín,alta,57.4,1,3,60.10,78
+DEMO-TERR-2026-0778,Chamberí,renovación,71.5,0,8,42.39,52
+DEMO-TERR-2026-0779,Tetuán,modificación,62.1,3,1,75.70,95
+DEMO-TERR-2026-0780,Latina,modificación,55.4,1,5,58.63,73
+DEMO-TERR-2026-0781,Centro,renovación,49.7,2,4,55.06,60
+DEMO-TERR-2026-0782,Ciudad Lineal,renovación,77.6,1,7,59.12,63
+DEMO-TERR-2026-0783,Chamartín,renovación,118.7,0,11,65.95,82
+DEMO-TERR-2026-0784,Barajas,modificación,24.8,1,7,42.62,43
+DEMO-TERR-2026-0785,Villaverde,alta,19.2,3,3,69.18,89
+DEMO-TERR-2026-0786,Arganzuela,alta,33.7,0,2,49.66,56
+DEMO-TERR-2026-0787,Tetuán,alta,74.8,2,11,70.23,97
+DEMO-TERR-2026-0788,Hortaleza,alta,49.7,0,7,47.21,55
+DEMO-TERR-2026-0789,Puente de Vallecas,modificación,109.1,3,9,89.99,128
+DEMO-TERR-2026-0790,Villaverde,renovación,45.5,0,7,28.83,30
+DEMO-TERR-2026-0791,Ciudad Lineal,alta,109.2,3,10,99.03,143
+DEMO-TERR-2026-0792,San Blas-Canillejas,alta,112.0,2,6,85.68,111
+DEMO-TERR-2026-0793,Salamanca,alta,31.0,1,7,48.75,57
+DEMO-TERR-2026-0794,Chamberí,alta,94.0,1,10,79.25,103
+DEMO-TERR-2026-0795,Moncloa-Aravaca,renovación,35.6,2,7,51.34,58
+DEMO-TERR-2026-0796,Moncloa-Aravaca,renovación,65.1,2,2,60.67,80
+DEMO-TERR-2026-0797,Moncloa-Aravaca,alta,81.0,0,6,58.77,59
+DEMO-TERR-2026-0798,Tetuán,modificación,68.9,0,1,47.64,59
+DEMO-TERR-2026-0799,Moncloa-Aravaca,alta,57.7,2,12,77.36,99
+DEMO-TERR-2026-0800,Arganzuela,alta,104.6,0,4,70.61,79
+DEMO-TERR-2026-0801,Moncloa-Aravaca,alta,37.1,1,10,48.45,59
+DEMO-TERR-2026-0802,Barajas,alta,59.0,0,12,51.63,56
+DEMO-TERR-2026-0803,Latina,renovación,41.3,0,11,36.81,49
+DEMO-TERR-2026-0804,Carabanchel,renovación,60.2,3,4,73.71,89
+DEMO-TERR-2026-0805,Moncloa-Aravaca,alta,19.2,1,1,50.20,60
+DEMO-TERR-2026-0806,Ciudad Lineal,alta,30.5,1,1,55.75,72
+DEMO-TERR-2026-0807,San Blas-Canillejas,alta,80.5,2,9,87.25,120
+DEMO-TERR-2026-0808,Latina,alta,83.8,0,1,48.49,60
+DEMO-TERR-2026-0809,Fuencarral-El Pardo,renovación,93.2,1,12,54.95,60
+DEMO-TERR-2026-0810,Moncloa-Aravaca,renovación,61.6,0,6,38.25,48
+DEMO-TERR-2026-0811,Villaverde,modificación,112.4,0,3,64.36,91
+DEMO-TERR-2026-0812,Retiro,renovación,94.3,0,3,48.37,48
+DEMO-TERR-2026-0813,Usera,alta,37.0,1,9,49.81,57
+DEMO-TERR-2026-0814,Carabanchel,alta,52.9,0,8,43.59,54
+DEMO-TERR-2026-0815,Villa de Vallecas,renovación,109.0,3,7,85.73,116
+DEMO-TERR-2026-0816,Latina,renovación,97.4,1,4,52.99,70
+DEMO-TERR-2026-0817,Centro,renovación,107.2,0,9,68.96,74
+DEMO-TERR-2026-0818,Usera,alta,59.1,0,1,55.00,62
+DEMO-TERR-2026-0819,Moncloa-Aravaca,modificación,82.1,0,8,54.97,63
+DEMO-TERR-2026-0820,Barajas,alta,60.5,0,11,59.28,68
+DEMO-TERR-2026-0821,Hortaleza,renovación,83.4,1,6,49.54,60
+DEMO-TERR-2026-0822,Retiro,alta,73.3,2,2,93.34,125
+DEMO-TERR-2026-0823,Vicálvaro,alta,111.5,3,3,91.41,111
+DEMO-TERR-2026-0824,Salamanca,renovación,23.3,1,11,42.20,44
+DEMO-TERR-2026-0825,San Blas-Canillejas,renovación,26.0,2,2,54.72,56
+DEMO-TERR-2026-0826,Fuencarral-El Pardo,alta,51.3,0,12,46.66,57
+DEMO-TERR-2026-0827,Carabanchel,alta,101.5,3,1,87.03,122
+DEMO-TERR-2026-0828,Vicálvaro,alta,62.5,1,5,63.89,78
+DEMO-TERR-2026-0829,Centro,alta,47.4,2,12,68.68,92
+DEMO-TERR-2026-0830,Salamanca,renovación,87.6,0,10,49.38,45
+DEMO-TERR-2026-0831,Fuencarral-El Pardo,renovación,39.1,1,4,39.47,48
+DEMO-TERR-2026-0832,Villaverde,alta,71.0,0,2,47.81,57
+DEMO-TERR-2026-0833,San Blas-Canillejas,alta,26.7,1,4,51.24,59
+DEMO-TERR-2026-0834,Vicálvaro,alta,50.4,0,1,40.55,51
+DEMO-TERR-2026-0835,Villaverde,alta,37.9,1,9,53.13,65
+DEMO-TERR-2026-0836,Hortaleza,renovación,53.3,1,9,58.77,71
+DEMO-TERR-2026-0837,Moncloa-Aravaca,renovación,37.0,1,11,50.30,55
+DEMO-TERR-2026-0838,Arganzuela,alta,81.2,0,2,55.30,80
+DEMO-TERR-2026-0839,Hortaleza,renovación,80.7,1,4,64.50,77
+DEMO-TERR-2026-0840,Latina,alta,60.5,0,5,47.69,55
+DEMO-TERR-2026-0841,Chamberí,modificación,85.5,1,10,70.89,76
+DEMO-TERR-2026-0842,Chamartín,renovación,63.2,0,9,40.98,45
+DEMO-TERR-2026-0843,Tetuán,modificación,69.7,0,2,41.84,35
+DEMO-TERR-2026-0844,Puente de Vallecas,alta,58.1,1,9,54.30,60
+DEMO-TERR-2026-0845,Moncloa-Aravaca,renovación,16.9,1,2,35.99,38
+DEMO-TERR-2026-0846,Moratalaz,renovación,111.3,1,9,75.29,87
+DEMO-TERR-2026-0847,Ciudad Lineal,renovación,95.8,0,5,54.55,70
+DEMO-TERR-2026-0848,San Blas-Canillejas,modificación,99.2,1,8,68.01,80
+DEMO-TERR-2026-0849,Villaverde,renovación,84.0,2,1,75.68,97
+DEMO-TERR-2026-0850,Tetuán,renovación,101.4,1,6,64.27,73
+DEMO-TERR-2026-0851,Chamartín,alta,96.3,0,7,70.78,82
+DEMO-TERR-2026-0852,Moncloa-Aravaca,alta,70.1,0,8,59.61,63
+DEMO-TERR-2026-0853,Chamartín,modificación,112.3,2,9,90.18,125
+DEMO-TERR-2026-0854,Centro,modificación,93.6,0,12,65.40,67
+DEMO-TERR-2026-0855,Salamanca,modificación,99.5,1,12,62.71,69
+DEMO-TERR-2026-0856,Fuencarral-El Pardo,modificación,86.2,1,2,50.39,62
+DEMO-TERR-2026-0857,Hortaleza,renovación,60.6,1,3,44.93,61
+DEMO-TERR-2026-0858,Moratalaz,modificación,97.7,2,12,82.43,106
+DEMO-TERR-2026-0859,Arganzuela,alta,31.0,0,3,41.94,61
+DEMO-TERR-2026-0860,Barajas,alta,23.4,2,11,66.23,83
+DEMO-TERR-2026-0861,Salamanca,modificación,36.3,2,3,61.12,71
+DEMO-TERR-2026-0862,Ciudad Lineal,alta,88.7,2,11,74.82,101
+DEMO-TERR-2026-0863,Vicálvaro,modificación,66.3,3,3,70.82,94
+DEMO-TERR-2026-0864,Chamberí,renovación,113.7,0,4,37.58,51
+DEMO-TERR-2026-0865,Fuencarral-El Pardo,renovación,92.4,1,10,54.00,66
+DEMO-TERR-2026-0866,Latina,renovación,49.3,1,2,40.62,44
+DEMO-TERR-2026-0867,Latina,renovación,115.0,1,3,61.04,76
+DEMO-TERR-2026-0868,Vicálvaro,modificación,118.7,0,1,69.64,85
+DEMO-TERR-2026-0869,Arganzuela,alta,82.6,1,4,68.82,85
+DEMO-TERR-2026-0870,Moncloa-Aravaca,modificación,111.8,2,11,78.60,104
+DEMO-TERR-2026-0871,Hortaleza,renovación,32.6,2,2,35.69,48
+DEMO-TERR-2026-0872,Tetuán,modificación,83.7,0,1,42.45,53
+DEMO-TERR-2026-0873,Centro,alta,12.9,1,12,39.19,39
+DEMO-TERR-2026-0874,Latina,alta,35.1,0,9,46.68,54
+DEMO-TERR-2026-0875,Centro,alta,28.1,1,7,48.57,46
+DEMO-TERR-2026-0876,San Blas-Canillejas,renovación,66.0,1,2,45.85,57
+DEMO-TERR-2026-0877,Moratalaz,alta,110.6,2,3,77.72,91
+DEMO-TERR-2026-0878,Hortaleza,renovación,81.5,0,11,49.65,60
+DEMO-TERR-2026-0879,Ciudad Lineal,alta,57.1,0,12,67.38,90
+DEMO-TERR-2026-0880,Ciudad Lineal,modificación,56.7,3,2,84.17,110
+DEMO-TERR-2026-0881,Centro,renovación,10.4,3,8,66.14,73
+DEMO-TERR-2026-0882,Puente de Vallecas,renovación,104.2,0,3,47.69,50
+DEMO-TERR-2026-0883,Hortaleza,modificación,47.2,1,3,63.38,70
+DEMO-TERR-2026-0884,Salamanca,modificación,54.1,0,7,29.97,36
+DEMO-TERR-2026-0885,Chamberí,renovación,39.0,1,3,53.32,53
+DEMO-TERR-2026-0886,Villaverde,renovación,64.0,1,5,53.42,66
+DEMO-TERR-2026-0887,San Blas-Canillejas,renovación,97.3,2,6,72.83,86
+DEMO-TERR-2026-0888,Centro,renovación,117.1,3,8,96.36,135
+DEMO-TERR-2026-0889,Vicálvaro,alta,61.6,0,10,50.60,50
+DEMO-TERR-2026-0890,San Blas-Canillejas,alta,47.1,0,8,52.12,53
+DEMO-TERR-2026-0891,Moncloa-Aravaca,renovación,113.4,0,4,49.42,62
+DEMO-TERR-2026-0892,Carabanchel,renovación,101.9,0,1,56.76,75
+DEMO-TERR-2026-0893,Villa de Vallecas,modificación,99.0,1,1,79.90,102
+DEMO-TERR-2026-0894,Latina,alta,70.2,1,4,62.37,87
+DEMO-TERR-2026-0895,Carabanchel,alta,63.0,1,10,58.37,65
+DEMO-TERR-2026-0896,Retiro,alta,45.2,0,7,49.01,53
+DEMO-TERR-2026-0897,Centro,modificación,63.2,1,5,45.17,34
+DEMO-TERR-2026-0898,Barajas,alta,107.1,2,10,90.48,121
+DEMO-TERR-2026-0899,Villa de Vallecas,alta,34.7,0,3,47.33,50
+DEMO-TERR-2026-0900,Chamartín,renovación,102.9,0,2,50.07,59
+DEMO-TERR-2026-0901,Puente de Vallecas,alta,72.6,0,6,48.47,55
+DEMO-TERR-2026-0902,Moncloa-Aravaca,renovación,57.4,0,8,47.02,50
+DEMO-TERR-2026-0903,Moncloa-Aravaca,renovación,74.7,0,3,41.67,39
+DEMO-TERR-2026-0904,San Blas-Canillejas,alta,27.4,2,8,68.29,69
+DEMO-TERR-2026-0905,Moncloa-Aravaca,alta,50.2,0,10,51.29,60
+DEMO-TERR-2026-0906,Salamanca,alta,10.5,2,11,61.14,65
+DEMO-TERR-2026-0907,Chamartín,alta,27.6,1,11,40.31,43
+DEMO-TERR-2026-0908,Ciudad Lineal,renovación,112.5,1,8,61.57,81
+DEMO-TERR-2026-0909,Ciudad Lineal,alta,55.8,0,12,52.25,64
+DEMO-TERR-2026-0910,Chamberí,alta,106.4,1,3,71.67,92
+DEMO-TERR-2026-0911,Puente de Vallecas,alta,108.9,2,4,82.30,106
+DEMO-TERR-2026-0912,Latina,alta,98.2,1,5,72.34,87
+DEMO-TERR-2026-0913,Latina,alta,80.8,0,7,67.55,71
+DEMO-TERR-2026-0914,Chamberí,alta,86.9,0,6,57.04,57
+DEMO-TERR-2026-0915,Moncloa-Aravaca,alta,89.0,0,4,71.54,91
+DEMO-TERR-2026-0916,Villaverde,modificación,75.7,1,10,62.63,81
+DEMO-TERR-2026-0917,Usera,renovación,117.4,3,8,86.55,105
+DEMO-TERR-2026-0918,Chamberí,renovación,29.2,0,4,33.16,41
+DEMO-TERR-2026-0919,Puente de Vallecas,renovación,33.3,2,4,50.95,50
+DEMO-TERR-2026-0920,Puente de Vallecas,modificación,36.5,0,11,32.14,39
+DEMO-TERR-2026-0921,Arganzuela,renovación,87.7,0,4,40.92,54
+DEMO-TERR-2026-0922,Moratalaz,alta,102.2,0,10,61.13,69
+DEMO-TERR-2026-0923,Latina,alta,84.8,1,9,79.42,94
+DEMO-TERR-2026-0924,Salamanca,alta,55.3,0,7,51.56,54
+DEMO-TERR-2026-0925,Retiro,renovación,37.8,0,12,38.08,36
+DEMO-TERR-2026-0926,Usera,alta,15.8,0,5,41.50,46
+DEMO-TERR-2026-0927,Vicálvaro,alta,60.2,0,3,51.05,62
+DEMO-TERR-2026-0928,Arganzuela,modificación,107.6,1,7,80.60,115
+DEMO-TERR-2026-0929,Villaverde,alta,33.4,0,3,49.62,59
+DEMO-TERR-2026-0930,Ciudad Lineal,modificación,83.6,2,3,72.92,94
+DEMO-TERR-2026-0931,Moncloa-Aravaca,modificación,114.5,1,4,76.04,107
+DEMO-TERR-2026-0932,San Blas-Canillejas,modificación,38.5,0,6,53.94,52
+DEMO-TERR-2026-0933,Villaverde,renovación,60.7,1,4,42.96,53
+DEMO-TERR-2026-0934,Moncloa-Aravaca,renovación,28.5,1,11,42.47,56
+DEMO-TERR-2026-0935,Latina,renovación,117.8,0,5,51.75,56
+DEMO-TERR-2026-0936,Centro,renovación,99.8,0,3,51.96,58
+DEMO-TERR-2026-0937,Villa de Vallecas,renovación,88.4,2,9,67.21,60
+DEMO-TERR-2026-0938,Usera,alta,18.4,1,11,59.08,68
+DEMO-TERR-2026-0939,Vicálvaro,alta,113.1,3,5,100.00,137
+DEMO-TERR-2026-0940,Ciudad Lineal,alta,119.1,1,5,81.32,108
+DEMO-TERR-2026-0941,San Blas-Canillejas,renovación,84.5,0,4,56.00,52
+DEMO-TERR-2026-0942,Moratalaz,modificación,118.4,1,9,68.59,83
+DEMO-TERR-2026-0943,Puente de Vallecas,alta,35.7,2,6,57.16,50
+DEMO-TERR-2026-0944,Carabanchel,alta,94.7,1,6,59.38,67
+DEMO-TERR-2026-0945,Retiro,alta,119.8,0,6,69.49,81
+DEMO-TERR-2026-0946,Puente de Vallecas,alta,58.2,1,8,70.62,88
+DEMO-TERR-2026-0947,Tetuán,modificación,83.1,0,3,66.59,81
+DEMO-TERR-2026-0948,Usera,alta,87.8,0,3,65.66,79
+DEMO-TERR-2026-0949,Arganzuela,renovación,26.6,0,7,20.09,24
+DEMO-TERR-2026-0950,Moncloa-Aravaca,alta,44.5,2,1,72.02,93
+DEMO-TERR-2026-0951,Arganzuela,alta,90.5,1,5,68.61,94
+DEMO-TERR-2026-0952,Arganzuela,alta,71.3,1,9,70.34,81
+DEMO-TERR-2026-0953,Moncloa-Aravaca,alta,97.1,0,7,50.80,56
+DEMO-TERR-2026-0954,Moncloa-Aravaca,renovación,87.4,1,4,51.79,68
+DEMO-TERR-2026-0955,Fuencarral-El Pardo,renovación,14.4,0,12,37.46,48
+DEMO-TERR-2026-0956,Carabanchel,renovación,62.6,1,2,43.80,50
+DEMO-TERR-2026-0957,Ciudad Lineal,alta,13.0,0,7,43.48,53
+DEMO-TERR-2026-0958,Carabanchel,modificación,40.1,0,7,40.96,36
+DEMO-TERR-2026-0959,Usera,alta,85.4,1,10,78.48,97
+DEMO-TERR-2026-0960,Moncloa-Aravaca,renovación,113.4,0,10,52.05,63
+DEMO-TERR-2026-0961,Chamartín,alta,75.0,3,3,92.34,120
+DEMO-TERR-2026-0962,Moncloa-Aravaca,alta,38.8,1,6,50.27,56
+DEMO-TERR-2026-0963,Tetuán,renovación,119.7,0,7,60.83,72
+DEMO-TERR-2026-0964,Arganzuela,alta,25.0,0,12,46.60,51
+DEMO-TERR-2026-0965,Centro,modificación,44.0,3,3,68.71,89
+DEMO-TERR-2026-0966,San Blas-Canillejas,renovación,46.8,1,6,62.70,85
+DEMO-TERR-2026-0967,Latina,renovación,82.5,3,2,81.03,110
+DEMO-TERR-2026-0968,Chamberí,renovación,62.1,1,1,57.31,52
+DEMO-TERR-2026-0969,Hortaleza,alta,57.7,0,10,54.44,58
+DEMO-TERR-2026-0970,Fuencarral-El Pardo,alta,89.4,2,2,89.70,118
+DEMO-TERR-2026-0971,Vicálvaro,modificación,78.8,0,12,39.64,40
+DEMO-TERR-2026-0972,Carabanchel,renovación,17.0,1,5,39.61,45
+DEMO-TERR-2026-0973,Vicálvaro,modificación,27.3,0,12,38.35,41
+DEMO-TERR-2026-0974,San Blas-Canillejas,alta,65.5,0,10,61.42,70
+DEMO-TERR-2026-0975,Retiro,modificación,106.3,3,5,94.44,128
+DEMO-TERR-2026-0976,Salamanca,renovación,116.7,1,6,67.76,84
+DEMO-TERR-2026-0977,Retiro,alta,103.8,0,8,71.65,92
+DEMO-TERR-2026-0978,Ciudad Lineal,renovación,114.0,0,1,50.83,52
+DEMO-TERR-2026-0979,Usera,renovación,108.3,1,10,64.73,81
+DEMO-TERR-2026-0980,Tetuán,alta,55.3,0,3,49.92,58
+DEMO-TERR-2026-0981,Villaverde,modificación,31.5,2,4,42.40,54
+DEMO-TERR-2026-0982,Arganzuela,alta,97.6,2,5,88.67,117
+DEMO-TERR-2026-0983,Moncloa-Aravaca,renovación,45.7,2,10,60.02,73
+DEMO-TERR-2026-0984,Hortaleza,renovación,106.0,0,3,47.35,57
+DEMO-TERR-2026-0985,Villa de Vallecas,renovación,10.9,2,3,26.70,32
+DEMO-TERR-2026-0986,Barajas,alta,71.4,1,3,66.99,85
+DEMO-TERR-2026-0987,Chamberí,renovación,60.1,0,6,35.45,46
+DEMO-TERR-2026-0988,Usera,renovación,77.6,1,12,62.66,71
+DEMO-TERR-2026-0989,Barajas,renovación,81.2,0,9,40.69,39
+DEMO-TERR-2026-0990,San Blas-Canillejas,renovación,38.7,0,11,42.66,50
+DEMO-TERR-2026-0991,Carabanchel,alta,14.9,2,7,61.66,71
+DEMO-TERR-2026-0992,Villa de Vallecas,renovación,93.6,1,5,57.83,64
+DEMO-TERR-2026-0993,Latina,alta,112.2,0,2,67.70,74
+DEMO-TERR-2026-0994,Vicálvaro,modificación,37.4,0,3,40.27,50
+DEMO-TERR-2026-0995,Fuencarral-El Pardo,alta,21.5,0,5,37.05,38
+DEMO-TERR-2026-0996,Moratalaz,alta,62.9,0,6,52.43,62
+DEMO-TERR-2026-0997,Retiro,modificación,61.0,0,7,47.92,54
+DEMO-TERR-2026-0998,Salamanca,alta,16.1,0,6,34.86,51
+DEMO-TERR-2026-0999,Barajas,renovación,42.6,0,11,49.63,46
+DEMO-TERR-2026-1000,Chamberí,renovación,92.7,0,8,55.56,62

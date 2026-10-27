@@ -1,0 +1,150 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{geometry}
+\geometry{margin=2.4cm}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{amssymb}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\hypersetup{colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black}
+\definecolor{codebg}{RGB}{245,247,250}
+\definecolor{codegreen}{RGB}{35,115,75}
+\lstdefinestyle{python}{
+ language=Python,basicstyle=\ttfamily\small,keywordstyle=\color{blue!70!black}\bfseries,
+ commentstyle=\color{codegreen},stringstyle=\color{red!60!black},
+ backgroundcolor=\color{codebg},frame=single,rulecolor=\color{black!15},
+ breaklines=true,showstringspaces=false,columns=fullflexible,
+ numbers=left,numberstyle=\tiny\color{black!45},xleftmargin=1.5em,
+}
+\pagestyle{fancy}\fancyhf{}\lhead{EDA y preprocesado con Python}\rhead{Proyecto didáctico}\cfoot{\thepage}
+\setlength{\headheight}{14pt}
+\title{\Huge Técnicas de EDA y preprocesado con Python\\[0.4em]\Large Proyecto práctico reproducible}
+\author{Material didáctico}
+\date{\today}
+\begin{document}
+\maketitle
+\begin{abstract}
+Este proyecto presenta un flujo completo de análisis exploratorio de datos (EDA) y preparación de datos para regresión. Se trabaja con un CSV sintético de expedientes de terrazas incluido en la carpeta \texttt{datos/}. El objetivo es aprender a revisar calidad, describir distribuciones y relaciones, detectar valores atípicos sin eliminarlos automáticamente y preparar particiones de entrenamiento y prueba evitando fuga de información.
+\end{abstract}
+\tableofcontents
+\newpage
+\section{Objetivos y alcance}
+Al terminar, el estudiante podrá:
+\begin{itemize}[nosep]
+\item inspeccionar estructura, tipos, cardinalidad, valores ausentes y duplicados;
+\item resumir variables numéricas y categóricas con tablas y gráficos;
+\item examinar relaciones y correlaciones, distinguiendo asociación de causalidad;
+\item localizar posibles valores atípicos y decidir su tratamiento con contexto;
+\item separar objetivo, identificador y predictores;
+\item dividir los datos antes de ajustar imputadores, escaladores y codificadores;
+\item guardar salidas y hacer el flujo reproducible.
+\end{itemize}
+El conjunto es deliberadamente sintético. \texttt{x} es un índice didáctico de complejidad y \texttt{y} son días simulados de tramitación: no representan expedientes ni resultados reales.
+\section{Estructura del proyecto}
+\begin{verbatim}
+proyecto_eda_preprocesado_latex/
+|-- main.tex
+|-- datos/datos_ejemplo_complejo.csv
+|-- scripts/eda_preprocesado.py
+|-- requirements.txt
+|-- README.md
+|-- resultados/                 (se crea al ejecutar)
+\end{verbatim}
+\section{Datos y pregunta de análisis}
+El archivo contiene las columnas:
+\begin{longtable}{@{}ll@{}}
+\toprule
+Columna & Interpretación didáctica\\\midrule
+\texttt{expediente\_id} & Identificador; no debe ser predictor.\\
+\texttt{distrito} & Categoría territorial sintética.\\
+\texttt{tipo\_tramite} & Categoría del trámite.\\
+\texttt{superficie\_solicitada\_m2} & Medida numérica simulada.\\
+\texttt{requerimientos\_documentacion} & Conteo discreto sintético.\\
+\texttt{mes\_presentacion} & Mes de presentación, de 1 a 12.\\
+\texttt{x} & Índice didáctico de complejidad.\\
+\texttt{y} & Objetivo: días simulados.\\\bottomrule
+\end{longtable}
+Pregunta orientativa: ¿qué patrones descriptivos aparecen entre las características de entrada y \texttt{y}? Esta exploración no demuestra causalidad ni valida conclusiones para situaciones reales.
+\section{EDA: técnicas y decisiones}
+\subsection{Inspección y calidad}
+Comenzar con dimensiones, muestra de filas, tipos, estadísticas y porcentaje de valores ausentes. Revisar duplicados exactos y duplicidad del identificador por separado. Un duplicado puede ser un error, pero también una observación legítima; investigar antes de borrar.
+\begin{lstlisting}[style=python]
+df.shape
+df.head()
+df.info()
+df.describe(include="all").T
+df.isna().sum().sort_values(ascending=False)
+df.duplicated().sum()
+df["expediente_id"].duplicated().sum()
+\end{lstlisting}
+\subsection{Univariado}
+Para variables numéricas usar histogramas, densidades, cuantiles y diagramas de caja. Para categóricas, contar frecuencias y usar barras. Observar asimetrías, clases raras, rangos imposibles y posibles errores de captura.
+\subsection{Bivariado y multivariado}
+Usar dispersión para pares numéricos, boxplots para comparar una variable numérica por categoría y correlación para resumir asociaciones lineales entre columnas numéricas. La correlación de Pearson puede ser baja aunque exista una relación no lineal y no mide causalidad. Para categorías, comparar proporciones y tamaños de grupo antes de interpretar.
+\subsection{Valores atípicos}
+La regla IQR marca como candidatos los valores fuera de $[Q_1-1.5\,IQR,\ Q_3+1.5\,IQR]$. Es una señal para investigar, no una orden de eliminar. Confirmar unidades, reglas de negocio, errores y sensibilidad del modelo. En este proyecto se conservan y se visualizan.
+\section{Preprocesado}
+\subsection{Separación de roles}
+\texttt{expediente\_id} se conserva como metadato, pero se excluye de \texttt{X}. \texttt{y} es el objetivo. El resto de campos constituyen predictores. No se deben incluir columnas derivadas del objetivo ni información que solo estaría disponible después del evento que se pretende anticipar.
+\subsection{Partición y fuga de información}
+Primero se crea una partición train/test. Después se ajustan las transformaciones únicamente con train. Ajustar una media, una mediana o un escalador sobre todos los datos deja que test influya en el entrenamiento y produce una evaluación demasiado optimista. Un \texttt{Pipeline} y un \texttt{ColumnTransformer} ayudan a mantener este orden también durante validación cruzada.
+\subsection{Transformaciones elegidas}
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule Tipo & Transformación & Motivo\\\midrule
+Numérica & Imputar mediana & Robusta frente a valores extremos.\\
+Numérica & Estandarizar & Pone escalas comparables; útil para modelos sensibles a escala.\\
+Categórica & Imputar moda & Completa categorías ausentes.\\
+Categórica & One-hot & Representa categorías sin imponer orden artificial.\\\bottomrule
+\end{tabular}
+\end{center}
+Para árboles, el escalado suele ser innecesario; para SVR, KNN y regularización suele ser importante. Si existen categorías ordinales reales, codificarlas con criterio explícito. Para alta cardinalidad considerar agrupación justificada u otros codificadores dentro de validación.
+\section{Ejecución}
+Instalar Python 3.10 o superior y ejecutar desde la raíz del proyecto:
+\begin{lstlisting}[language=bash,basicstyle=\ttfamily\small,backgroundcolor=\color{codebg},frame=single]
+python -m venv .venv
+# Windows PowerShell:
+.venv\Scripts\Activate.ps1
+# macOS/Linux: source .venv/bin/activate
+python -m pip install -r requirements.txt
+python scripts/eda_preprocesado.py
+\end{lstlisting}
+Las salidas se escriben en \texttt{resultados/}. Para cambiar el origen o el objetivo, revisar las constantes del script y mantener \texttt{expediente\_id} excluido.
+\section{Interpretación de resultados}
+El script calcula número de filas y columnas, duplicados, faltantes, perfiles y estadísticas. Produce histogramas, boxplots, correlaciones y una gráfica de relación entre \texttt{x} e \texttt{y}. También crea train/test preprocesados y serializa el transformador.
+Al interpretar:
+\begin{enumerate}
+\item comprueba que la muestra y los rangos son razonables;
+\item lee conteos junto con porcentajes y tamaños de grupo;
+\item investiga candidatos atípicos con contexto antes de tratarlos;
+\item examina relaciones gráficas además de correlaciones;
+\item valida las decisiones con conocimiento del dominio;
+\item documenta cambios para que otro analista pueda reproducirlos.
+\end{enumerate}
+\section{Limitaciones y buenas prácticas}
+El CSV se generó para enseñanza y no permite inferir patrones administrativos reales. Los gráficos descriptivos no prueban causalidad. El split aleatorio es adecuado para este ejemplo independiente; datos temporales, grupos o entidades repetidas pueden requerir particiones temporales o agrupadas. La transformación de fecha, texto libre, clases desequilibradas y valores imposibles debe adaptarse al conjunto real. El preprocesador serializado debe cargarse solo desde fuentes confiables.
+\section{Lista de comprobación}
+\begin{itemize}[nosep]
+\item[$\square$] ¿Se identificaron objetivo, predictores e identificadores?
+\item[$\square$] ¿Se inspeccionaron nulos, duplicados, tipos, rangos y categorías raras?
+\item[$\square$] ¿Se estudiaron distribuciones y relaciones con gráficos?
+\item[$\square$] ¿Los candidatos atípicos se investigaron en vez de borrarse automáticamente?
+\item[$\square$] ¿Se separó test antes de ajustar transformaciones?
+\item[$\square$] ¿Se guardaron decisiones, dependencias y resultados reproducibles?
+\end{itemize}
+\section{Referencias técnicas}
+\begin{itemize}
+\item Documentación de pandas: \url{https://pandas.pydata.org/docs/}
+\item Preprocesado de scikit-learn: \url{https://scikit-learn.org/stable/modules/preprocessing.html}
+\item Composición de transformaciones: \url{https://scikit-learn.org/stable/modules/compose.html}
+\item Validación cruzada y fuga de datos: \url{https://scikit-learn.org/stable/common_pitfalls.html}
+\end{itemize}
+\end{document}
