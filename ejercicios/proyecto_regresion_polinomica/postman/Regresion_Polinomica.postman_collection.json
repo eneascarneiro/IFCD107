@@ -24,6 +24,21 @@
     {
       "key": "token",
       "value": ""
+    },
+    {
+      "key": "last_eda_preprocessed_csv",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "last_eda_report_pdf",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "last_svm_metrics",
+      "value": "",
+      "type": "string"
     }
   ],
   "item": [
@@ -760,6 +775,341 @@
         },
         "url": "{{baseUrl}}/api/v1/regresion/boosting/gradient/csv"
       }
+    },
+    {
+      "name": "EDA y SVR - seis casuisticas",
+      "description": "Cada solicitud ejecuta de extremo a extremo un caso: hace EDA y preprocesado, genera el PDF y luego entrena SVR con una partición de prueba. No es necesario adjuntar después otro archivo al endpoint SVR.",
+      "item": [
+        {
+          "name": "Ejecutar EDA y entrenar SVR (una petición por caso)",
+          "item": [
+            {
+              "name": "EDA + SVR - Referencia limpia",
+              "description": "Una llamada genera el informe PDF y los datos preprocesados primero; después entrena un SVR con esos mismos datos. La respuesta incluye métricas y rutas de todos los artefactos.",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"EDA y SVR completados\", function () { pm.response.to.have.status(200); });",
+                      "if (pm.response.code === 200) {",
+                      "  var result = pm.response.json();",
+                      "  pm.test(\"La respuesta incluye métricas y artefactos\", function () {",
+                      "    pm.expect(result.metrics).to.be.an(\"object\");",
+                      "    pm.expect(result.artifacts.eda_report_pdf).to.be.a(\"string\");",
+                      "    pm.expect(result.artifacts.preprocessed_csv).to.be.a(\"string\");",
+                      "    pm.expect(result.artifacts.trained_model_pkt).to.be.a(\"string\");",
+                      "  });",
+                      "  pm.collectionVariables.set(\"last_run_id\", result.run_id);",
+                      "  pm.collectionVariables.set(\"last_eda_report_pdf\", result.artifacts.eda_report_pdf);",
+                      "  pm.collectionVariables.set(\"last_eda_preprocessed_csv\", result.artifacts.preprocessed_csv);",
+                      "  pm.collectionVariables.set(\"last_svm_metrics\", JSON.stringify(result.metrics));",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "reference",
+                      "value": "eda_01_referencia_limpia",
+                      "type": "text"
+                    },
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "src": "../proyecto_eda_preprocesado_latex/datos/01_referencia_limpia.csv"
+                    }
+                  ]
+                },
+                "url": "{{baseUrl}}/api/v1/eda/preprocesado/csv"
+              }
+            },
+            {
+              "name": "EDA + SVR - Valores ausentes",
+              "description": "Una llamada genera el informe PDF y los datos preprocesados primero; después entrena un SVR con esos mismos datos. La respuesta incluye métricas y rutas de todos los artefactos.",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"EDA y SVR completados\", function () { pm.response.to.have.status(200); });",
+                      "if (pm.response.code === 200) {",
+                      "  var result = pm.response.json();",
+                      "  pm.test(\"La respuesta incluye métricas y artefactos\", function () {",
+                      "    pm.expect(result.metrics).to.be.an(\"object\");",
+                      "    pm.expect(result.artifacts.eda_report_pdf).to.be.a(\"string\");",
+                      "    pm.expect(result.artifacts.preprocessed_csv).to.be.a(\"string\");",
+                      "    pm.expect(result.artifacts.trained_model_pkt).to.be.a(\"string\");",
+                      "  });",
+                      "  pm.collectionVariables.set(\"last_run_id\", result.run_id);",
+                      "  pm.collectionVariables.set(\"last_eda_report_pdf\", result.artifacts.eda_report_pdf);",
+                      "  pm.collectionVariables.set(\"last_eda_preprocessed_csv\", result.artifacts.preprocessed_csv);",
+                      "  pm.collectionVariables.set(\"last_svm_metrics\", JSON.stringify(result.metrics));",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "reference",
+                      "value": "eda_02_valores_ausentes",
+                      "type": "text"
+                    },
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "src": "../proyecto_eda_preprocesado_latex/datos/02_valores_ausentes.csv"
+                    }
+                  ]
+                },
+                "url": "{{baseUrl}}/api/v1/eda/preprocesado/csv"
+              }
+            },
+            {
+              "name": "EDA + SVR - Valores atipicos",
+              "description": "Una llamada genera el informe PDF y los datos preprocesados primero; después entrena un SVR con esos mismos datos. La respuesta incluye métricas y rutas de todos los artefactos.",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"EDA y SVR completados\", function () { pm.response.to.have.status(200); });",
+                      "if (pm.response.code === 200) {",
+                      "  var result = pm.response.json();",
+                      "  pm.test(\"La respuesta incluye métricas y artefactos\", function () {",
+                      "    pm.expect(result.metrics).to.be.an(\"object\");",
+                      "    pm.expect(result.artifacts.eda_report_pdf).to.be.a(\"string\");",
+                      "    pm.expect(result.artifacts.preprocessed_csv).to.be.a(\"string\");",
+                      "    pm.expect(result.artifacts.trained_model_pkt).to.be.a(\"string\");",
+                      "  });",
+                      "  pm.collectionVariables.set(\"last_run_id\", result.run_id);",
+                      "  pm.collectionVariables.set(\"last_eda_report_pdf\", result.artifacts.eda_report_pdf);",
+                      "  pm.collectionVariables.set(\"last_eda_preprocessed_csv\", result.artifacts.preprocessed_csv);",
+                      "  pm.collectionVariables.set(\"last_svm_metrics\", JSON.stringify(result.metrics));",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "reference",
+                      "value": "eda_03_valores_atipicos",
+                      "type": "text"
+                    },
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "src": "../proyecto_eda_preprocesado_latex/datos/03_valores_atipicos.csv"
+                    }
+                  ]
+                },
+                "url": "{{baseUrl}}/api/v1/eda/preprocesado/csv"
+              }
+            },
+            {
+              "name": "EDA + SVR - Categorias raras",
+              "description": "Una llamada genera el informe PDF y los datos preprocesados primero; después entrena un SVR con esos mismos datos. La respuesta incluye métricas y rutas de todos los artefactos.",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"EDA y SVR completados\", function () { pm.response.to.have.status(200); });",
+                      "if (pm.response.code === 200) {",
+                      "  var result = pm.response.json();",
+                      "  pm.test(\"La respuesta incluye métricas y artefactos\", function () {",
+                      "    pm.expect(result.metrics).to.be.an(\"object\");",
+                      "    pm.expect(result.artifacts.eda_report_pdf).to.be.a(\"string\");",
+                      "    pm.expect(result.artifacts.preprocessed_csv).to.be.a(\"string\");",
+                      "    pm.expect(result.artifacts.trained_model_pkt).to.be.a(\"string\");",
+                      "  });",
+                      "  pm.collectionVariables.set(\"last_run_id\", result.run_id);",
+                      "  pm.collectionVariables.set(\"last_eda_report_pdf\", result.artifacts.eda_report_pdf);",
+                      "  pm.collectionVariables.set(\"last_eda_preprocessed_csv\", result.artifacts.preprocessed_csv);",
+                      "  pm.collectionVariables.set(\"last_svm_metrics\", JSON.stringify(result.metrics));",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "reference",
+                      "value": "eda_04_categorias_raras",
+                      "type": "text"
+                    },
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "src": "../proyecto_eda_preprocesado_latex/datos/04_categorias_raras.csv"
+                    }
+                  ]
+                },
+                "url": "{{baseUrl}}/api/v1/eda/preprocesado/csv"
+              }
+            },
+            {
+              "name": "EDA + SVR - Duplicados",
+              "description": "Una llamada genera el informe PDF y los datos preprocesados primero; después entrena un SVR con esos mismos datos. La respuesta incluye métricas y rutas de todos los artefactos.",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"EDA y SVR completados\", function () { pm.response.to.have.status(200); });",
+                      "if (pm.response.code === 200) {",
+                      "  var result = pm.response.json();",
+                      "  pm.test(\"La respuesta incluye métricas y artefactos\", function () {",
+                      "    pm.expect(result.metrics).to.be.an(\"object\");",
+                      "    pm.expect(result.artifacts.eda_report_pdf).to.be.a(\"string\");",
+                      "    pm.expect(result.artifacts.preprocessed_csv).to.be.a(\"string\");",
+                      "    pm.expect(result.artifacts.trained_model_pkt).to.be.a(\"string\");",
+                      "  });",
+                      "  pm.collectionVariables.set(\"last_run_id\", result.run_id);",
+                      "  pm.collectionVariables.set(\"last_eda_report_pdf\", result.artifacts.eda_report_pdf);",
+                      "  pm.collectionVariables.set(\"last_eda_preprocessed_csv\", result.artifacts.preprocessed_csv);",
+                      "  pm.collectionVariables.set(\"last_svm_metrics\", JSON.stringify(result.metrics));",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "reference",
+                      "value": "eda_05_duplicados",
+                      "type": "text"
+                    },
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "src": "../proyecto_eda_preprocesado_latex/datos/05_duplicados.csv"
+                    }
+                  ]
+                },
+                "url": "{{baseUrl}}/api/v1/eda/preprocesado/csv"
+              }
+            },
+            {
+              "name": "EDA + SVR - Sesgo y heterocedasticidad",
+              "description": "Una llamada genera el informe PDF y los datos preprocesados primero; después entrena un SVR con esos mismos datos. La respuesta incluye métricas y rutas de todos los artefactos.",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"EDA y SVR completados\", function () { pm.response.to.have.status(200); });",
+                      "if (pm.response.code === 200) {",
+                      "  var result = pm.response.json();",
+                      "  pm.test(\"La respuesta incluye métricas y artefactos\", function () {",
+                      "    pm.expect(result.metrics).to.be.an(\"object\");",
+                      "    pm.expect(result.artifacts.eda_report_pdf).to.be.a(\"string\");",
+                      "    pm.expect(result.artifacts.preprocessed_csv).to.be.a(\"string\");",
+                      "    pm.expect(result.artifacts.trained_model_pkt).to.be.a(\"string\");",
+                      "  });",
+                      "  pm.collectionVariables.set(\"last_run_id\", result.run_id);",
+                      "  pm.collectionVariables.set(\"last_eda_report_pdf\", result.artifacts.eda_report_pdf);",
+                      "  pm.collectionVariables.set(\"last_eda_preprocessed_csv\", result.artifacts.preprocessed_csv);",
+                      "  pm.collectionVariables.set(\"last_svm_metrics\", JSON.stringify(result.metrics));",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "reference",
+                      "value": "eda_06_sesgo_y_heterocedasticidad",
+                      "type": "text"
+                    },
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "src": "../proyecto_eda_preprocesado_latex/datos/06_sesgo_y_heterocedasticidad.csv"
+                    }
+                  ]
+                },
+                "url": "{{baseUrl}}/api/v1/eda/preprocesado/csv"
+              }
+            }
+          ]
+        }
+      ]
     }
   ]
 }

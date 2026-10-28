@@ -1,0 +1,181 @@
+﻿expediente_id,distrito,tipo_tramite,superficie_solicitada_m2,requerimientos_documentacion,mes_presentacion,x,y
+CASO-0001,Distrito experimental muy poco frecuente,renovacion,103.6,0,10,59.46,48.2
+CASO-0002,Retiro,renovacion,79.5,1,9,60.43,65.2
+CASO-0003,Usera,modificacion,19.9,0,1,33.35,38.3
+CASO-0004,Usera,alta,34.7,0,6,21.19,42.6
+CASO-0005,Chamberí,alta,97.8,0,11,54.68,65.7
+CASO-0006,Retiro,alta,56.2,2,8,48.94,67.5
+CASO-0007,Centro,renovacion,92.6,3,3,68.4,72.7
+CASO-0008,Salamanca,  ALTA ,51.4,0,9,34.34,33.2
+CASO-0009,Salamanca,renovacion,48.1,0,7,42.31,43.7
+CASO-0010,Chamberí,modificacion,20.0,0,9,25.2,42.8
+CASO-0011,Chamberí,renovacion,15.4,0,3,27.27,37.5
+CASO-0012,Centro ,alta,107.9,3,1,76.55,100.3
+CASO-0013,Centro,renovacion,19.2,0,4,17.54,32.0
+CASO-0014,Centro,alta,20.1,3,1,39.38,62.5
+CASO-0015,Retiro,renovacion,57.0,0,9,39.44,45.0
+CASO-0016,Usera,modificacion,109.3,1,11,60.41,59.3
+CASO-0017,Usera,alta,40.4,0,7,32.81,48.9
+CASO-0018,Usera,renovacion,29.3,0,3,36.53,40.8
+CASO-0019,Chamberí,renovacion,81.2,0,8,59.95,54.0
+CASO-0020,Centro,alta,25.3,0,3,29.58,33.4
+CASO-0021,Salamanca,renovacion,22.6,1,4,27.61,40.9
+CASO-0022,Usera,modificacion,87.0,0,9,48.48,56.5
+CASO-0023,Usera,alta,101.1,2,3,74.52,86.1
+CASO-0024,Distrito experimental muy poco frecuente,renovacion,99.6,1,11,59.72,56.6
+CASO-0025,Salamanca,alta,106.4,1,1,53.13,63.6
+CASO-0026,Salamanca,alta,71.9,2,6,39.76,61.6
+CASO-0027,Retiro,renovacion,65.0,2,5,60.2,64.4
+CASO-0028,Centro,alta,21.6,0,4,11.83,33.9
+CASO-0029,Chamberí,renovacion,105.7,2,10,69.63,68.3
+CASO-0030,Chamberí,modificacion,32.9,1,11,42.86,58.4
+CASO-0031,Retiro,alta,51.6,0,8,44.27,57.0
+CASO-0032,Centro,renovacion,68.7,2,10,45.02,41.8
+CASO-0033,Retiro,alta,79.8,1,1,67.75,80.6
+CASO-0034,Chamberí,alta,43.4,0,7,31.89,50.9
+CASO-0035,Salamanca,alta,108.6,1,8,73.05,91.5
+CASO-0036,Salamanca,renovacion,33.2,0,3,27.27,23.6
+CASO-0037,Centro,  ALTA ,19.6,1,11,21.77,42.9
+CASO-0038,Salamanca,alta,100.8,0,4,58.02,66.5
+CASO-0039,Chamberí,alta,95.2,0,10,65.83,67.7
+CASO-0040,Centro,modificacion,93.1,1,5,69.61,78.1
+CASO-0041,Chamberí,alta,56.4,1,1,47.09,58.4
+CASO-0042,Usera,alta,100.3,0,1,67.39,66.0
+CASO-0043,Retiro,modificacion,55.5,0,7,37.57,41.7
+CASO-0044,Usera,alta,55.0,1,9,38.02,65.1
+CASO-0045,Chamberí,alta,75.0,1,7,59.51,73.9
+CASO-0046,Chamberí,renovacion,60.7,0,1,44.46,46.5
+CASO-0047,Distrito experimental muy poco frecuente,alta,13.0,0,2,18.56,30.9
+CASO-0048,Retiro,modificacion,44.6,0,2,30.62,35.7
+CASO-0049,Centro ,alta,13.4,1,2,20.55,38.7
+CASO-0050,Centro,renovacion,101.3,2,11,69.86,65.3
+CASO-0051,Chamberí,alta,42.5,0,8,10.79,31.1
+CASO-0052,Usera,alta,56.0,1,8,40.49,61.0
+CASO-0053,Centro,modificacion,79.1,0,4,41.29,48.1
+CASO-0054,Retiro,renovacion,27.7,2,4,48.05,44.8
+CASO-0055,Salamanca,alta,43.3,0,7,32.0,48.4
+CASO-0056,Usera,alta,66.1,1,4,38.93,41.5
+CASO-0057,Usera,renovacion,38.3,3,2,48.88,53.8
+CASO-0058,Centro,renovacion,107.2,0,5,65.82,64.1
+CASO-0059,Salamanca,renovacion,98.3,2,5,63.17,73.0
+CASO-0060,Usera,renovacion,66.2,1,8,37.78,37.1
+CASO-0061,Chamberí,modificacion,80.6,1,7,66.21,78.0
+CASO-0062,Chamberí,modificacion,70.6,0,5,44.86,50.5
+CASO-0063,Usera,renovacion,20.7,1,2,18.68,31.7
+CASO-0064,Salamanca,modificacion,17.6,0,10,10,21.6
+CASO-0065,Chamberí,renovacion,100.3,2,9,71.79,78.1
+CASO-0066,Usera,  ALTA ,91.6,1,12,61.82,60.8
+CASO-0067,Chamberí,alta,72.5,3,3,66.42,84.3
+CASO-0068,Usera,alta,92.4,0,2,45.08,57.2
+CASO-0069,Retiro,renovacion,21.8,1,5,39.33,39.6
+CASO-0070,Distrito experimental muy poco frecuente,renovacion,17.4,1,9,35.18,36.5
+CASO-0071,Chamberí,modificacion,17.8,1,2,32.88,39.1
+CASO-0072,Usera,alta,98.2,0,6,62.85,69.7
+CASO-0073,Salamanca,modificacion,58.4,3,12,65.24,81.1
+CASO-0074,Retiro,renovacion,32.2,0,3,17.77,32.1
+CASO-0075,Centro,modificacion,54.3,0,2,44.33,38.8
+CASO-0076,Retiro,renovacion,108.6,0,7,57.37,51.6
+CASO-0077,Centro,alta,35.1,2,12,56.87,62.1
+CASO-0078,Salamanca,alta,34.7,1,7,30.86,46.2
+CASO-0079,Chamberí,alta,72.7,2,6,61.89,79.1
+CASO-0080,Usera,alta,84.8,1,7,54.21,68.6
+CASO-0081,Chamberí,renovacion,31.8,2,8,43.25,53.3
+CASO-0082,Chamberí,alta,42.3,2,8,46.11,65.3
+CASO-0083,Centro,alta,83.2,0,12,55.81,69.7
+CASO-0084,Chamberí,alta,38.5,1,1,44.37,51.1
+CASO-0085,Salamanca,renovacion,35.9,0,1,28.87,20.7
+CASO-0086,Centro ,modificacion,83.7,2,8,44.17,49.8
+CASO-0087,Chamberí,modificacion,56.3,0,6,38.21,50.5
+CASO-0088,Retiro,alta,33.5,0,9,26.01,48.7
+CASO-0089,Retiro,renovacion,58.2,0,1,40.62,45.1
+CASO-0090,Salamanca,alta,35.7,2,4,32.55,53.8
+CASO-0091,Retiro,renovacion,23.7,0,9,20.8,34.4
+CASO-0092,Usera,modificacion,80.0,2,2,61.17,77.0
+CASO-0093,Distrito experimental muy poco frecuente,alta,30.9,1,7,34.55,50.7
+CASO-0094,Usera,modificacion,60.7,0,11,37.77,45.6
+CASO-0095,Salamanca,  ALTA ,33.4,1,8,39.48,60.0
+CASO-0096,Retiro,alta,61.7,1,9,54.71,61.6
+CASO-0097,Centro,modificacion,74.4,0,3,55.44,56.8
+CASO-0098,Chamberí,modificacion,60.6,1,5,52.21,56.3
+CASO-0099,Salamanca,renovacion,53.5,0,2,29.78,31.0
+CASO-0100,Chamberí,modificacion,27.8,0,3,14.76,33.6
+CASO-0101,Salamanca,alta,24.6,0,4,17.61,35.0
+CASO-0102,Retiro,renovacion,101.6,1,7,58.17,63.8
+CASO-0103,Salamanca,modificacion,95.9,0,1,62.27,63.3
+CASO-0104,Chamberí,renovacion,106.0,2,3,62.06,67.1
+CASO-0105,Usera,modificacion,86.3,0,3,50.69,53.1
+CASO-0106,Chamberí,alta,14.3,1,7,27.71,37.8
+CASO-0107,Chamberí,alta,75.1,1,5,56.92,58.9
+CASO-0108,Centro,modificacion,62.1,1,2,38.75,55.9
+CASO-0109,Usera,renovacion,36.3,0,7,29.16,35.1
+CASO-0110,Usera,alta,79.8,2,2,60.39,85.6
+CASO-0111,Centro,modificacion,64.3,0,5,31.73,40.2
+CASO-0112,Retiro,alta,75.6,2,8,60.65,86.2
+CASO-0113,Salamanca,modificacion,34.1,1,8,35.03,43.8
+CASO-0114,Usera,modificacion,107.8,2,7,66.32,81.4
+CASO-0115,Salamanca,renovacion,82.6,0,2,49.07,52.6
+CASO-0116,Distrito experimental muy poco frecuente,modificacion,51.0,0,9,32.28,50.9
+CASO-0117,Salamanca,modificacion,67.1,1,5,38.45,48.8
+CASO-0118,Salamanca,renovacion,102.9,1,5,63.06,56.2
+CASO-0119,Centro,modificacion,66.7,2,9,52.54,73.1
+CASO-0120,Salamanca,alta,45.2,0,9,29.38,49.0
+CASO-0121,Retiro,alta,72.9,2,12,44.18,59.9
+CASO-0122,Salamanca,alta,32.0,0,6,36.33,49.1
+CASO-0123,Centro ,modificacion,91.4,0,10,54.74,60.8
+CASO-0124,Chamberí,  ALTA ,76.3,1,3,49.7,44.0
+CASO-0125,Chamberí,modificacion,18.2,0,8,29.68,42.5
+CASO-0126,Salamanca,alta,56.4,0,9,44.35,55.3
+CASO-0127,Chamberí,modificacion,106.9,0,6,65.86,69.4
+CASO-0128,Centro,alta,46.8,0,4,23.08,40.4
+CASO-0129,Usera,alta,28.6,0,11,26.47,38.0
+CASO-0130,Usera,renovacion,68.5,3,12,53.1,62.2
+CASO-0131,Retiro,renovacion,44.8,0,10,24.15,29.0
+CASO-0132,Centro,modificacion,93.3,1,7,62.68,74.0
+CASO-0133,Chamberí,modificacion,52.8,1,1,48.93,53.9
+CASO-0134,Salamanca,renovacion,105.3,0,12,51.35,49.3
+CASO-0135,Chamberí,alta,55.4,1,8,44.45,52.2
+CASO-0136,Retiro,renovacion,93.4,1,5,64.24,68.3
+CASO-0137,Retiro,renovacion,30.5,2,1,30.81,31.3
+CASO-0138,Retiro,renovacion,13.7,2,11,27.66,34.6
+CASO-0139,Distrito experimental muy poco frecuente,alta,63.2,1,12,46.31,56.2
+CASO-0140,Retiro,modificacion,21.1,0,11,28.74,49.1
+CASO-0141,Salamanca,renovacion,42.5,1,4,31.33,32.6
+CASO-0142,Retiro,renovacion,90.4,2,1,65.9,61.1
+CASO-0143,Centro,renovacion,42.1,0,5,29.38,31.8
+CASO-0144,Retiro,alta,83.1,1,7,44.37,68.2
+CASO-0145,Usera,renovacion,18.7,0,8,30.71,30.9
+CASO-0146,Retiro,renovacion,99.1,1,1,66.33,58.5
+CASO-0147,Salamanca,modificacion,23.0,3,12,36.23,54.5
+CASO-0148,Usera,modificacion,97.7,1,7,66.62,73.1
+CASO-0149,Centro,alta,49.5,1,11,33.7,53.0
+CASO-0150,Salamanca,renovacion,55.3,1,3,33.11,29.6
+CASO-0151,Salamanca,renovacion,109.2,0,5,51.9,48.3
+CASO-0152,Chamberí,alta,79.2,0,8,43.16,52.5
+CASO-0153,Salamanca,  ALTA ,71.6,0,6,51.28,71.1
+CASO-0154,Retiro,renovacion,64.6,0,2,33.75,24.0
+CASO-0155,Centro,modificacion,97.1,1,8,54.69,68.6
+CASO-0156,Usera,alta,21.0,0,11,28.37,45.5
+CASO-0157,Centro,modificacion,41.1,0,9,30.21,49.4
+CASO-0158,Centro,alta,71.9,2,8,63.52,80.3
+CASO-0159,Retiro,alta,17.0,0,7,15.83,43.8
+CASO-0160,Centro ,modificacion,12.8,2,7,28.34,41.9
+CASO-0161,Salamanca,modificacion,94.6,0,2,54.69,54.8
+CASO-0162,Distrito experimental muy poco frecuente,renovacion,102.9,0,11,58.11,56.7
+CASO-0163,Usera,renovacion,86.0,0,10,41.54,33.1
+CASO-0164,Usera,renovacion,15.0,0,2,27.67,39.4
+CASO-0165,Retiro,alta,14.7,1,10,25.51,44.5
+CASO-0166,Usera,alta,79.5,2,6,58.57,72.8
+CASO-0167,Retiro,alta,94.7,0,1,67.87,81.0
+CASO-0168,Retiro,alta,63.7,2,5,38.81,51.3
+CASO-0169,Retiro,modificacion,95.8,1,11,55.75,61.9
+CASO-0170,Salamanca,renovacion,80.3,1,8,55.19,62.0
+CASO-0171,Usera,renovacion,19.8,1,10,21.78,35.2
+CASO-0172,Retiro,alta,14.2,3,10,36.8,61.4
+CASO-0173,Chamberí,renovacion,108.8,0,7,71.54,73.6
+CASO-0174,Centro,alta,78.4,2,7,41.45,62.3
+CASO-0175,Centro,renovacion,31.8,0,9,23.17,20.3
+CASO-0176,Chamberí,renovacion,60.7,0,5,31.34,29.3
+CASO-0177,Centro,modificacion,50.5,2,4,45.22,61.4
+CASO-0178,Salamanca,renovacion,64.9,0,5,45.4,53.9
+CASO-0179,Retiro,alta,94.6,1,11,63.59,72.5
+CASO-0180,Centro,renovacion,107.6,0,11,66.96,68.5

@@ -71,6 +71,50 @@ Las tres rutas reciben `multipart/form-data` con `reference`, `target`, opciones
 
 Cada estimador está en su módulo de `regression/`: `svm_regressor.py`, `adaboost_regressor.py` y `gradient_boosting_regressor.py`. `tabular_preprocessing.py` centraliza la imputación/codificación común y el escalado específico que necesita SVR. La colección Postman incluye una solicitud de ejemplo para cada endpoint nuevo usando el CSV sintético incluido.
 
+### Ejecutar las seis prácticas SVR paso a paso
+
+El script `regression/train_svm_casuisticas.py` es una guía comentada para principiantes y comparte `train_one_dataset` con el endpoint EDA. Para cada CSV primero genera el informe EDA y guarda los datos transformados; solo después ajusta el SVR y calcula las métricas en un conjunto de prueba. Ejecútalo desde la raíz:
+
+```powershell
+.venv\Scripts\python.exe regression\train_svm_casuisticas.py
+```
+
+Los PDFs, CSV preprocesados, predicciones, modelos y métricas individuales se guardan en `runs/svm_casuisticas/<casuistica>/`. `runs/svm_casuisticas/resumen_entrenamientos.csv` compara R², RMSE, MAE y sesgo entre los seis casos. Los datos y métricas son didácticos y no describen expedientes reales.
+
+## EDA y preprocesado tabular con informe PDF
+
+`POST /api/v1/eda/preprocesado/csv` acepta `multipart/form-data` con `reference` y el archivo `file`; requiere Bearer token y limita el CSV a 4 MB. El endpoint llama a `train_one_dataset` en `regression/train_svm_casuisticas.py`: primero elabora el informe EDA y el CSV transformado, y después entrena SVR sobre esos datos. La clase `regression/eda_preprocesado.py` convierte `tipo_tramite` y `distrito` a códigos numéricos reproducibles, convierte `requerimientos_documentacion` (o `requiere_documentacion`) a número o códigos si es texto, y sustituye `mes_presentacion` por las variables cíclicas seno/coseno. La respuesta incluye las métricas y rutas del informe PDF, CSV preprocesado, predicciones y modelo guardado bajo `runs/<reference>/`.
+
+## n8n, Dify, Flowise y modelos locales con Ollama
+
+El `compose.yaml` de la raíz levanta la API de regresión, n8n, Flowise y Ollama. También incluye el Compose oficial de Dify para mantener sus servicios y configuración alineados con el proyecto upstream. Se requiere Docker Compose v2.20 o posterior. Dify se incorpora desde `dify/docker/docker-compose.yaml`, por lo que antes del primer arranque hay que preparar su repositorio y su archivo de entorno:
+
+```powershell
+git clone https://github.com/langgenius/dify.git dify
+if (!(Test-Path .env)) { Copy-Item .env.example .env }
+if (!(Test-Path dify/docker/.env)) { Copy-Item dify/docker/.env.example dify/docker/.env }
+```
+
+Si ya existe `.env`, conserva sus valores y añade las nuevas variables que falten desde `.env.example`. Edita ambos archivos de entorno y sustituye las contraseñas y claves de ejemplo por valores aleatorios seguros. Mantén los mismos nombres de modelos (`llama3:8b` y `mistral:7b`) si quieres que los servicios usen los modelos descargados. La primera ejecución requiere conexión a Internet para descargar las imágenes de contenedor y varios GB de modelos:
+
+En `dify/docker/.env`, limita también la publicación web de Dify al equipo local configurando `EXPOSE_NGINX_PORT=127.0.0.1:8080` y `EXPOSE_NGINX_SSL_PORT=127.0.0.1:8443`.
+
+```powershell
+docker compose up -d --build
+```
+
+Accesos locales:
+
+- API de regresión: `http://localhost:5000`
+- n8n: `http://localhost:5678`
+- Flowise: `http://localhost:3001` (credenciales definidas en `.env`)
+- Dify: `http://localhost:8080/install` la primera vez; después, `http://localhost:8080`
+- Ollama: API local en `http://localhost:11434`
+
+Ollama descarga por defecto `llama3:8b` y `mistral:7b`, que se guardan en el volumen local `./ollama`. En Flowise y n8n, configura una conexión Ollama con URL `http://ollama:11434`; en Dify, configura el proveedor Ollama con URL `http://host.docker.internal:11434` y el nombre exacto del modelo. Docker Desktop resuelve `host.docker.internal`; en instalaciones Linux puede ser necesario habilitar el acceso al host desde los contenedores.
+
+La inferencia con estos modelos locales no factura llamadas a una API externa. El equipo sigue consumiendo almacenamiento, memoria, CPU/GPU y electricidad; el primer arranque también descarga imágenes y modelos. El Compose deja las interfaces ligadas a `127.0.0.1`, de modo que son accesibles desde el propio equipo. Para detener los servicios sin borrar los datos: `docker compose down`; no añadas `-v` si quieres conservar los volúmenes.
+
 ## Ejemplo de KNN con Ollama
 
 `ejemplos/knn_con_ollama.py` ejecuta KNN de regresión con scikit-learn sobre `ejemplos/datos_knn_5000_outliers.csv`. Después, envía a Ollama solo un resumen de las métricas para obtener una explicación en lenguaje natural; Ollama no entrena KNN ni recibe las filas del CSV.

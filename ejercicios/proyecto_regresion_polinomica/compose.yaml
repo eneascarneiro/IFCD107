@@ -1,5 +1,11 @@
+include:
+  # Dify mantiene su Compose oficial en su propio repositorio y directorio.
+  # Consulte README.md para clonar el repositorio y crear su archivo .env.
+  - path: ./dify/docker/docker-compose.yaml
+    project_directory: ./dify/docker
+
 services:
-  api:
+  regression-api:
     build: .
     ports:
       - "${API_PORT:-5000}:5000"
@@ -9,7 +15,7 @@ services:
       API_TOKEN_SECRET: ${API_TOKEN_SECRET:?Set API_TOKEN_SECRET in .env}
       API_TOKEN_TTL_SECONDS: ${API_TOKEN_TTL_SECONDS:-3600}
       OLLAMA_BASE_URL: http://ollama:11434
-      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen2.5:3b}
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-llama3:8b}
       OLLAMA_TIMEOUT_SECONDS: ${OLLAMA_TIMEOUT_SECONDS:-120}
     volumes:
       - regression_runs:/app/runs
@@ -30,6 +36,9 @@ services:
     image: ollama/ollama:latest
     volumes:
       - ./ollama:/root/.ollama
+    ports:
+      # Disponible localmente para los contenedores de Dify y herramientas del host.
+      - "127.0.0.1:${OLLAMA_PORT:-11434}:11434"
     expose:
       - "11434"
     healthcheck:
@@ -44,13 +53,56 @@ services:
     image: ollama/ollama:latest
     environment:
       OLLAMA_HOST: http://ollama:11434
-    entrypoint: ["ollama"]
-    command: ["pull", "${OLLAMA_MODEL:-qwen2.5:3b}"]
+      OLLAMA_MODEL_LLAMA3: ${OLLAMA_MODEL_LLAMA3:-llama3:8b}
+      OLLAMA_MODEL_MISTRAL: ${OLLAMA_MODEL_MISTRAL:-mistral:7b}
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-llama3:8b}
+    entrypoint: ["/bin/sh", "-c"]
+    command: >-
+      ollama pull "$${OLLAMA_MODEL_LLAMA3}" &&
+      ollama pull "$${OLLAMA_MODEL_MISTRAL}" &&
+      ollama pull "$${OLLAMA_MODEL}"
     depends_on:
       ollama:
         condition: service_healthy
     restart: "no"
 
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+    ports:
+      - "127.0.0.1:${N8N_PORT:-5678}:5678"
+    environment:
+      N8N_HOST: localhost
+      N8N_PORT: 5678
+      N8N_PROTOCOL: http
+      N8N_EDITOR_BASE_URL: http://localhost:${N8N_PORT:-5678}/
+      WEBHOOK_URL: http://localhost:${N8N_PORT:-5678}/
+      N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY:?Set N8N_ENCRYPTION_KEY in .env}
+      GENERIC_TIMEZONE: ${GENERIC_TIMEZONE:-Europe/Paris}
+      TZ: ${GENERIC_TIMEZONE:-Europe/Paris}
+      N8N_DIAGNOSTICS_ENABLED: "false"
+      N8N_PERSONALIZATION_ENABLED: "false"
+    volumes:
+      - n8n_data:/home/node/.n8n
+    restart: unless-stopped
+
+  flowise:
+    image: flowiseai/flowise:latest
+    ports:
+      - "127.0.0.1:${FLOWISE_PORT:-3001}:3000"
+    environment:
+      PORT: 3000
+      FLOWISE_USERNAME: ${FLOWISE_USERNAME:?Set FLOWISE_USERNAME in .env}
+      FLOWISE_PASSWORD: ${FLOWISE_PASSWORD:?Set FLOWISE_PASSWORD in .env}
+      DATABASE_PATH: /root/.flowise
+    volumes:
+      - flowise_data:/root/.flowise
+    depends_on:
+      ollama:
+        condition: service_healthy
+    restart: unless-stopped
+
 volumes:
   regression_runs:
+  n8n_data:
+  flowise_data:
 

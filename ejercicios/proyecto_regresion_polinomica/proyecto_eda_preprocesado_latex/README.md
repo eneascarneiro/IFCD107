@@ -13,7 +13,7 @@ python -m pip install -r requirements.txt
 python scripts/eda_preprocesado.py
 ```
 
-Las salidas se guardan en `resultados/`: perfil y estadísticas, datos limpios, particiones preprocesadas, transformador serializado y gráficos. La preparación usa split 80/20, semilla fija y ajusta las transformaciones exclusivamente con entrenamiento.
+Las salidas se guardan en `resultados/`: perfil y estadísticas, datos limpios, particiones preprocesadas, transformador serializado, gráficos y `informe_comprobacion_datos.pdf`. El PDF resume todos los CSV de `datos/` (incluidas las seis casuísticas y el CSV original), con filas, faltantes, duplicados, IDs repetidos, candidatos IQR, perfiles por columna, histogramas de `y` y relación `x-y`. La preparación usa split 80/20, semilla fija y ajusta las transformaciones exclusivamente con entrenamiento.
 
 ## Compilar LaTeX
 

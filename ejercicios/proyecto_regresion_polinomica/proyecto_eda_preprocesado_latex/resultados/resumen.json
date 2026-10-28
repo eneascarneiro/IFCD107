@@ -1,0 +1,31 @@
+{
+  "filas_entrada": 1000,
+  "filas_salida": 1000,
+  "duplicados_exactos_eliminados": 0,
+  "celdas_ausentes": 0,
+  "id_excluido": "expediente_id",
+  "objetivo": "y",
+  "predictores": [
+    "distrito",
+    "tipo_tramite",
+    "superficie_solicitada_m2",
+    "requerimientos_documentacion",
+    "mes_presentacion",
+    "x"
+  ],
+  "numericos": [
+    "superficie_solicitada_m2",
+    "requerimientos_documentacion",
+    "mes_presentacion",
+    "x"
+  ],
+  "categoricos": [
+    "distrito",
+    "tipo_tramite"
+  ],
+  "filas_train": 800,
+  "filas_test": 200,
+  "columnas_codificadas": 28,
+  "semilla": 42,
+  "nota": "Datos sintéticos de uso didáctico; no representan expedientes reales."
+}

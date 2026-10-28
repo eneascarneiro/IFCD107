@@ -1,0 +1,9 @@
+﻿,tipo,ausentes,ausentes_pct,valores_unicos
+expediente_id,str,0,0.0,1000
+distrito,str,0,0.0,21
+tipo_tramite,str,0,0.0,3
+superficie_solicitada_m2,float64,0,0.0,671
+requerimientos_documentacion,int64,0,0.0,4
+mes_presentacion,int64,0,0.0,12
+x,float64,0,0.0,916
+y,int64,0,0.0,120

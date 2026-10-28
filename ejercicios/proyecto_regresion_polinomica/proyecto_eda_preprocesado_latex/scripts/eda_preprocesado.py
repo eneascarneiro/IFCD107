@@ -247,8 +247,8 @@ def main():
     test_matrix = preprocessor.transform(X_test)
     names = preprocessor.get_feature_names_out()
     for filename, matrix, targets in (
-            ("train_preprocesado.csv", train_matrix, y_train),
-            ("test_preprocesado.csv", test_matrix, y_test),
+        ("train_preprocesado.csv", train_matrix, y_train),
+        ("test_preprocesado.csv", test_matrix, y_test),
     ):
         result = pd.DataFrame(matrix, columns=names)
         result[TARGET] = targets.to_numpy()
