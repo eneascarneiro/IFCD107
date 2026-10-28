@@ -22,6 +22,8 @@ Mapa de rutas:
 - POST /api/v1/regresion/boosting/adaboost/csv.
 - POST /api/v1/regresion/boosting/gradient/csv.
 - POST /api/v1/eda/preprocesado/csv: EDA, codificación, informe PDF y entrenamiento SVR.
+- POST /api/v1/primitiva/analizar/csv: ejecuta el analizador local sobre un CSV histórico.
+- POST /api/v1/primitiva/knn/csv y /api/v1/primitiva/cnn/csv: modelos didácticos sobre histórico CSV.
 
 Todas las rutas POST de entrenamiento requieren el encabezado Authorization:
 Bearer <token>. Los endpoints CSV reciben multipart/form-data con un campo
@@ -49,7 +51,7 @@ from api_functions import (
     parse_csv, parse_json_points, random_forest_options, run_model,
     run_random_forest, run_polynomial_search, run_knn_cross_validation,
     run_tabular_regressor, regression_model_options, validate_reference, parse_integer,
-    parse_search_options, run_eda_preprocesado,
+    parse_search_options, run_eda_preprocesado, run_primitiva_analysis, run_primitiva_model,
 )
 from regression.parameter_search import PARAMETER_CATALOG
 
@@ -495,6 +497,64 @@ def create_app(output_root: Path = OUTPUT_ROOT, users: dict | None = None, token
         if len(raw_csv) > 4 * 1024 * 1024:
             return jsonify(error="El CSV supera el límite de 4 MB."), 413
         return run_eda_preprocesado(app, output_root, reference, raw_csv, uploaded.filename)
+
+    @app.post("/api/v1/primitiva/analizar/csv")
+    @require_token
+    def analyze_primitiva_csv():
+        """Ejecuta uno de los analizadores fijos de Primitiva sobre un CSV subido."""
+        reference, error = validate_reference(request.form.get("reference"))
+        if error:
+            return jsonify(error=error), 400
+        version = request.form.get("version", "v02").strip().lower()
+        if version not in {"v01", "v02"}:
+            return jsonify(error="version debe ser 'v01' o 'v02'."), 400
+        uploaded = request.files.get("file")
+        if uploaded is None or not uploaded.filename:
+            return jsonify(error="Adjunta el CSV histórico en el campo multipart 'file'."), 400
+        if Path(uploaded.filename).suffix.lower() != ".csv":
+            return jsonify(error="El archivo debe tener extensión .csv."), 400
+        raw_csv = uploaded.read()
+        if len(raw_csv) > 4 * 1024 * 1024:
+            return jsonify(error="El CSV supera el límite de 4 MB."), 413
+        return run_primitiva_analysis(output_root, reference, raw_csv, version)
+
+    def fit_primitiva_model_csv(model_name):
+        """Valida el formulario común y ejecuta el clasificador solicitado."""
+        reference, error = validate_reference(request.form.get("reference"))
+        if error:
+            return jsonify(error=error), 400
+        uploaded = request.files.get("file")
+        if uploaded is None or not uploaded.filename:
+            return jsonify(error="Adjunta el CSV histórico en el campo multipart 'file'."), 400
+        if Path(uploaded.filename).suffix.lower() != ".csv":
+            return jsonify(error="El archivo debe tener extensión .csv."), 400
+        raw_csv = uploaded.read()
+        if len(raw_csv) > 4 * 1024 * 1024:
+            return jsonify(error="El CSV supera el límite de 4 MB."), 413
+        try:
+            options = {
+                "window": parse_integer("window", 10, 3, 30, request.form),
+                "random_state": parse_integer("random_state", 42, 0, 2**32 - 1, request.form),
+            }
+            if model_name == "knn":
+                options["neighbors"] = parse_integer("neighbors", 5, 1, 25, request.form)
+            else:
+                options["epochs"] = parse_integer("epochs", 80, 10, 300, request.form)
+        except ValueError as exc:
+            return jsonify(error=str(exc)), 400
+        return run_primitiva_model(output_root, reference, raw_csv, model_name, options)
+
+    @app.post("/api/v1/primitiva/knn/csv")
+    @require_token
+    def analyze_primitiva_knn_csv():
+        """Analiza el histórico con KNN multietiqueta y validación cronológica."""
+        return fit_primitiva_model_csv("knn")
+
+    @app.post("/api/v1/primitiva/cnn/csv")
+    @require_token
+    def analyze_primitiva_cnn_csv():
+        """Analiza el histórico con una CNN 1D didáctica y validación cronológica."""
+        return fit_primitiva_model_csv("cnn")
 
     return app
 

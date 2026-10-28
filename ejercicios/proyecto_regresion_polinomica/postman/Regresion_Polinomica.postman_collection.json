@@ -1,7 +1,7 @@
 {
   "info": {
-    "name": "API de regresión polinómica, KNN, SVM y ensamblados",
-    "description": "Health, autenticación Bearer, regresión polinómica, KNN, Random Forest, SVR, AdaBoostRegressor y GradientBoostingRegressor. Ejecuta Obtener token antes de las solicitudes de entrenamiento.",
+    "name": "API de regresión y análisis de La Primitiva",
+    "description": "Health, autenticación Bearer, regresión polinómica, KNN, Random Forest, SVR, AdaBoostRegressor y GradientBoostingRegressor. Ejecuta Obtener token antes de las solicitudes de entrenamiento. Incluye ejecución controlada de los analizadores históricos de La Primitiva con CSV.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -37,6 +37,16 @@
     },
     {
       "key": "last_svm_metrics",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "last_primitiva_run_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "last_primitiva_report",
       "value": "",
       "type": "string"
     }
@@ -1108,6 +1118,254 @@
               }
             }
           ]
+        }
+      ]
+    },
+    {
+      "name": "La Primitiva",
+      "description": "Primero ejecuta «Obtener token». Después usa una de estas llamadas POST a /api/v1/primitiva/analizar/csv; cada llamada selecciona una versión del script. Incluye también dos modelos didácticos de clasificación multietiqueta: KNN y CNN 1D; no predicen ni mejoran las probabilidades reales.",
+      "item": [
+        {
+          "name": "POST /api/v1/primitiva/analizar/csv (v02)",
+          "description": "Envía el CSV de ejemplo sintético y ejecuta el script v02. Requiere {token} de la solicitud «Obtener token». Para tus datos, sustituye el campo file por un CSV histórico con N1-N6.",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Análisis de La Primitiva completado\", function () { pm.response.to.have.status(200); });",
+                  "if (pm.response.code === 200) {",
+                  "  var result = pm.response.json();",
+                  "  pm.test(\"La respuesta incluye el informe PDF\", function () { pm.expect(result.artifacts.report_pdf).to.be.a(\"string\"); });",
+                  "  pm.collectionVariables.set(\"last_primitiva_run_id\", result.run_id);",
+                  "  pm.collectionVariables.set(\"last_primitiva_report\", result.artifacts.report_pdf);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "reference",
+                  "value": "primitiva_historico_demo",
+                  "type": "text",
+                  "description": "Identificador que forma parte de la ruta de salida bajo runs/<reference>/primitiva/."
+                },
+                {
+                  "key": "version",
+                  "value": "v02",
+                  "type": "text",
+                  "description": "Versión fija del script seleccionada por esta llamada."
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "../primitiva/datos_ejemplo_sinteticos.csv",
+                  "description": "CSV sintético de ejemplo incluido en primitiva/. Puedes reemplazarlo desde Postman."
+                }
+              ]
+            },
+            "url": "{{baseUrl}}/api/v1/primitiva/analizar/csv"
+          }
+        },
+        {
+          "name": "POST /api/v1/primitiva/analizar/csv (v01)",
+          "description": "Envía el CSV de ejemplo sintético y ejecuta el script v01. Requiere {token} de la solicitud «Obtener token». Para tus datos, sustituye el campo file por un CSV histórico con N1-N6.",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Análisis de La Primitiva completado\", function () { pm.response.to.have.status(200); });",
+                  "if (pm.response.code === 200) {",
+                  "  var result = pm.response.json();",
+                  "  pm.test(\"La respuesta incluye el informe PDF\", function () { pm.expect(result.artifacts.report_pdf).to.be.a(\"string\"); });",
+                  "  pm.collectionVariables.set(\"last_primitiva_run_id\", result.run_id);",
+                  "  pm.collectionVariables.set(\"last_primitiva_report\", result.artifacts.report_pdf);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "reference",
+                  "value": "primitiva_historico_demo",
+                  "type": "text",
+                  "description": "Identificador que forma parte de la ruta de salida bajo runs/<reference>/primitiva/."
+                },
+                {
+                  "key": "version",
+                  "value": "v01",
+                  "type": "text",
+                  "description": "Versión fija del script seleccionada por esta llamada."
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "../primitiva/datos_ejemplo_sinteticos.csv",
+                  "description": "CSV sintético de ejemplo incluido en primitiva/. Puedes reemplazarlo desde Postman."
+                }
+              ]
+            },
+            "url": "{{baseUrl}}/api/v1/primitiva/analizar/csv"
+          }
+        },
+        {
+          "name": "POST /api/v1/primitiva/knn/csv",
+          "description": "Analiza histórico con KNN multietiqueta y reserva cronológicamente el 20% final para validación. Solo demostración: no aumenta la probabilidad de acierto.",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"KNN multietiqueta: HTTP 200\", function () { pm.response.to.have.status(200); });",
+                  "if (pm.response.code === 200) {",
+                  "  var result = pm.response.json();",
+                  "  pm.test(\"Seis números en la clasificación\", function () { pm.expect(result.suggested_numbers).to.have.lengthOf(6); });",
+                  "  pm.test(\"Incluye métricas y referencia aleatoria\", function () { pm.expect(result.metrics.random_expected_hits_at_6).to.be.a(\"number\"); });",
+                  "  pm.collectionVariables.set(\"last_primitiva_knn_result\", JSON.stringify(result));",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "reference",
+                  "value": "primitiva_knn_demo",
+                  "type": "text"
+                },
+                {
+                  "key": "window",
+                  "value": "10",
+                  "type": "text",
+                  "description": "Número de sorteos anteriores usados como ventana (3-30)."
+                },
+                {
+                  "key": "random_state",
+                  "value": "42",
+                  "type": "text",
+                  "description": "Semilla reproducible."
+                },
+                {
+                  "key": "neighbors",
+                  "value": "5",
+                  "type": "text",
+                  "description": "Número de vecinos del KNN (1-25)."
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "../primitiva/datos_ejemplo_sinteticos.csv",
+                  "description": "CSV sintético de demostración; sustituible por histórico real."
+                }
+              ]
+            },
+            "url": "{{baseUrl}}/api/v1/primitiva/knn/csv"
+          }
+        },
+        {
+          "name": "POST /api/v1/primitiva/cnn/csv",
+          "description": "Analiza histórico con CNN 1D implementada con NumPy y reserva cronológicamente el 20% final para validación. Solo demostración: no aumenta la probabilidad de acierto.",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"CNN 1D implementada con NumPy: HTTP 200\", function () { pm.response.to.have.status(200); });",
+                  "if (pm.response.code === 200) {",
+                  "  var result = pm.response.json();",
+                  "  pm.test(\"Seis números en la clasificación\", function () { pm.expect(result.suggested_numbers).to.have.lengthOf(6); });",
+                  "  pm.test(\"Incluye métricas y referencia aleatoria\", function () { pm.expect(result.metrics.random_expected_hits_at_6).to.be.a(\"number\"); });",
+                  "  pm.collectionVariables.set(\"last_primitiva_cnn_result\", JSON.stringify(result));",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "reference",
+                  "value": "primitiva_cnn_demo",
+                  "type": "text"
+                },
+                {
+                  "key": "window",
+                  "value": "10",
+                  "type": "text",
+                  "description": "Número de sorteos anteriores usados como ventana (3-30)."
+                },
+                {
+                  "key": "random_state",
+                  "value": "42",
+                  "type": "text",
+                  "description": "Semilla reproducible."
+                },
+                {
+                  "key": "epochs",
+                  "value": "80",
+                  "type": "text",
+                  "description": "Épocas de entrenamiento (10-300)."
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "../primitiva/datos_ejemplo_sinteticos.csv",
+                  "description": "CSV sintético de demostración; sustituible por histórico real."
+                }
+              ]
+            },
+            "url": "{{baseUrl}}/api/v1/primitiva/cnn/csv"
+          }
         }
       ]
     }

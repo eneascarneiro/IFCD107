@@ -76,7 +76,6 @@ services:
       N8N_PROTOCOL: http
       N8N_EDITOR_BASE_URL: http://localhost:${N8N_PORT:-5678}/
       WEBHOOK_URL: http://localhost:${N8N_PORT:-5678}/
-      N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY:?Set N8N_ENCRYPTION_KEY in .env}
       GENERIC_TIMEZONE: ${GENERIC_TIMEZONE:-Europe/Paris}
       TZ: ${GENERIC_TIMEZONE:-Europe/Paris}
       N8N_DIAGNOSTICS_ENABLED: "false"
@@ -86,20 +85,38 @@ services:
     restart: unless-stopped
 
   flowise:
-    image: flowiseai/flowise:latest
+    # Flowise 3.1.4 tiene un fallo de dependencias al inicializar nodos opcionales.
+    # 3.1.3 es la última etiqueta anterior a ese fallo que arranca correctamente.
+    image: ${FLOWISE_IMAGE:-flowiseai/flowise:3.1.3}
     ports:
       - "127.0.0.1:${FLOWISE_PORT:-3001}:3000"
     environment:
       PORT: 3000
-      FLOWISE_USERNAME: ${FLOWISE_USERNAME:?Set FLOWISE_USERNAME in .env}
-      FLOWISE_PASSWORD: ${FLOWISE_PASSWORD:?Set FLOWISE_PASSWORD in .env}
-      DATABASE_PATH: /root/.flowise
+      DATABASE_PATH: /home/node/.flowise
+      APIKEY_PATH: /home/node/.flowise
+      LOG_PATH: /home/node/.flowise/logs
+      SECRETKEY_PATH: /home/node/.flowise
+      BLOB_STORAGE_PATH: /home/node/.flowise/storage
+      SECRETKEY_STORAGE_TYPE: local
+      STORAGE_TYPE: local
     volumes:
-      - flowise_data:/root/.flowise
+      - flowise_data:/home/node/.flowise
     depends_on:
       ollama:
         condition: service_healthy
+      flowise-data-init:
+        condition: service_completed_successfully
     restart: unless-stopped
+
+  # Flowise ejecuta como usuario node (UID 1000). Este paso prepara el volumen
+  # compartido para que pueda crear la base SQLite, claves, logs y ficheros.
+  flowise-data-init:
+    image: busybox:1.37
+    user: "0:0"
+    command: ["sh", "-c", "chown -R 1000:1000 /data"]
+    volumes:
+      - flowise_data:/data
+    restart: "no"
 
 volumes:
   regression_runs:

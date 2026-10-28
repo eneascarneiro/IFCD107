@@ -95,7 +95,15 @@ if (!(Test-Path .env)) { Copy-Item .env.example .env }
 if (!(Test-Path dify/docker/.env)) { Copy-Item dify/docker/.env.example dify/docker/.env }
 ```
 
-Si ya existe `.env`, conserva sus valores y añade las nuevas variables que falten desde `.env.example`. Edita ambos archivos de entorno y sustituye las contraseñas y claves de ejemplo por valores aleatorios seguros. Mantén los mismos nombres de modelos (`llama3:8b` y `mistral:7b`) si quieres que los servicios usen los modelos descargados. La primera ejecución requiere conexión a Internet para descargar las imágenes de contenedor y varios GB de modelos:
+Si ya existe `.env`, conserva sus valores y añade las nuevas variables que falten desde `.env.example`. Asegúrate de que incluya `COMPOSE_PROFILES=weaviate,postgresql,collaboration`; estos perfiles habilitan los servicios de base de datos y vectorización de Dify al lanzar desde el Compose raíz. Sustituye las contraseñas y claves de ejemplo por valores aleatorios seguros. Mantén los mismos nombres de modelos (`llama3:8b` y `mistral:7b`) si quieres que los servicios usen los modelos descargados. La primera ejecución requiere conexión a Internet para descargar las imágenes de contenedor y varios GB de modelos:
+
+El perfil local de Dify requiere el token `DIFY_AGENT_LOCAL_SANDBOX_AUTH_TOKEN`. Genéralo y guárdalo en `dify/docker/.env` (no lo publiques):
+
+```powershell
+python -c "import secrets; print(secrets.token_urlsafe(48))"
+```
+
+Pega el valor generado en la línea `DIFY_AGENT_LOCAL_SANDBOX_AUTH_TOKEN=`. Dify comparte ese valor entre `agent_backend` y `local_sandbox`; ambos contenedores deben recrearse después de cambiarlo.
 
 En `dify/docker/.env`, limita también la publicación web de Dify al equipo local configurando `EXPOSE_NGINX_PORT=127.0.0.1:8080` y `EXPOSE_NGINX_SSL_PORT=127.0.0.1:8443`.
 
@@ -107,13 +115,81 @@ Accesos locales:
 
 - API de regresión: `http://localhost:5000`
 - n8n: `http://localhost:5678`
-- Flowise: `http://localhost:3001` (credenciales definidas en `.env`)
+- Flowise: `http://localhost:3001` (crea la cuenta administradora al primer acceso)
 - Dify: `http://localhost:8080/install` la primera vez; después, `http://localhost:8080`
 - Ollama: API local en `http://localhost:11434`
 
 Ollama descarga por defecto `llama3:8b` y `mistral:7b`, que se guardan en el volumen local `./ollama`. En Flowise y n8n, configura una conexión Ollama con URL `http://ollama:11434`; en Dify, configura el proveedor Ollama con URL `http://host.docker.internal:11434` y el nombre exacto del modelo. Docker Desktop resuelve `host.docker.internal`; en instalaciones Linux puede ser necesario habilitar el acceso al host desde los contenedores.
 
 La inferencia con estos modelos locales no factura llamadas a una API externa. El equipo sigue consumiendo almacenamiento, memoria, CPU/GPU y electricidad; el primer arranque también descarga imágenes y modelos. El Compose deja las interfaces ligadas a `127.0.0.1`, de modo que son accesibles desde el propio equipo. Para detener los servicios sin borrar los datos: `docker compose down`; no añadas `-v` si quieres conservar los volúmenes.
+
+### Solucionar permisos de Flowise
+
+Flowise se ejecuta como usuario `node` (UID 1000) y guarda SQLite, claves, logs y archivos en `/home/node/.flowise`. El servicio `flowise-data-init` ajusta los permisos del volumen persistente antes de iniciar Flowise. Si el contenedor se detuvo con `EACCES` en `/root/.flowise`, actualiza la configuración y recrea ambos servicios:
+
+```powershell
+docker compose up -d --force-recreate flowise-data-init flowise
+docker compose logs --tail 100 flowise
+```
+
+El mensaje `Auth secrets not initialized` que aparece después del error de permisos suele ser consecuencia de que Flowise no pudo inicializar la base de datos y los secretos; revisa que el arranque ya no muestre `EACCES`. La clave de cifrado de credenciales y la base de datos se conservan en el volumen `flowise_data`; no lo borres si quieres conservar los flujos y la cuenta.
+
+### Solucionar `local_sandbox_auth_token is required`
+
+El backend local de Dify no inicia si `DIFY_AGENT_LOCAL_SANDBOX_AUTH_TOKEN` está vacío. Añade un token aleatorio a `dify/docker/.env` como se indica arriba y recrea los dos servicios que lo utilizan:
+
+```powershell
+docker compose up -d --force-recreate local_sandbox agent_backend
+docker compose logs --tail 100 agent_backend local_sandbox
+```
+
+### Solucionar `lookup db_postgres: no such host`
+
+`db_postgres` forma parte del perfil `postgresql`. Al iniciar la composición raíz sin los perfiles de Dify activos, Compose puede omitir la base de datos aunque `plugin_daemon` esté configurado para conectarse a ella. Comprueba que el `.env` raíz tenga `COMPOSE_PROFILES=weaviate,postgresql,collaboration` y recrea los servicios afectados:
+
+```powershell
+docker compose up -d --force-recreate db_postgres plugin_daemon api worker worker_beat agent_backend
+docker compose logs --tail 100 db_postgres plugin_daemon
+```
+
+### Solucionar `Cannot find module '@smithy/eventstream-codec'`
+
+Flowise 3.1.4 presenta fallos de dependencias durante el arranque de nodos, incluido AWS Bedrock. El Compose fija Flowise en `3.1.3`, que evita el problema reportado. Para actualizar la imagen y recrear el servicio:
+
+```powershell
+docker compose pull flowise
+docker compose up -d --force-recreate flowise
+docker compose logs --tail 100 flowise
+```
+
+La etiqueta `3.1.3` ha sido reportada con una discrepancia en la versión CLI interna; se fija como solución práctica al fallo de arranque de `3.1.4`, no como actualización definitiva. Consulta las [incidencias de Flowise](https://github.com/FlowiseAI/Flowise/issues/6688) antes de cambiar `FLOWISE_IMAGE`.
+
+## API de análisis histórico de La Primitiva
+
+Los scripts recibidos en `C:\Users\josem\Downloads\primitiva` se han incorporado al proyecto en `primitiva/` para que también estén disponibles dentro de la imagen Docker. La ruta `POST /api/v1/primitiva/analizar/csv` ejecuta el analizador `v02` por defecto; también admite `v01`. Requiere Bearer token y `multipart/form-data` con `reference`, `version` y `file`. Solo se ejecutan los dos scripts incluidos; el archivo subido se trata como datos, no como código. El límite del CSV es 4 MB y el proceso tiene un límite de 90 segundos.
+
+El CSV debe contener las columnas `N1` a `N6`; admite `FECHA`, `R` y `Joker` opcionales. Los scripts esperan separador `;` y buscan automáticamente la cabecera real cuando el fichero tiene líneas introductorias. `primitiva/datos_ejemplo_sinteticos.csv` contiene 60 sorteos ficticios para una primera prueba; no son resultados oficiales. La respuesta devuelve rutas relativas al CSV, informe PDF y log bajo `runs/<reference>/primitiva/`. El análisis de frecuencias históricas no predice sorteos futuros: cada combinación mantiene la misma probabilidad teórica.
+
+En Postman, ejecuta `Obtener token` y después una de las solicitudes de la carpeta **La Primitiva**. Las llamadas ya adjuntan el CSV sintético; puedes sustituirlo por un fichero histórico en el campo `file`.
+
+### Clasificadores didácticos KNN y CNN 1D
+
+Se incorporan `POST /api/v1/primitiva/knn/csv` y `POST /api/v1/primitiva/cnn/csv`. Ambos requieren Bearer token y `multipart/form-data` con `reference` y un `file` CSV con las columnas `N1` a `N6`. El límite de subida es 4 MB. Son rutas distintas para comparar dos métodos; no afirman que sea posible anticipar un sorteo aleatorio.
+
+Parámetros de formulario:
+
+| Campo | KNN | CNN 1D | Predeterminado |
+| --- | --- | --- | --- |
+| `window` | 3-30 sorteos previos | 3-30 sorteos previos | 10 |
+| `neighbors` | 1-25 vecinos | No se usa | 5 |
+| `epochs` | No se usa | 10-300 épocas | 80 |
+| `random_state` | Semilla | Semilla de inicialización | 42 |
+
+El programa transforma cada sorteo en 49 indicadores (uno por número) y cada ejemplo en una secuencia de sorteos anteriores. KNN usa distancia Hamming y ponderación por distancia. La CNN 1D es una implementación pequeña de propósito didáctico basada en NumPy, con convolución temporal, ReLU, promedio global y salida multietiqueta; no añade TensorFlow o PyTorch al contenedor. Para la validación reserva el 20% final de las secuencias, respetando el orden temporal; luego ajusta el algoritmo con todo el histórico para producir un ranking exploratorio de seis números para el siguiente sorteo.
+
+La respuesta incluye `suggested_numbers`, puntuaciones de ranking y métricas como aciertos medios por boleto y tasa de seis aciertos en el tramo reservado. Una selección aleatoria de seis números tiene un valor esperado de `36/49` aciertos (aprox. 0,735), porque cada boleto elegido contiene seis números y el sorteo extrae seis de 49. El pequeño CSV ficticio solo sirve para probar el flujo, no para evaluar capacidad predictiva. Los resultados y la entrada se guardan bajo `runs/<reference>/primitiva/` en `predicciones/`, `csv_entrada/` y `logs_salida/`.
+
+En Postman se agregan las solicitudes **POST /api/v1/primitiva/knn/csv** y **POST /api/v1/primitiva/cnn/csv** dentro de **La Primitiva**. Ejecuta primero **Obtener token** y después selecciona el modelo; las pruebas de respuesta comprueban que hay seis números y métricas.
 
 ## Ejemplo de KNN con Ollama
 

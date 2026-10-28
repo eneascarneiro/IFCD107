@@ -11,6 +11,10 @@ import csv
 import io
 import logging
 import re
+import shutil
+import subprocess
+import sys
+import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 from uuid import uuid4
@@ -33,6 +37,49 @@ from regression.parameter_search import PARAMETER_CATALOG
 # Límites del procesamiento aplicados tanto a endpoints JSON como a CSV.
 MAX_POINTS = 100_000
 REFERENCE_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$")
+PRIMITIVA_SCRIPTS = {
+    "v01": Path(__file__).resolve().parent / "primitiva" / "primitiva.py",
+    "v02": Path(__file__).resolve().parent / "primitiva" / "primitiva_v02.py",
+}
+
+def run_primitiva_model(output_root, reference, raw_csv, model_name, options):
+    """Ajusta un modelo didáctico KNN/CNN y conserva sus resultados como JSON."""
+    from primitiva.predictors import analyze_draws, load_draw_matrix
+
+    run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ") + "_" + uuid4().hex[:8]
+    output_root = Path(output_root)
+    base = output_root / reference / "primitiva"
+    input_dir, result_dir, log_dir = (base / name for name in ("csv_entrada", "predicciones", "logs_salida"))
+    for directory in (input_dir, result_dir, log_dir):
+        directory.mkdir(parents=True, exist_ok=True)
+    input_path = input_dir / f"{run_id}.csv"
+    result_path = result_dir / f"{run_id}_{model_name}.json"
+    log_path = log_dir / f"{run_id}_{model_name}.log"
+    input_path.write_bytes(raw_csv)
+    try:
+        draws = load_draw_matrix(raw_csv)
+        result = analyze_draws(draws, model_name=model_name, **options)
+        result.update({"status": "completed", "reference": reference, "run_id": run_id})
+        result["artifacts"] = {
+            "input_csv": str(input_path.relative_to(output_root)),
+            "result_json": str(result_path.relative_to(output_root)),
+            "execution_log": str(log_path.relative_to(output_root)),
+        }
+        result_path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
+        log_path.write_text(
+            f"run_id={run_id}\nmodel={model_name}\noptions={json.dumps(options, ensure_ascii=False)}\n"
+            f"historical_draws={len(draws)}\nmetrics={json.dumps(result['metrics'], ensure_ascii=False)}\n",
+            encoding="utf-8",
+        )
+        return jsonify(result), 200
+    except ValueError as exc:
+        log_path.write_text(f"run_id={run_id}\nmodel={model_name}\nerror={exc}\n", encoding="utf-8")
+        return jsonify(error=str(exc), reference=reference, run_id=run_id), 422
+    except Exception:
+        logging.getLogger(__name__).exception("Error al analizar La Primitiva con %s.", model_name)
+        log_path.write_text(f"run_id={run_id}\nmodel={model_name}\nerror=Error interno\n", encoding="utf-8")
+        return jsonify(error="Error interno durante el análisis del modelo.", reference=reference,
+                       run_id=run_id), 500
 
 def validate_reference(value):
     """Acepta una referencia segura para formar nombres de carpetas y archivos."""
@@ -450,6 +497,99 @@ def run_tabular_regressor(app, output_root, reference, raw_csv, options, model_n
     finally:
         handler.close()
         logger.removeHandler(handler)
+
+
+def run_primitiva_analysis(output_root, reference, raw_csv, version):
+    """Ejecuta de forma aislada uno de los analizadores locales de La Primitiva.
+
+    Solo se pueden seleccionar los dos scripts incluidos en el proyecto; el
+    fichero recibido por HTTP se trata como datos CSV y nunca como código.
+    """
+    script_path = PRIMITIVA_SCRIPTS.get(version)
+    if script_path is None:
+        return jsonify(error="version debe ser 'v01' o 'v02'."), 400
+    if not script_path.is_file():
+        return jsonify(error=f"No se encuentra el script configurado para {version}."), 500
+
+    run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ") + "_" + uuid4().hex[:8]
+    output_root = Path(output_root)
+    base = output_root / reference / "primitiva"
+    input_dir = base / "csv_entrada"
+    report_dir = base / "informes"
+    log_dir = base / "logs_salida"
+    for directory in (input_dir, report_dir, log_dir):
+        directory.mkdir(parents=True, exist_ok=True)
+
+    saved_input = input_dir / f"{run_id}.csv"
+    saved_report = report_dir / f"{run_id}_informe.pdf"
+    saved_log = log_dir / f"{run_id}.log"
+    saved_input.write_bytes(raw_csv)
+
+    try:
+        # El código legado busca cualquier CSV del directorio actual y escribe
+        # en generated/. Una carpeta temporal por petición evita colisiones.
+        with tempfile.TemporaryDirectory(prefix=f"primitiva-{run_id}-") as temp_dir:
+            work_dir = Path(temp_dir)
+            shutil.copyfile(saved_input, work_dir / "historico.csv")
+            result = subprocess.run(
+                [sys.executable, str(script_path)],
+                cwd=work_dir,
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                timeout=90,
+                check=False,
+            )
+            log_text = (
+                f"script={script_path.name}\n"
+                f"return_code={result.returncode}\n\n"
+                f"--- stdout ---\n{result.stdout}\n"
+                f"--- stderr ---\n{result.stderr}"
+            )
+            saved_log.write_text(log_text, encoding="utf-8")
+
+            generated_report = work_dir / "generated" / "analisis_combinaciones_primitiva.pdf"
+            if result.returncode != 0:
+                return jsonify(
+                    error="El analizador de La Primitiva terminó con error.",
+                    reference=reference,
+                    run_id=run_id,
+                    artifacts={"input_csv": str(saved_input.relative_to(output_root)),
+                               "execution_log": str(saved_log.relative_to(output_root))},
+                ), 500
+            if not generated_report.is_file():
+                return jsonify(
+                    error="El CSV no contiene los datos válidos necesarios (columnas N1 a N6).",
+                    reference=reference,
+                    run_id=run_id,
+                    artifacts={"input_csv": str(saved_input.relative_to(output_root)),
+                               "execution_log": str(saved_log.relative_to(output_root))},
+                ), 422
+            shutil.copyfile(generated_report, saved_report)
+
+        return jsonify(
+            status="completed",
+            reference=reference,
+            run_id=run_id,
+            algorithm=f"primitiva_{version}",
+            note=("El análisis de frecuencias históricas no predice sorteos futuros; "
+                  "cada combinación conserva la misma probabilidad teórica."),
+            artifacts={
+                "input_csv": str(saved_input.relative_to(output_root)),
+                "report_pdf": str(saved_report.relative_to(output_root)),
+                "execution_log": str(saved_log.relative_to(output_root)),
+            },
+        ), 200
+    except subprocess.TimeoutExpired:
+        saved_log.write_text("La ejecución superó el límite de 90 segundos.", encoding="utf-8")
+        return jsonify(error="El análisis superó el límite de 90 segundos.", reference=reference,
+                       run_id=run_id), 504
+    except Exception:
+        logging.getLogger(__name__).exception("Error al ejecutar el análisis de La Primitiva.")
+        saved_log.write_text("Error interno al ejecutar el analizador.", encoding="utf-8")
+        return jsonify(error="Error interno al ejecutar el analizador.", reference=reference,
+                       run_id=run_id), 500
 
 def run_random_forest(app, output_root, reference, raw_csv, options, source_name):
     """Coordina el entrenamiento de Random Forest y la escritura de artefactos."""
