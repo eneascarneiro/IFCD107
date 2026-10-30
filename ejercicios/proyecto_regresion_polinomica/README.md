@@ -73,7 +73,9 @@ Cada estimador está en su módulo de `regression/`: `svm_regressor.py`, `adaboo
 
 ### Ejecutar las seis prácticas SVR paso a paso
 
-El script `regression/train_svm_casuisticas.py` es una guía comentada para principiantes y comparte `train_one_dataset` con el endpoint EDA. Para cada CSV primero genera el informe EDA y guarda los datos transformados; solo después ajusta el SVR y calcula las métricas en un conjunto de prueba. Ejecútalo desde la raíz:
+El script `regression/train_svm_casuisticas.py` es una guía comentada para principiantes y comparte `train_one_dataset` con el endpoint EDA. Para cada CSV preprocesa y guarda los datos transformados; después compara `GridSearchCV` y `RandomizedSearchCV` con validación cruzada sobre el conjunto de entrenamiento. Selecciona el buscador con menor RMSE medio de validación, evalúa los dos mejores estimadores en el mismo conjunto de prueba reservado y persiste los hiperparámetros del ganador en `best_training`. El PDF final incluye una gráfica de valores reales frente a predichos para cada búsqueda.
+
+`GridSearchCV` prueba combinaciones definidas para kernels lineal, RBF y polinómico. `RandomizedSearchCV` explora 40 combinaciones con rangos logarítmicos para `C`, `epsilon` y `gamma`. Ambos incluyen el preprocesador dentro del pipeline, así que imputación, escalado y codificación se ajustan dentro de cada pliegue. Las tablas completas de resultados se guardan en `busquedas/`; el modelo ganador y sus parámetros aparecen en el JSON de métricas, la respuesta del endpoint EDA y el resumen general `resumen_entrenamientos.csv`. Ejecuta el script desde la raíz:
 
 ```powershell
 .venv\Scripts\python.exe regression\train_svm_casuisticas.py
@@ -83,7 +85,47 @@ Los PDFs, CSV preprocesados, predicciones, modelos y métricas individuales se g
 
 ## EDA y preprocesado tabular con informe PDF
 
-`POST /api/v1/eda/preprocesado/csv` acepta `multipart/form-data` con `reference` y el archivo `file`; requiere Bearer token y limita el CSV a 4 MB. El endpoint llama a `train_one_dataset` en `regression/train_svm_casuisticas.py`: primero elabora el informe EDA y el CSV transformado, y después entrena SVR sobre esos datos. La clase `regression/eda_preprocesado.py` convierte `tipo_tramite` y `distrito` a códigos numéricos reproducibles, convierte `requerimientos_documentacion` (o `requiere_documentacion`) a número o códigos si es texto, y sustituye `mes_presentacion` por las variables cíclicas seno/coseno. La respuesta incluye las métricas y rutas del informe PDF, CSV preprocesado, predicciones y modelo guardado bajo `runs/<reference>/`.
+`POST /api/v1/eda/preprocesado/csv` acepta `multipart/form-data` con `reference` y el archivo `file`; requiere Bearer token y limita el CSV a 4 MB. El endpoint llama a `train_one_dataset` en `regression/train_svm_casuisticas.py`: primero elabora el informe EDA y el CSV transformado, y después entrena SVR sobre esos datos. La clase `regression/eda_preprocesado.py` convierte `tipo_tramite` y `distrito` a códigos numéricos reproducibles, convierte `requerimientos_documentacion` (o `requiere_documentacion`) a número o códigos si es texto, y sustituye `mes_presentacion` por las variables cíclicas seno/coseno. El informe PDF incluye una matriz de correlación de Pearson para columnas numéricas.
+
+El formulario admite `min_correlation` (predeterminado `0`) y `max_correlation` (predeterminado `1`), ambos entre 0 y 1. Para variables numéricas, el filtro conserva las características cuyo valor absoluto de correlación con el objetivo `y` esté dentro del intervalo, incluidos sus extremos; excluye las que queden fuera. Así, los valores predeterminados conservan todas las características. El objetivo `y`, el identificador `expediente_id` y las categorías codificadas no se eliminan por este filtro. Se puede mantener la exclusión manual opcional con `feaures_eliminar=columna1,columna2` (campo legado). La respuesta detalla los umbrales y las columnas descartadas, además de las métricas y rutas del informe PDF, CSV preprocesado, predicciones y modelo bajo `runs/<reference>/`.
+
+## Casuísticas comparativas para 21 algoritmos de regresión
+
+La subcarpeta **Casuísticas comparativas de regresión** de la colección Postman tiene una solicitud por algoritmo. Todas llaman a `POST /api/v1/regresion/casuisticas/<algorithm>/csv`, con `reference`, `file`, `cv`, `n_iter` y `random_state`. La API ejecuta GridSearchCV y RandomizedSearchCV sobre una partición de entrenamiento, escoge por el menor RMSE medio de validación y evalúa los dos ganadores en la misma partición de prueba. El PDF contiene EDA, matriz de correlación y gráficas de predicción frente a valor real para ambos métodos. Se archivan los hiperparámetros ganadores, predicciones, modelo, resultados de búsqueda y métricas bajo `runs/<reference>/casuisticas/<algorithm>/`.
+
+Cada algoritmo también tiene un lanzador que procesa los seis CSV didácticos de `proyecto_eda_preprocesado_latex/datos/`. Ejecuta desde la raíz del proyecto el módulo que corresponda; por ejemplo:
+
+```powershell
+python regression/train_ridge_casuisticas.py
+```
+
+Los módulos individuales son:
+
+| Algoritmo | Lanzador funcional | Plantilla de ejercicio con pseudocódigo |
+| --- | --- | --- |
+| Lineal simple | `train_regresion_lineal_simple_casuisticas.py` | `train_regresion_lineal_simple_ejercicio_casuisticas.py` |
+| Lineal múltiple | `train_regresion_lineal_multiple_casuisticas.py` | `train_regresion_lineal_multiple_ejercicio_casuisticas.py` |
+| Ridge | `train_ridge_casuisticas.py` | `train_ridge_ejercicio_casuisticas.py` |
+| Lasso | `train_lasso_casuisticas.py` | `train_lasso_ejercicio_casuisticas.py` |
+| Elastic Net | `train_elastic_net_casuisticas.py` | `train_elastic_net_ejercicio_casuisticas.py` |
+| Lineal bayesiana | `train_regresion_lineal_bayesiana_casuisticas.py` | `train_regresion_lineal_bayesiana_ejercicio_casuisticas.py` |
+| Polinomial | `train_regresion_polinomial_casuisticas.py` | `train_regresion_polinomial_ejercicio_casuisticas.py` |
+| Huber | `train_huber_casuisticas.py` | `train_huber_ejercicio_casuisticas.py` |
+| RANSAC | `train_ransac_casuisticas.py` | `train_ransac_ejercicio_casuisticas.py` |
+| Theil-Sen | `train_theil_sen_casuisticas.py` | `train_theil_sen_ejercicio_casuisticas.py` |
+| Cuantílica | `train_regresion_cuantilica_casuisticas.py` | `train_regresion_cuantilica_ejercicio_casuisticas.py` |
+| Árbol de decisión | `train_arbol_decision_casuisticas.py` | `train_arbol_decision_ejercicio_casuisticas.py` |
+| Random Forest | `train_random_forest_casuisticas.py` | `train_random_forest_ejercicio_casuisticas.py` |
+| Gradient Boosting | `train_gradient_boosting_casuisticas.py` | `train_gradient_boosting_ejercicio_casuisticas.py` |
+| XGBoost | `train_xgboost_casuisticas.py` | `train_xgboost_ejercicio_casuisticas.py` |
+| LightGBM | `train_lightgbm_casuisticas.py` | `train_lightgbm_ejercicio_casuisticas.py` |
+| CatBoost | `train_catboost_casuisticas.py` | `train_catboost_ejercicio_casuisticas.py` |
+| SVR | `train_svr_casuisticas.py` | `train_svr_ejercicio_casuisticas.py` |
+| KNN | `train_knn_casuisticas.py` | `train_knn_ejercicio_casuisticas.py` |
+| Procesos Gaussianos | `train_gaussian_process_casuisticas.py` | `train_gaussian_process_ejercicio_casuisticas.py` |
+| MLPRegressor | `train_mlp_casuisticas.py` | `train_mlp_ejercicio_casuisticas.py` |
+
+Las plantillas están compuestas solo por comentarios. Describen paso a paso el flujo común de preprocesado, partición sin fuga, GridSearchCV/RandomizedSearchCV, comparación del ganador, evaluación, gráficas y artefactos, además de los hiperparámetros y consideraciones propias de cada método. El alumnado completa el código en Python usando el lanzador funcional correspondiente como referencia.
 
 ## n8n, Dify, Flowise y modelos locales con Ollama
 

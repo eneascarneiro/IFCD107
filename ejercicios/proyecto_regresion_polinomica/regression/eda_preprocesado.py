@@ -32,12 +32,12 @@ class EdaPreprocesado:
         result.columns = [str(column).strip() for column in result.columns]
         if result.columns.duplicated().any():
             raise ValueError("El CSV no puede contener nombres de columna duplicados.")
-        required = set(self.CATEGORY_COLUMNS) | {self.MONTH_COLUMN}
-        if not any(column in result for column in self.DOCUMENT_COLUMNS):
-            required.add(self.DOCUMENT_COLUMNS[0])
-        missing = sorted(required.difference(result.columns))
-        if missing:
-            raise ValueError("Faltan columnas requeridas para este preprocesado: " + ", ".join(missing))
+        # required = set(self.CATEGORY_COLUMNS) | {self.MONTH_COLUMN}
+        # if not any(column in result for column in self.DOCUMENT_COLUMNS):
+        #     required.add(self.DOCUMENT_COLUMNS[0])
+        # missing = sorted(required.difference(result.columns))
+        # if missing:
+        #     raise ValueError("Faltan columnas requeridas para este preprocesado: " + ", ".join(missing))
         mappings: dict[str, dict] = {}
 
         for column in self.CATEGORY_COLUMNS:
@@ -108,7 +108,11 @@ class EdaPreprocesado:
         return rows
 
     def generate_report(self, source: pd.DataFrame, transformed: pd.DataFrame,
-                        mappings: dict, pdf_path: Path, source_name: str = "entrada.csv") -> None:
+                        mappings: dict, pdf_path: Path, source_name: str = "entrada.csv",
+                        correlation_matrix: pd.DataFrame | None = None,
+                        correlation_min: float = 0.0, correlation_max: float = 1.0,
+                        excluded_by_correlation: list[str] | None = None,
+                        model_comparisons: dict[str, dict] | None = None) -> None:
         """Escribe un informe PDF con controles de calidad y distribuciones."""
         pdf_path = Path(pdf_path)
         pdf_path.parent.mkdir(parents=True, exist_ok=True)
@@ -121,7 +125,10 @@ class EdaPreprocesado:
             import matplotlib.pyplot as plt
             from matplotlib.backends.backend_pdf import PdfPages
         except ImportError:
-            self._generate_text_report(source, transformed, mappings, pdf_path, source_name)
+            self._generate_text_report(
+                source, transformed, mappings, pdf_path, source_name, correlation_matrix,
+                correlation_min, correlation_max, excluded_by_correlation, model_comparisons,
+            )
             return
 
         with PdfPages(pdf_path) as pdf:
@@ -160,6 +167,46 @@ class EdaPreprocesado:
             pdf.savefig(fig, bbox_inches="tight")
             plt.close(fig)
 
+            if correlation_matrix is not None and not correlation_matrix.empty:
+                # Dividimos la matriz en bloques para que el PDF incluya todas
+                # las variables y las etiquetas sigan siendo legibles.
+                block_size = 12
+                for row_start in range(0, len(correlation_matrix.index), block_size):
+                    for column_start in range(0, len(correlation_matrix.columns), block_size):
+                        visible = correlation_matrix.iloc[
+                            row_start:row_start + block_size,
+                            column_start:column_start + block_size,
+                        ]
+                        fig, ax = plt.subplots(figsize=(11.7, 8.3))
+                        image = ax.imshow(visible.to_numpy(dtype=float), cmap="coolwarm",
+                                          vmin=-1, vmax=1, aspect="auto")
+                        ax.set_xticks(np.arange(len(visible.columns)))
+                        ax.set_yticks(np.arange(len(visible.index)))
+                        ax.set_xticklabels([str(value) for value in visible.columns], rotation=55,
+                                           ha="right", fontsize=8)
+                        ax.set_yticklabels([str(value) for value in visible.index], fontsize=8)
+                        for row in range(len(visible.index)):
+                            for column in range(len(visible.columns)):
+                                value = visible.iloc[row, column]
+                                if pd.notna(value):
+                                    ax.text(column, row, f"{value:.2f}", ha="center", va="center",
+                                            fontsize=7, color="black")
+                        fig.colorbar(image, ax=ax, label="Correlación de Pearson")
+                        fig.suptitle(
+                            f"Matriz de correlación (filas {row_start + 1}-"
+                            f"{row_start + len(visible.index)}, columnas "
+                            f"{column_start + 1}-{column_start + len(visible.columns)})",
+                            fontsize=13,
+                        )
+                        fig.text(.07, .025,
+                                 f"Filtro respecto a y: |r| entre {correlation_min:.2f} y "
+                                 f"{correlation_max:.2f}. Variables excluidas: "
+                                 f"{', '.join(excluded_by_correlation or []) or 'ninguna'}. "
+                                 "Las correlaciones no implican causalidad.", fontsize=8, wrap=True)
+                        fig.tight_layout(rect=[0, .07, 1, .94])
+                        pdf.savefig(fig, bbox_inches="tight")
+                        plt.close(fig)
+
             numeric_columns = transformed.select_dtypes(include="number").columns.tolist()
             numeric_columns = [column for column in numeric_columns if transformed[column].notna().any()]
             selected = numeric_columns[:6]
@@ -182,8 +229,46 @@ class EdaPreprocesado:
             pdf.savefig(fig, bbox_inches="tight")
             plt.close(fig)
 
+            # Cada búsqueda recibe una página independiente y usa el mismo
+            # conjunto de prueba, lo que permite comparar ambas predicciones.
+            for method_name, comparison in (model_comparisons or {}).items():
+                actual = np.asarray(comparison["y_true"], dtype=float)
+                predicted = np.asarray(comparison["y_predicted"], dtype=float)
+                if not len(actual):
+                    continue
+                lower = float(min(actual.min(), predicted.min()))
+                upper = float(max(actual.max(), predicted.max()))
+                padding = max((upper - lower) * 0.05, 1e-9)
+                fig, ax = plt.subplots(figsize=(9, 7))
+                ax.scatter(actual, predicted, color="#2878B5", edgecolor="white",
+                           alpha=.8, label="Predicciones")
+                ax.plot([lower - padding, upper + padding],
+                        [lower - padding, upper + padding], color="#d62728",
+                        linestyle="--", label="Predicción ideal: predicho = real")
+                ax.set_xlim(lower - padding, upper + padding)
+                ax.set_ylim(lower - padding, upper + padding)
+                ax.set_xlabel("Valor real")
+                ax.set_ylabel("Valor predicho")
+                ax.set_title(f"{method_name}: predicciones frente a valores reales")
+                ax.grid(True, alpha=.25)
+                ax.legend()
+                ax.text(
+                    .04, .96,
+                    f"RMSE = {comparison['rmse']:.4g}\nR² = {comparison['r2']:.4g}\n"
+                    f"Observaciones de prueba = {len(actual)}",
+                    transform=ax.transAxes, va="top",
+                    bbox={"boxstyle": "round", "facecolor": "white", "alpha": .85},
+                )
+                fig.tight_layout()
+                pdf.savefig(fig, bbox_inches="tight")
+                plt.close(fig)
+
     def _generate_text_report(self, source: pd.DataFrame, transformed: pd.DataFrame,
-                              mappings: dict, pdf_path: Path, source_name: str) -> None:
+                              mappings: dict, pdf_path: Path, source_name: str,
+                              correlation_matrix: pd.DataFrame | None = None,
+                              correlation_min: float = 0.0, correlation_max: float = 1.0,
+                              excluded_by_correlation: list[str] | None = None,
+                              model_comparisons: dict[str, dict] | None = None) -> None:
         """Crea un PDF sencillo sin bibliotecas gráficas adicionales."""
         lines = [
             "INFORME EDA Y PREPROCESADO",
@@ -204,6 +289,23 @@ class EdaPreprocesado:
         lines.extend(["", "TRANSFORMACIONES APLICADAS"])
         for column, mapping in mappings.items():
             lines.append(f"{column}: {mapping}")
+        lines.extend([
+            "", "MATRIZ DE CORRELACION DE PEARSON (solo columnas numericas)",
+            f"Filtro respecto a y: correlacion absoluta entre {correlation_min:.2f} y {correlation_max:.2f}",
+            "Variables excluidas por correlacion: " + (", ".join(excluded_by_correlation or []) or "ninguna"),
+        ])
+        if correlation_matrix is not None:
+            lines.append(correlation_matrix.to_string())
+        for method_name, comparison in (model_comparisons or {}).items():
+            lines.extend([
+                "", f"{method_name}: PREDICCIONES FRENTE A VALORES REALES",
+                f"RMSE={comparison['rmse']:.6g}; R2={comparison['r2']:.6g}",
+                "Real | Predicho",
+            ])
+            lines.extend(
+                f"{actual:.6g} | {predicted:.6g}"
+                for actual, predicted in zip(comparison["y_true"], comparison["y_predicted"])
+            )
         lines.extend(["", "PERFIL NUMERICO PREPROCESADO (columna | min | mediana | max | nulos)"])
         for column in transformed.select_dtypes(include="number").columns:
             values = transformed[column].dropna()

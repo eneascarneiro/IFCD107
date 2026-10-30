@@ -1,0 +1,167 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{lmodern}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage{xcolor,listings,booktabs,longtable,hyperref}
+\usepackage{fancyhdr}
+\hypersetup{colorlinks=true,linkcolor=blue,urlcolor=blue}
+\lstset{basicstyle=\ttfamily\small,breaklines=true,frame=single,columns=fullflexible,showstringspaces=false,inputencoding=utf8,literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1 {ñ}{{\~n}}1 {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1 {Ñ}{{\~N}}1}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{IFCD107 -- Plataforma de trabajo}
+\rhead{API y Docker}
+\cfoot{\thepage}
+\setlength{\headheight}{14pt}
+\title{Plataforma de trabajo del curso\\\large API REST, Docker y servicios de apoyo}
+\author{IFCD107 -- Especialista en Inteligencia Artificial}
+\date{Octubre de 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Este documento describe el entorno práctico del proyecto de regresión polinómica. La aplicación Flask expone una API HTTP para ejecutar modelos de aprendizaje automático; Docker empaqueta la aplicación y permite iniciar servicios auxiliares como Ollama, n8n y Flowise. Se explican los componentes, el intercambio de datos, la puesta en marcha, las pruebas y la gestión cotidiana del entorno.
+\end{abstract}
+
+\section{Objetivo de la plataforma}
+El propósito es practicar dos habilidades complementarias: consumir y diseñar servicios mediante una API, y ejecutar aplicaciones en un entorno reproducible mediante contenedores. En vez de llamar directamente a las funciones Python desde cada herramienta, el cliente envía una petición HTTP a Flask. La API valida la entrada, ejecuta el algoritmo y devuelve una respuesta JSON con métricas, identificador de ejecución y, cuando aplica, rutas de los artefactos generados.
+
+Docker permite preparar los componentes con versiones y configuración declaradas. Cada servicio se ejecuta en su contenedor, con sus dependencias aisladas; Docker Compose coordina su arranque, las redes internas, los puertos y los volúmenes persistentes.
+
+\section{Componentes del proyecto}
+\begin{longtable}{p{0.24\linewidth}p{0.68\linewidth}}
+\toprule
+Componente & Función en las prácticas\\\midrule
+API Flask (\texttt{app.py}) & Publica rutas HTTP para salud, autenticación y entrenamientos. Delega la lógica de modelos en \texttt{api\_functions.py} y \texttt{regression/}.\\
+Dockerfile & Construye la imagen de la API sobre Python 3.11, instala \texttt{requirements.txt} y ejecuta Gunicorn en el puerto 5000.\\
+Docker Compose & Declara los servicios y su configuración. El Compose raíz incluye la API, Ollama, n8n y Flowise, además del Compose oficial de Dify cuando su repositorio está preparado.\\
+Ollama & Sirve modelos de lenguaje locales en la red de contenedores. La configuración descarga por defecto \texttt{llama3:8b} y \texttt{mistral:7b}.\\
+n8n & Entorno visual para construir flujos de automatización que pueden llamar a APIs.\\
+Flowise & Interfaz visual para crear flujos con modelos y componentes de IA.\\
+Dify & Plataforma de aplicaciones LLM incorporada desde su Compose oficial; requiere preparar su repositorio y entorno.\\
+Postman & Cliente para enviar solicitudes HTTP, adjuntar CSV y revisar respuestas sin escribir un cliente propio.\\
+\bottomrule
+\end{longtable}
+
+La API también se puede ejecutar directamente con Python, sin Docker. Esta opción es útil para desarrollar y depurar Flask; Docker resulta adecuado para practicar el despliegue de servicios relacionados. La colección de Postman está en \texttt{postman/Regresion\_Polinomica.postman\_collection.json} y los ejemplos de datos en \texttt{ejemplos/}.
+
+\section{Modelo mental: imagen, contenedor y servicio}
+Una \textbf{imagen} es la plantilla inmutable que contiene el programa y sus dependencias. Un \textbf{contenedor} es una instancia en ejecución de esa imagen. Un \textbf{servicio} de Compose describe cómo crear y ejecutar uno o más contenedores: imagen o construcción, variables, puertos, volúmenes y dependencias.
+
+Los servicios de Compose se comunican entre sí por la red interna usando el nombre del servicio como dirección. Por ejemplo, la API usa \texttt{http://ollama:11434} para alcanzar Ollama. Desde el navegador del equipo, en cambio, se usa un puerto publicado como \texttt{http://localhost:5000}. El puerto interno y el publicado se conectan mediante una regla del Compose.
+
+\section{Recorrido de una petición a la API}
+\begin{enumerate}
+\item Postman envía una solicitud HTTP a la dirección local de la API.
+\item Flask identifica la ruta y el método, valida los datos y, para las rutas protegidas, comprueba el token Bearer.
+\item La función correspondiente prepara los datos, separa entrenamiento y prueba, ajusta el modelo y calcula predicciones y métricas.
+\item El proyecto guarda los resultados bajo \texttt{runs/<referencia>/}, incluyendo según el endpoint registros, CSV, gráficas o modelos.
+\item Flask devuelve un estado HTTP y un cuerpo JSON. Postman muestra ambos para inspección.
+\end{enumerate}
+
+Una API es un contrato entre cliente y servidor. El método indica la operación; la ruta identifica el recurso o acción; los encabezados transportan metadatos como el tipo de contenido y la autorización; el cuerpo contiene la entrada. JSON se utiliza para datos estructurados y \texttt{multipart/form-data} para formularios que incluyen ficheros.
+
+\section{Rutas representativas}
+\begin{longtable}{p{0.14\linewidth}p{0.43\linewidth}p{0.36\linewidth}}
+\toprule Método & Ruta & Uso\\\midrule
+GET & \texttt{/api/v1/health} & Comprobar que la API responde; no requiere token.\\
+POST & \texttt{/api/v1/auth/token} & Enviar credenciales y obtener un token temporal.\\
+GET & \texttt{/api/v1/regresion/parametros} & Consultar el catálogo de parámetros disponibles.\\
+POST & \texttt{/api/v1/regresion/polinomica} & Ajustar el modelo a datos JSON.\\
+POST & \texttt{/api/v1/regresion/polinomica/csv} & Ajustar el modelo a un CSV con columnas \texttt{x,y}.\\
+POST & \texttt{/api/v1/regresion/polinomica/randomizedsearch} & Buscar hiperparámetros con validación cruzada.\\
+POST & \texttt{/api/v1/random-forest/csv} & Entrenar Random Forest desde un CSV tabular.\\
+\bottomrule
+\end{longtable}
+Las rutas de entrenamiento requieren \texttt{Authorization: Bearer <token>}. La emisión del token y la comprobación de salud son públicas. El código de estado ayuda a reconocer el resultado: 2xx indica éxito, 400 entrada inválida, 401 falta de autorización, 413 exceso de tamaño y 5xx un fallo del servidor o del entrenamiento.
+
+\subsection{Ejemplo de solicitud JSON}
+\begin{lstlisting}
+POST http://localhost:5000/api/v1/regresion/polinomica
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "reference": "prueba_curso",
+  "degree": 2,
+  "data": [
+    {"x": 1, "y": 3.1},
+    {"x": 2, "y": 5.2},
+    {"x": 3, "y": 9.0},
+    {"x": 4, "y": 15.1},
+    {"x": 5, "y": 22.8}
+  ]
+}
+\end{lstlisting}
+Los campos exactos y límites se deben consultar en la guía del proyecto y en la colección Postman. Para CSV, Postman construye automáticamente el formulario multipart al adjuntar el archivo; no hay que fijar manualmente el encabezado boundary.
+
+\section{Puesta en marcha con Docker}
+El entorno descrito usa Docker Desktop con Docker Compose v2.20 o posterior. La primera ejecución descarga imágenes y modelos; Ollama puede necesitar varios gigabytes de almacenamiento, además de memoria y tiempo de CPU/GPU. Se necesita conexión a Internet para esas descargas iniciales.
+
+El Compose raíz requiere los archivos de configuración locales. Si no existen, crear el entorno a partir de las plantillas; si ya existen, conservarlos y completar las variables que falten. El repositorio oficial de Dify y su archivo de entorno son necesarios si se va a levantar Dify:
+\begin{lstlisting}
+if (!(Test-Path .env)) { Copy-Item .env.example .env }
+git clone https://github.com/langgenius/dify.git dify
+if (!(Test-Path dify/docker/.env)) {
+  Copy-Item dify/docker/.env.example dify/docker/.env
+}
+\end{lstlisting}
+Antes de iniciar, configurar credenciales y secretos aleatorios propios en los archivos \texttt{.env}; no publicar esos archivos ni copiar secretos a documentación compartida. Para Dify, la guía principal incluye la configuración de perfiles, sandbox y puertos. Si solo se quiere ejecutar la API localmente, se puede omitir este conjunto de servicios y usar el procedimiento Python de \texttt{README.md}.
+
+Para construir e iniciar los servicios:
+\begin{lstlisting}
+docker compose up -d --build
+docker compose ps
+docker compose logs -f regression-api
+\end{lstlisting}
+La opción \texttt{-d} deja los contenedores en segundo plano; \texttt{--build} reconstruye la imagen de la API. La descarga de modelos se realiza mediante el servicio de inicialización de Ollama y puede prolongar el primer arranque. Los servicios principales se publican localmente en:
+\begin{center}
+\begin{tabular}{ll}\toprule
+Servicio & Dirección\\\midrule
+API de regresión & \url{http://localhost:5000}\\
+n8n & \url{http://localhost:5678}\\
+Flowise & \url{http://localhost:3001}\\
+Dify (si se configuró) & \url{http://localhost:8080}\\
+Ollama & \url{http://localhost:11434}\\\bottomrule
+\end{tabular}
+\end{center}
+Las interfaces locales están ligadas a la máquina anfitriona. Para comprobar la API, abrir \url{http://localhost:5000/api/v1/health} o ejecutar \texttt{Invoke-RestMethod http://localhost:5000/api/v1/health} en PowerShell.
+
+\section{Práctica guiada en Postman}
+\begin{enumerate}
+\item Importar la colección de Postman del proyecto.
+\item Configurar \texttt{baseUrl} como \texttt{http://localhost:5000}, el usuario \texttt{admin} y la contraseña tomada del entorno local autorizado.
+\item Ejecutar primero \textbf{Obtener token}. La colección guarda el token para las siguientes peticiones.
+\item Ejecutar \textbf{Health} y comprobar el estado HTTP y el JSON.
+\item Probar el ajuste polinómico JSON y, después, el ajuste CSV con \texttt{ejemplos/datos\_ejemplo\_xy.csv}.
+\item Inspeccionar métricas, \texttt{run\_id} y archivos bajo \texttt{runs/}. Cambiar el grado o la referencia y repetir.
+\item Probar una entrada inválida para observar cómo la API devuelve un error HTTP legible.
+\end{enumerate}
+
+\section{Datos, persistencia y limpieza}
+El servicio de la API monta un volumen Docker llamado \texttt{regression\_runs} sobre \texttt{/app/runs}; así, los artefactos persisten aunque se reemplace el contenedor. Ollama guarda sus modelos en \texttt{./ollama}; n8n y Flowise tienen volúmenes propios para sus datos y configuración. Eliminar un contenedor no equivale a borrar el volumen.
+
+Para detener el conjunto manteniendo los volúmenes:
+\begin{lstlisting}
+docker compose down
+\end{lstlisting}
+Para iniciarlo otra vez, ejecutar \texttt{docker compose up -d}. Evitar \texttt{docker compose down -v} si se quieren conservar modelos, flujos, configuraciones y resultados. Para revisar un servicio concreto, usar \texttt{docker compose logs --tail 100 nombre-del-servicio}.
+
+\section{Buenas prácticas de trabajo}
+\begin{itemize}
+\item Mantener claves, contraseñas y tokens en los archivos locales de entorno; compartir solo plantillas sin secretos.
+\item Usar referencias sencillas para agrupar ejecuciones y no incluir datos personales en ellas.
+\item Empezar con los CSV sintéticos de \texttt{ejemplos/}; están preparados para practicar y no representan registros reales.
+\item Verificar el estado del servicio y los logs antes de atribuir un error al algoritmo.
+\item Distinguir la dirección usada por el equipo (\texttt{localhost}) de la dirección usada entre contenedores (nombre de servicio, por ejemplo \texttt{ollama}).
+\item Recordar que un modelo local no envía la inferencia a un proveedor externo, pero sí utiliza recursos del equipo.
+\end{itemize}
+
+\section{Resultados de aprendizaje}
+Al trabajar con esta plataforma, el alumnado practica la lectura de contratos HTTP, el uso de métodos y códigos de estado, el intercambio de JSON y CSV, la autenticación Bearer, el diagnóstico mediante logs y la ejecución de servicios con Docker Compose. En paralelo, puede observar cómo una API integra el entrenamiento de modelos y convierte sus resultados en respuestas y artefactos consultables.
+
+\section{Documentación del proyecto}
+Este texto sirve como presentación de la plataforma. Para detalles de implementación y contratos completos, consultar \texttt{documentacion/guia\_proyecto.tex}; para instrucciones actualizadas de arranque, configuración y solución de problemas, consultar \texttt{README.md}. Las solicitudes reproducibles están en la colección de Postman.
+
+\end{document}

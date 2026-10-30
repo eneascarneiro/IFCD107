@@ -1,0 +1,238 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{lmodern}
+\usepackage{geometry}
+\geometry{margin=2.4cm}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\hypersetup{colorlinks=true,linkcolor=blue!55!black,urlcolor=blue!55!black}
+\definecolor{azulcurso}{HTML}{24476B}
+\definecolor{grisfondo}{HTML}{F3F5F7}
+\lstset{basicstyle=\ttfamily\small,breaklines=true,frame=single,backgroundcolor=\color{grisfondo},columns=fullflexible}
+\setlist{itemsep=3pt,topsep=4pt}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{IFCD107 — Prácticas de regresión}
+\rhead{GridSearchCV y RandomizedSearchCV}
+\cfoot{\thepage}
+\titleformat{\section}{\Large\bfseries\color{azulcurso}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{azulcurso}}{\thesubsection}{0.6em}{}
+
+\title{\textbf{Prácticas comparativas de algoritmos de regresión}\\
+\large Guía del proyecto, aclaraciones e instrucciones para el alumnado}
+\author{IFCD107 — Proyecto de regresión polinómica y casuísticas}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Presentación y propósito}
+Este proyecto propone completar, ejecutar y comparar 21 algoritmos de regresión sobre seis conjuntos de datos didácticos. Cada algoritmo tiene un entrenador funcional de referencia y una plantilla individual con pseudocódigo comentado que debe completar el alumnado. Las plantillas se encuentran en \texttt{plantillas\_ejercicio/}; son comentarios de Python y no contienen una solución ejecutable.
+
+El objetivo no consiste en declarar un algoritmo universalmente mejor. Se trata de diseñar un flujo reproducible, evitar fugas de información, justificar la búsqueda de hiperparámetros y explicar cómo cambian los errores entre casuísticas.
+
+\subsection{Resultados de aprendizaje}
+Al completar la práctica, el alumnado podrá:
+\begin{itemize}
+\item preparar variables numéricas y categóricas dentro de un \texttt{Pipeline};
+\item separar entrenamiento y prueba antes de buscar hiperparámetros;
+\item comparar \texttt{GridSearchCV} y \texttt{RandomizedSearchCV} usando los mismos pliegues;
+\item interpretar RMSE, MAE, sesgo y $R^2$ sin usar el test para escoger el modelo;
+\item explicar los hiperparámetros relevantes y los límites de cada familia de modelos;
+\item conservar los resultados, parámetros, gráficas e informes de forma reproducible.
+\end{itemize}
+
+\section{Estructura incluida en el ZIP}
+\begin{itemize}
+\item \texttt{main.tex}: documento principal del proyecto LaTeX.
+\item \texttt{README.md}: instrucciones breves para compilar, estudiar y usar las plantillas.
+\item \texttt{plantillas\_ejercicio/}: 21 archivos \texttt{train\_* \_ejercicio\_casuisticas.py}, uno por método, con pseudocódigo detallado en comentarios.
+\end{itemize}
+Los entrenadores Python completos se mantienen en el proyecto original. Cada plantilla indica el nombre del entrenador correspondiente para que pueda consultarse como referencia; la carpeta de plantillas del ZIP es el material que se entrega para completar.
+
+\section{Datos y casuísticas}
+Los CSV incluidos originalmente en \texttt{proyecto\_eda\_preprocesado\_latex/datos/} son datos simulados. No describen expedientes reales. Las columnas centrales incluyen identificador, distrito, tipo de trámite, superficie solicitada, requerimientos de documentación, mes, predictor \texttt{x} y objetivo continuo \texttt{y}. El objetivo del ejercicio es predecir \texttt{y}.
+
+\begin{longtable}{p{0.34\linewidth}p{0.58\linewidth}}
+\toprule
+\textbf{Archivo} & \textbf{Qué debe analizarse}\\
+\midrule
+\endhead
+\texttt{01\_referencia\_limpia.csv} & Referencia sin anomalías intencionadas: flujo base, tipos y distribuciones.\\
+\texttt{02\_valores\_ausentes.csv} & Valores ausentes en variables y objetivo; distinguir imputación de predicciones imposibles cuando falta \texttt{y}.\\
+\texttt{03\_valores\_atipicos.csv} & Valores extremos, validación contextual de rangos y sensibilidad de modelos robustos.\\
+\texttt{04\_categorias\_raras.csv} & Categorías poco frecuentes y diferencias de espacios/mayúsculas; normalización y categorías no vistas.\\
+\texttt{05\_duplicados.csv} & Duplicados exactos y conflictos entre identificador y objetivo; no eliminar filas sin justificarlo.\\
+\texttt{06\_sesgo\_y\_heterocedasticidad.csv} & Predictor sesgado y dispersión de \texttt{y} creciente con \texttt{x}; estudiar residuos y límites de la correlación lineal.\\
+\bottomrule
+\end{longtable}
+
+El flujo por lotes lee los seis archivos. También se puede usar la API con un CSV que contenga \texttt{y} y al menos una característica. Debe indicarse el significado y las unidades del objetivo antes de interpretar una métrica.
+
+\section{Protocolo común de entrenamiento}
+Cada ejercicio debe seguir el mismo protocolo para que la comparación sea justa.
+
+\begin{enumerate}
+\item \textbf{Inspeccionar y validar.} Leer el CSV, normalizar nombres de columnas, comprobar duplicados, filas vacías, valores ausentes, tipos y presencia del objetivo \texttt{y}. Excluir identificadores y columnas que revelen directa o indirectamente el objetivo.
+\item \textbf{Preparar variables.} Separar características $X$ y objetivo $y$. Imputar numéricas con estadísticas aprendidas en entrenamiento, codificar categorías y escalar cuando el algoritmo dependa de distancias o magnitudes. Estos pasos pertenecen al \texttt{Pipeline}.
+\item \textbf{Crear la prueba final.} Reservar una partición de test, por ejemplo el 20\%, usando una semilla fija. No ajustar transformaciones, seleccionar características ni elegir hiperparámetros mirando ese conjunto.
+\item \textbf{Definir las búsquedas.} Crear una cuadrícula acotada y pedagógica para GridSearchCV y distribuciones/rangos razonables para RandomizedSearchCV. Comprobar que los parámetros se aplican al paso correcto del pipeline.
+\item \textbf{Validación cruzada interna.} Ejecutar ambas búsquedas solo con train, usando los mismos pliegues y el mismo scorer. El preprocesador vuelve a ajustarse dentro de cada pliegue.
+\item \textbf{Elegir el ganador.} Se usa el RMSE medio de validación cruzada. En scikit-learn, \texttt{neg\_root\_mean\_squared\_error} es negativo; gana el score más alto, es decir, el menos negativo y de menor RMSE.
+\item \textbf{Evaluar una sola vez.} Evaluar el mejor estimador de cada buscador en el mismo test reservado. Escoger un método por validación, no porque haya salido mejor en test.
+\item \textbf{Informar y guardar.} Crear gráficas real frente a predicho para ambos métodos y guardar parámetros, métricas, predicciones, informe PDF, modelo y tablas \texttt{cv\_results\_}.
+\end{enumerate}
+
+\subsection{Por qué el preprocesado va dentro del pipeline}
+Si se calcula la mediana, la media, la desviación típica o el vocabulario categórico usando todos los datos antes de crear los pliegues, la validación recibe información de observaciones que debería tratar como nuevas. Al colocar la transformación dentro de \texttt{Pipeline}, cada pliegue aprende sus transformaciones solamente de su parte de entrenamiento. El test permanece separado hasta la evaluación final.
+
+\subsection{Diferencia entre GridSearchCV y RandomizedSearchCV}
+\texttt{GridSearchCV} evalúa todas las combinaciones declaradas en una cuadrícula finita. Es útil para un espacio pequeño y explícito. Su coste crece como el producto del número de opciones de cada parámetro por el número de pliegues.
+
+\texttt{RandomizedSearchCV} prueba un presupuesto de candidatos y puede muestrear distribuciones continuas o escalas logarítmicas. No garantiza encontrar el óptimo global; su resultado depende del rango, el número de iteraciones y la semilla. Para una comparación justa, ambos buscadores deben compartir datos de entrenamiento, partición y métrica.
+
+\subsection{Métricas que se deben explicar}
+\begin{itemize}
+\item \textbf{RMSE}: raíz del error cuadrático medio; penaliza más los errores grandes y conserva las unidades de $y$.
+\item \textbf{MAE}: error absoluto medio; resume el tamaño típico del error con menor sensibilidad a valores extremos que RMSE.
+\item \textbf{Sesgo}: promedio de $y_{\mathrm{real}}-y_{\mathrm{predicho}}$; revela si el modelo tiende a quedarse corto o largo.
+\item \textbf{$R^2$}: comparación con una predicción constante basada en la media de entrenamiento. Puede ser negativo en test.
+\end{itemize}
+Las métricas no sustituyen el análisis de las gráficas de residuos, la distribución de errores y las condiciones del caso.
+
+\section{Aclaraciones para completar las plantillas}
+\begin{itemize}
+\item Cada archivo de ejercicio es independiente y corresponde a un único algoritmo. No se debe crear un entrenador que mezcle los 21 métodos en una sola plantilla.
+\item El archivo de ejercicio contiene pseudocódigo en comentarios. El alumno debe convertir cada paso en Python y completar imports, funciones, validaciones, pipelines, búsquedas, guardado y manejo de errores.
+\item El entrenador funcional correspondiente sirve para contrastar el flujo una vez que se haya intentado la implementación. No se deben copiar las salidas del entrenador como si fueran una explicación.
+\item Se busca un resultado didáctico y reproducible, no una garantía de rendimiento predictivo ni una selección automática de variables universal.
+\item La regresión lineal simple usa exactamente una variable; debe identificarse cuál y justificarse. La regresión lineal múltiple usa varias características válidas.
+\item Algunas opciones solo aplican a ciertos kernels o estimadores. No deben mezclarse en una cuadrícula configuraciones incompatibles.
+\item Algoritmos como Gaussian Process, Theil-Sen, CatBoost, XGBoost y MLP pueden consumir más tiempo. Limitar la búsqueda y documentar el coste.
+\item Para árboles, las categorías deben transformarse de una forma que el estimador admita. CatBoost puede trabajar con categorías nativas si se prepara su entrada de manera coherente; no asumir que todos los estimadores aceptan la misma matriz.
+\end{itemize}
+
+\section{Los 21 métodos y sus puntos de estudio}
+La tabla resume el propósito de cada práctica. Los rangos concretos se justifican en cada plantilla; no son valores universales.
+
+\small
+\begin{longtable}{p{0.23\linewidth}p{0.34\linewidth}p{0.35\linewidth}}
+\toprule
+\textbf{Método} & \textbf{Qué estudiar} & \textbf{Hiperparámetros o decisiones}\\
+\midrule
+\endhead
+Lineal simple & Una característica y una recta. & Variable elegida, \texttt{fit\_intercept}.\\
+Lineal múltiple & Efecto conjunto de predictores. & \texttt{fit\_intercept}, colinealidad y coeficientes.\\
+Ridge & Penalización L2 estabiliza coeficientes. & \texttt{alpha}, escala y colinealidad.\\
+Lasso & Penalización L1 y coeficientes nulos. & \texttt{alpha}, convergencia y selección inestable con correlación.\\
+Elastic Net & Combina L1 y L2. & \texttt{alpha}, \texttt{l1\_ratio}.\\
+Bayesiana & Distribución posterior de coeficientes. & Hiperparámetros de precisión e incertidumbre.\\
+Polinomial & Potencias/interacciones para curvas. & Grado y control de crecimiento de características.\\
+Huber & Pérdida menos sensible a residuos grandes. & \texttt{epsilon}, \texttt{alpha}.\\
+RANSAC & Ajuste con consenso de inliers. & \texttt{min\_samples}, umbral residual, ensayos y semilla.\\
+Theil-Sen & Medianas de ajustes sobre subconjuntos. & Tamaño de subpoblación, iteraciones y coste.\\
+Cuantílica & Cuantil condicional, no necesariamente la media. & \texttt{quantile}, \texttt{alpha}, pinball loss.\\
+Árbol de decisión & Reglas locales y riesgo de sobreajuste. & Profundidad, hojas mínimas, criterio.\\
+Random Forest & Promedio de árboles con bootstrap/aleatoriedad. & Número de árboles, profundidad, variables por división.\\
+Gradient Boosting & Ensamble secuencial. & Tasa de aprendizaje, etapas, profundidad y submuestreo.\\
+XGBoost & Boosting con regularización y opciones eficientes. & Profundidad, tasa, subsample y regularización.\\
+LightGBM & Boosting por hojas. & \texttt{num\_leaves}, profundidad, tasa y hojas mínimas.\\
+CatBoost & Boosting con soporte específico para categorías. & Iteraciones, profundidad, tasa y pérdida.\\
+SVR & Tubo de tolerancia y margen. & Kernel, \texttt{C}, \texttt{epsilon}, \texttt{gamma}.\\
+KNN & Promedio local de vecinos próximos. & Vecinos, métrica, ponderación y escalado.\\
+Gaussian Process & Distribución sobre funciones y predicción incierta. & Kernel, ruido \texttt{alpha}, normalización.\\
+MLPRegressor & Red multicapa entrenada por retropropagación. & Capas, activación, regularización y tasa de aprendizaje.\\
+\bottomrule
+\end{longtable}
+\normalsize
+
+\section{Instrucciones para el ejercicio}
+\subsection{Preparación}
+\begin{enumerate}
+\item Instalar las dependencias del proyecto original con el entorno Python indicado por el docente.
+\item Descomprimir el ZIP en una carpeta de trabajo. Para ejecutar las referencias funcionales, conservar el proyecto original y su carpeta \texttt{proyecto\_eda\_preprocesado\_latex/datos/}.
+\item Elegir un método y abrir su archivo correspondiente en \texttt{plantillas\_ejercicio/}.
+\item Leer primero la descripción general y el archivo \texttt{LEEME\_casuisticas.md} del proyecto para entender que los datos son simulados.
+\end{enumerate}
+
+\subsection{Implementación}
+Completar en cada práctica, en este orden:
+\begin{enumerate}
+\item carga y validación de una casuística;
+\item selección de columnas y preprocesado dentro de un pipeline;
+\item partición train/test reproducible;
+\item cuadrícula y distribuciones válidas del método;
+\item GridSearchCV y RandomizedSearchCV con la misma CV y scorer;
+\item comparación de los ganadores mediante validación cruzada;
+\item predicción de ambos finalistas en el mismo test;
+\item métricas, gráfica real/predicho e interpretación;
+\item guardado de modelo, metadatos, tablas de búsqueda y resumen.
+\end{enumerate}
+
+\subsection{Ejecución y revisión}
+La estructura del proyecto contiene lanzadores funcionales llamados \texttt{train\_<algoritmo>\_casuisticas.py}; los scripts de práctica terminan en \texttt{\_ejercicio\_casuisticas.py}. Para ejecutar un entrenador de referencia desde la raíz del proyecto se puede usar, por ejemplo:
+\begin{lstlisting}
+python regression/train_ridge_casuisticas.py
+\end{lstlisting}
+Para comparar una entrada mediante API, primero se obtiene un token y luego se envía un CSV a:
+\begin{lstlisting}
+POST /api/v1/regresion/casuisticas/<algorithm>/csv
+\end{lstlisting}
+Campos multipart: \texttt{reference}, \texttt{file}, \texttt{cv}, \texttt{n\_iter} y \texttt{random\_state}. La colección Postman del proyecto incluye una solicitud por algoritmo. Los errores de validación deben comunicarse con un mensaje útil y los errores internos deben dejar detalle en el log de ejecución.
+
+\section{Artefactos que debe entregar el alumnado}
+Para el método asignado, entregar:
+\begin{enumerate}
+\item la plantilla completada y comentada con un nivel claro para otra persona;
+\item tabla de hiperparámetros y presupuesto de búsqueda;
+\item métricas de train/CV/test claramente diferenciadas, sin usar test en el ajuste;
+\item predicciones reales y predichas en CSV;
+\item gráfica real frente a predicho para GridSearchCV y RandomizedSearchCV;
+\item informe con casuística, parámetros ganadores, comparación y limitaciones;
+\item reflexión breve sobre generalización, sesgo, outliers, categorías o incertidumbre según el método.
+\end{enumerate}
+
+\section{Rúbrica orientativa}
+\begin{longtable}{p{0.68\linewidth}r}
+\toprule
+\textbf{Criterio} & \textbf{Puntos}\\
+\midrule
+Validación de datos y prevención de fuga de información & 20\\
+Pipeline/preprocesado adecuado al algoritmo & 15\\
+Búsquedas Grid y Randomized válidas, reproducibles y justificadas & 20\\
+Selección por validación y evaluación independiente en test & 15\\
+Métricas, gráficas y análisis de errores & 15\\
+Organización de resultados, documentación y manejo de errores & 10\\
+Explicación de límites y conclusiones prudentes & 5\\
+\midrule
+Total & 100\\
+\bottomrule
+\end{longtable}
+
+\section{Errores frecuentes y cómo evitarlos}
+\begin{itemize}
+\item \textbf{Escalar antes de CV}: produce fuga. Incluir escalado dentro del pipeline.
+\item \textbf{Elegir el modelo según test}: convierte el test en validación. Seleccionar por CV y reservar test para la evaluación final.
+\item \textbf{Buscar rangos desproporcionados}: incrementa tiempo sin aportar una pregunta clara. Empezar con rangos pequeños y ampliarlos con justificación.
+\item \textbf{Comparar ejecuciones con particiones distintas}: oculta el efecto del algoritmo. Compartir semilla y holdout.
+\item \textbf{Interpretar importancia o coeficiente como causalidad}: son relaciones del modelo y pueden cambiar con correlación, escala y datos.
+\item \textbf{Ignorar convergencia y coste}: guardar warnings relevantes, número de candidatos, pliegues y duración.
+\item \textbf{Informar solo $R^2$}: incluir errores en unidades originales y analizar residuos.
+\end{itemize}
+
+\section{Referencias de implementación}
+Las clases y entrenadores del proyecto fuente son la referencia práctica para completar las plantillas. La documentación oficial de scikit-learn describe \href{https://scikit-learn.org/stable/modules/grid_search.html}{GridSearchCV y RandomizedSearchCV}, \href{https://scikit-learn.org/stable/modules/compose.html}{pipelines y composición de transformadores}, y las métricas de regresión en \href{https://scikit-learn.org/stable/modules/model_evaluation.html}{evaluación de modelos}. Para XGBoost, LightGBM y CatBoost, consultar la documentación oficial de cada biblioteca antes de adaptar rangos y opciones.
+
+\end{document}

@@ -24,6 +24,7 @@ Mapa de rutas:
 - POST /api/v1/eda/preprocesado/csv: EDA, codificación, informe PDF y entrenamiento SVR.
 - POST /api/v1/primitiva/analizar/csv: ejecuta el analizador local sobre un CSV histórico.
 - POST /api/v1/primitiva/knn/csv y /api/v1/primitiva/cnn/csv: modelos didácticos sobre histórico CSV.
+- POST /api/v1/regresion/casuisticas/<algorithm>/csv: compara GridSearchCV y RandomizedSearchCV.
 
 Todas las rutas POST de entrenamiento requieren el encabezado Authorization:
 Bearer <token>. Los endpoints CSV reciben multipart/form-data con un campo
@@ -52,7 +53,9 @@ from api_functions import (
     run_random_forest, run_polynomial_search, run_knn_cross_validation,
     run_tabular_regressor, regression_model_options, validate_reference, parse_integer,
     parse_search_options, run_eda_preprocesado, run_primitiva_analysis, run_primitiva_model,
+    validate_reference_v1, run_regression_casuistica,run_regression_casuistica_ejercicio,
 )
+from regression.casuisticas import ALGORITHM_LABELS
 from regression.parameter_search import PARAMETER_CATALOG
 
 
@@ -496,8 +499,86 @@ def create_app(output_root: Path = OUTPUT_ROOT, users: dict | None = None, token
         raw_csv = uploaded.read()
         if len(raw_csv) > 4 * 1024 * 1024:
             return jsonify(error="El CSV supera el límite de 4 MB."), 413
-        return run_eda_preprocesado(app, output_root, reference, raw_csv, uploaded.filename)
 
+        # Conservamos el campo antiguo para excluir columnas por nombre, pero
+        # ya no es obligatorio. N/A o vacío significa que no se excluye ninguna.
+        feaures_eliminar, error = validate_reference_v1(
+            request.form.get("feaures_eliminar", "N/A"),
+            "Entrada feaures_eliminar no válida",
+        )
+        if error:
+            return jsonify(error=error), 400
+        array_features_excluidas = (
+            [] if not feaures_eliminar or feaures_eliminar.strip().upper() == "N/A"
+            else [name.strip() for name in feaures_eliminar.split(",") if name.strip()]
+        )
+        try:
+            min_correlation = float(request.form.get("min_correlation", 0))
+            max_correlation = float(request.form.get("max_correlation", 1))
+            if not np.isfinite(min_correlation) or not 0 <= min_correlation <= 1:
+                raise ValueError
+            if not np.isfinite(max_correlation) or not 0 <= max_correlation <= 1:
+                raise ValueError
+            if min_correlation > max_correlation:
+                return jsonify(error="min_correlation no puede ser mayor que max_correlation."), 400
+        except (TypeError, ValueError):
+            return jsonify(error="min_correlation y max_correlation deben ser números entre 0 y 1."), 400
+
+        return run_eda_preprocesado(app, output_root, reference, raw_csv, uploaded.filename,
+                                    array_features_excluidas, min_correlation, max_correlation)
+
+    @app.post("/api/v1/regresion/casuisticas/<algorithm>/csv")
+    @require_token
+    def train_regression_casuistica(algorithm):
+        """Compara búsquedas Grid/Randomized para el algoritmo indicado."""
+        if algorithm not in ALGORITHM_LABELS:
+            return jsonify(error="Algoritmo no reconocido.", valid_algorithms=sorted(ALGORITHM_LABELS)), 404
+        reference, error = validate_reference(request.form.get("reference"))
+        if error:
+            return jsonify(error=error), 400
+        uploaded = request.files.get("file")
+        if uploaded is None or not uploaded.filename:
+            return jsonify(error="Adjunta el CSV en el campo multipart 'file'."), 400
+        if Path(uploaded.filename).suffix.lower() != ".csv":
+            return jsonify(error="El archivo debe tener extensión .csv."), 400
+        raw_csv = uploaded.read()
+        if len(raw_csv) > 4 * 1024 * 1024:
+            return jsonify(error="El CSV supera el límite de 4 MB."), 413
+        try:
+            cv = parse_integer("cv", 5, 2, 10, request.form)
+            n_iter = parse_integer("n_iter", 20, 1, 100, request.form)
+            random_state = parse_integer("random_state", 42, 0, 2**32 - 1, request.form)
+        except ValueError as exc:
+            return jsonify(error=str(exc)), 400
+        return run_regression_casuistica(
+            output_root, reference, raw_csv, algorithm, cv, n_iter, random_state
+        )
+    @app.post("/api/v1/regresion/casuisticas/ejercicio/<algorithm>/csv")
+    @require_token
+    def train_regression_casuistica_ejercicio(algorithm):
+        """Compara búsquedas Grid/Randomized para el algoritmo indicado."""
+        if algorithm not in ALGORITHM_LABELS:
+            return jsonify(error="Algoritmo no reconocido.", valid_algorithms=sorted(ALGORITHM_LABELS)), 404
+        reference, error = validate_reference(request.form.get("reference"))
+        if error:
+            return jsonify(error=error), 400
+        uploaded = request.files.get("file")
+        if uploaded is None or not uploaded.filename:
+            return jsonify(error="Adjunta el CSV en el campo multipart 'file'."), 400
+        if Path(uploaded.filename).suffix.lower() != ".csv":
+            return jsonify(error="El archivo debe tener extensión .csv."), 400
+        raw_csv = uploaded.read()
+        if len(raw_csv) > 4 * 1024 * 1024:
+            return jsonify(error="El CSV supera el límite de 4 MB."), 413
+        try:
+            cv = parse_integer("cv", 5, 2, 10, request.form)
+            n_iter = parse_integer("n_iter", 20, 1, 100, request.form)
+            random_state = parse_integer("random_state", 42, 0, 2**32 - 1, request.form)
+        except ValueError as exc:
+            return jsonify(error=str(exc)), 400
+        return run_regression_casuistica_ejercicio(
+            output_root, reference, raw_csv, algorithm, cv, n_iter, random_state
+        )
     @app.post("/api/v1/primitiva/analizar/csv")
     @require_token
     def analyze_primitiva_csv():

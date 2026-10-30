@@ -81,6 +81,117 @@ def run_primitiva_model(output_root, reference, raw_csv, model_name, options):
         return jsonify(error="Error interno durante el análisis del modelo.", reference=reference,
                        run_id=run_id), 500
 
+
+def run_regression_casuistica(output_root, reference, raw_csv, algorithm,
+                              cv=5, n_iter=20, random_state=42):
+    """Ejecuta una casuística de regresión elegida por slug validado en Flask."""
+    import io
+    import pandas as pd
+    from regression.casuisticas import ALGORITHM_LABELS, train_algorithm_frame
+
+    if algorithm not in ALGORITHM_LABELS:
+        return jsonify(error="Algoritmo de casuística no reconocido."), 404
+    run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ") + "_" + uuid4().hex[:8]
+    output_root = Path(output_root)
+    base = output_root / reference / "casuisticas" / algorithm
+    input_dir = base / "csv_entrada"
+    log_dir = base / "logs_salida"
+    input_dir.mkdir(parents=True, exist_ok=True)
+    log_dir.mkdir(parents=True, exist_ok=True)
+    input_path = input_dir / f"{run_id}.csv"
+    log_path = log_dir / f"{run_id}.log"
+    input_path.write_bytes(raw_csv)
+    try:
+        frame = pd.read_csv(io.BytesIO(raw_csv), encoding="utf-8-sig")
+        if len(frame) > MAX_POINTS:
+            raise ValueError(f"El CSV supera el límite de {MAX_POINTS} filas.")
+        result = train_algorithm_frame(
+            frame, algorithm, base / "resultados", run_id,
+            cv=cv, n_iter=n_iter, random_state=random_state,
+        )
+        artifact_paths = {
+            key: str(Path(value).relative_to(output_root))
+            for key, value in result["artifacts"].items()
+        }
+        artifact_paths.update({
+            "input_csv": str(input_path.relative_to(output_root)),
+            "log": str(log_path.relative_to(output_root)),
+        })
+        result.update({"reference": reference, "run_id": run_id, "artifacts": artifact_paths})
+        log_path.write_text(
+            f"algorithm={algorithm}\nrun_id={run_id}\ncv={cv}\nn_iter={n_iter}\n"
+            f"winner={result['winner']}\nbest_parameters={json.dumps(result['best_parameters'], default=str)}\n"
+            f"metrics={json.dumps(result['metrics'])}\n",
+            encoding="utf-8",
+        )
+        return jsonify(result), 200
+    except (ValueError, UnicodeDecodeError, pd.errors.ParserError, pd.errors.EmptyDataError) as exc:
+        log_path.write_text(f"algorithm={algorithm}\nrun_id={run_id}\nerror={exc}\n", encoding="utf-8")
+        return jsonify(error=f"No se pudo entrenar la casuística: {exc}",
+                       reference=reference, run_id=run_id), 422
+    except Exception:
+        logging.getLogger(__name__).exception("Error entrenando la casuística %s.", algorithm)
+        log_path.write_text(f"algorithm={algorithm}\nrun_id={run_id}\nerror=Error interno\n", encoding="utf-8")
+        return jsonify(error="Error interno durante el entrenamiento de la casuística.",
+                       reference=reference, run_id=run_id), 500
+
+def run_regression_casuistica_ejercicio(output_root, reference, raw_csv, algorithm,
+                              cv=5, n_iter=20, random_state=42):
+    """Ejecuta una casuística de regresión elegida por slug validado en Flask."""
+    import io
+    import pandas as pd
+    from regression.casuisticas import ALGORITHM_LABELS, train_algorithm_frame
+
+    if algorithm not in ALGORITHM_LABELS:
+        return jsonify(error="Algoritmo de casuística no reconocido."), 404
+    run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ") + "_" + uuid4().hex[:8]
+    output_root = Path(output_root)
+    base = output_root / reference / "casuisticas" / algorithm
+    input_dir = base / "csv_entrada"
+    log_dir = base / "logs_salida"
+    input_dir.mkdir(parents=True, exist_ok=True)
+    log_dir.mkdir(parents=True, exist_ok=True)
+    input_path = input_dir / f"{run_id}.csv"
+    log_path = log_dir / f"{run_id}.log"
+    input_path.write_bytes(raw_csv)
+    # aqui empiezan loa cambios del ejercicio 
+    # por cada nombre de algoritmo crear un método en
+    # el py correspondiente y llamarlo
+    try:
+        frame = pd.read_csv(io.BytesIO(raw_csv), encoding="utf-8-sig")
+        if len(frame) > MAX_POINTS:
+            raise ValueError(f"El CSV supera el límite de {MAX_POINTS} filas.")
+        result = train_algorithm_frame(
+            frame, algorithm, base / "resultados", run_id,
+            cv=cv, n_iter=n_iter, random_state=random_state,
+        )
+        artifact_paths = {
+            key: str(Path(value).relative_to(output_root))
+            for key, value in result["artifacts"].items()
+        }
+        artifact_paths.update({
+            "input_csv": str(input_path.relative_to(output_root)),
+            "log": str(log_path.relative_to(output_root)),
+        })
+        result.update({"reference": reference, "run_id": run_id, "artifacts": artifact_paths})
+        log_path.write_text(
+            f"algorithm={algorithm}\nrun_id={run_id}\ncv={cv}\nn_iter={n_iter}\n"
+            f"winner={result['winner']}\nbest_parameters={json.dumps(result['best_parameters'], default=str)}\n"
+            f"metrics={json.dumps(result['metrics'])}\n",
+            encoding="utf-8",
+        )
+        return jsonify(result), 200
+    except (ValueError, UnicodeDecodeError, pd.errors.ParserError, pd.errors.EmptyDataError) as exc:
+        log_path.write_text(f"algorithm={algorithm}\nrun_id={run_id}\nerror={exc}\n", encoding="utf-8")
+        return jsonify(error=f"No se pudo entrenar la casuística: {exc}",
+                       reference=reference, run_id=run_id), 422
+    except Exception:
+        logging.getLogger(__name__).exception("Error entrenando la casuística %s.", algorithm)
+        log_path.write_text(f"algorithm={algorithm}\nrun_id={run_id}\nerror=Error interno\n", encoding="utf-8")
+        return jsonify(error="Error interno durante el entrenamiento de la casuística.",
+                       reference=reference, run_id=run_id), 500
+
+
 def validate_reference(value):
     """Acepta una referencia segura para formar nombres de carpetas y archivos."""
     # La validación se aplica antes de formar cualquier ruta. No se normaliza una
@@ -88,6 +199,15 @@ def validate_reference(value):
     if not isinstance(value, str) or not REFERENCE_RE.fullmatch(value):
         return None, "reference es obligatorio y debe tener 1-64 caracteres: letras, números, punto, guion o guion bajo."
     return value, None
+
+def validate_reference_v1(value,txterror):
+    """Acepta una referencia segura para formar nombres de carpetas y archivos."""
+    # La validación se aplica antes de formar cualquier ruta. No se normaliza una
+    # referencia inválida porque eso podría hacer colisionar expedientes distintos.
+    if not isinstance(value, str) :
+        return None, txterror
+    return value, None
+
 
 def parse_json_points(points):
     """Convierte puntos JSON en dos vectores numéricos y comprueba sus valores."""
@@ -681,7 +801,9 @@ def run_random_forest(app, output_root, reference, raw_csv, options, source_name
         handler.close()
         logger.removeHandler(handler)
 
-def run_eda_preprocesado(app, output_root, reference, raw_csv, source_name):
+def run_eda_preprocesado(app, output_root, reference, raw_csv, source_name,
+                         array_features_excluidas=None, min_correlation=0.0,
+                         max_correlation=1.0):
     """Genera el informe EDA y después entrena SVR sobre esos datos procesados."""
     from io import BytesIO
     import pandas as pd
@@ -715,9 +837,15 @@ def run_eda_preprocesado(app, output_root, reference, raw_csv, source_name):
         if not len(frame.columns):
             raise ValueError("El CSV debe incluir columnas con encabezado.")
 
-        # Esta función compartida se usa también desde la ejecución por lotes.
-        # Dentro de ella el informe PDF se escribe antes de ajustar el SVR.
-        result = train_one_dataset(frame, source_name, base, run_id)
+        # La función compartida produce la matriz de correlación, elimina las
+        # variables fuera del intervalo y conserva la exclusión manual existente.
+        result = train_one_dataset(
+            frame, source_name, base, run_id,
+            min_correlation=min_correlation,
+            max_correlation=max_correlation,
+            excluded_features=array_features_excluidas or [],
+        )
+
         artifact_paths = {
             name: str(Path(path).relative_to(output_root))
             for name, path in result["artifacts"].items()
@@ -733,8 +861,10 @@ def run_eda_preprocesado(app, output_root, reference, raw_csv, source_name):
             "n_rows_train": result["filas_train"], "n_rows_test": result["filas_test"],
             "input_columns": [str(column) for column in frame.columns],
             "feature_columns": result["variables"],
+            "correlation_filter": result["correlation_filter"],
             "transformations": result["codificaciones"],
             "parameters": result["parametros_svr"],
+            "best_training": result["best_training"],
             "metrics": result["metricas"],
             "artifacts": artifact_paths,
         }
