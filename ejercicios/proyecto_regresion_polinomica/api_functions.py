@@ -33,6 +33,7 @@ from regression.svm_regressor import build_svm_regression_pipeline
 from regression.adaboost_regressor import build_adaboost_regression_pipeline
 from regression.gradient_boosting_regressor import build_gradient_boosting_regression_pipeline
 from regression.parameter_search import PARAMETER_CATALOG
+from regression.train_regresion_lineal_simple_ejercicio_casuisticas import train_algorithm_frame_lineal_regression
 
 # Límites del procesamiento aplicados tanto a endpoints JSON como a CSV.
 MAX_POINTS = 100_000
@@ -161,8 +162,9 @@ def run_regression_casuistica_ejercicio(output_root, reference, raw_csv, algorit
         frame = pd.read_csv(io.BytesIO(raw_csv), encoding="utf-8-sig")
         if len(frame) > MAX_POINTS:
             raise ValueError(f"El CSV supera el límite de {MAX_POINTS} filas.")
-        result = train_algorithm_frame(
-            frame, algorithm, base / "resultados", run_id,
+        # como solo hay un algoritmo llamo al de regresion lineal 
+        result = train_algorithm_frame_lineal_regression(
+            frame, base / "resultados", run_id,
             cv=cv, n_iter=n_iter, random_state=random_state,
         )
         artifact_paths = {
