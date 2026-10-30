@@ -1,8 +1,8 @@
 include:
   # Dify mantiene su Compose oficial en su propio repositorio y directorio.
   # Consulte README.md para clonar el repositorio y crear su archivo .env.
-  - path: ./dify/docker/docker-compose.yaml
-    project_directory: ./dify/docker
+  #- path: ./dify/docker/docker-compose.yaml
+  #  project_directory: ./dify/docker
 
 services:
   regression-api:
